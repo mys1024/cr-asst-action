@@ -1,4 +1,4 @@
-name: Code Review
+name: Review PR
 
 on:
   pull_request:

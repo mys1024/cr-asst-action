@@ -1,10 +1,14 @@
 name: cr-asst-action
-description: Use cr-asst with Github Actions.
+description: An action powered by cr-asst that reviews your pull requests with AI assistants.
 author: mys1024
 
 branding:
   icon: heart
   color: red
+
+runs:
+  using: node20
+  main: dist/index.mjs
 
 inputs:
   github-token:
@@ -31,7 +35,3 @@ inputs:
   output-price:
     description: Price per million output tokens. For computing cost.
     required: false
-
-runs:
-  using: node20
-  main: dist/index.mjs

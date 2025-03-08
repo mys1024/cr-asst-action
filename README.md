@@ -5,11 +5,39 @@
 [![workflow-ci](https://img.shields.io/github/actions/workflow/status/mys1024/cr-asst-action/ci.yml?label=ci)](https://github.com/mys1024/cr-asst-action/actions/workflows/ci.yml)
 [![workflow-release](https://img.shields.io/github/actions/workflow/status/mys1024/cr-asst-action/release.yml?label=release)](https://github.com/mys1024/cr-asst-action/actions/workflows/release.yml)
 
-<!-- [![codecov](https://codecov.io/gh/mys1024/cr-asst-action/graph/badge.svg?token=nRaMsQAh1N)](https://codecov.io/gh/mys1024/cr-asst-action) -->
+An action powered by **[cr-asst](https://github.com/mys1024/cr-asst)** that reviews your pull requests with AI assistants.
 
 ## Usage
 
-TBD.
+```yml
+name: Review PR
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - main
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Review
+        uses: mys1024/cr-asst-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }} # required
+          api-key: ${{ secrets.CR_API_KEY }} # required
+          model: gpt-4 # required
+          base-url: https://api.example.com/v1 #optional
+```
+
+See [action.yml](./action.yml) for more details about inputs.
 
 ## License
 
