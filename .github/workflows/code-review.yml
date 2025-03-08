@@ -1,0 +1,27 @@
+name: Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - main
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Review
+        uses: ./
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          model: deepseek-ai/DeepSeek-V3
+          base-url: https://api.siliconflow.cn/v1
+          api-key: ${{ secrets.CR_API_KEY }}
+          input-price: 2
+          output-price: 8

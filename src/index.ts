@@ -1,3 +1,3 @@
-export function greet() {
-  return 'Hello, Node.js!';
-}
+import { run } from './run';
+
+run();

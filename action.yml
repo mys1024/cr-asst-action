@@ -1,0 +1,40 @@
+name: cr-asst-action
+description: Use cr-asst with Github Actions.
+author: mys1024
+
+# Add your action's branding here. This will appear on the GitHub Marketplace.
+branding:
+  icon: heart
+  color: red
+
+inputs:
+  github-token:
+    description: Github token.
+    required: true
+  model:
+    description: AI Model to use for review.
+    required: true
+  api-key:
+    description: API key for the AI service.
+    required: true
+  base-url:
+    description: Base URL for the AI service API.
+    required: false
+  prompt-file:
+    description: Path to a custom prompt file, or a builtin prompt ("en", "zh-cn", or
+      "zh-cn-nyan").
+    required: false
+    default: en
+  diffs-cmd:
+    description: Command to get code diffs for review.
+    required: false
+  input-price:
+    description: Price per million input tokens. For computing cost.
+    required: false
+  output-price:
+    description: Price per million output tokens. For computing cost.
+    required: false
+
+runs:
+  using: node20
+  main: dist/index.mjs
