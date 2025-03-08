@@ -2,7 +2,6 @@ name: cr-asst-action
 description: Use cr-asst with Github Actions.
 author: mys1024
 
-# Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
   icon: heart
   color: red
@@ -21,10 +20,8 @@ inputs:
     description: Base URL for the AI service API.
     required: false
   prompt-file:
-    description: Path to a custom prompt file, or a builtin prompt ("en", "zh-cn", or
-      "zh-cn-nyan").
+    description: Path to a custom prompt file, or a builtin prompt ("en", "zh-cn", or "zh-cn-nyan").
     required: false
-    default: en
   diffs-cmd:
     description: Command to get code diffs for review.
     required: false

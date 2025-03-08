@@ -1,28 +1,24 @@
 {
-  "name": "starter-node",
+  "name": "cr-asst-action",
   "type": "module",
   "version": "0.9.0",
+  "private": true,
   "packageManager": "pnpm@10.6.1",
-  "description": "A Node.js package starter template.",
+  "description": "TBD.",
   "author": "mys1024",
   "license": "MIT",
-  "homepage": "https://github.com/mys1024/starter-node#readme",
+  "homepage": "https://github.com/mys1024/cr-asst-action#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mys1024/starter-node.git"
+    "url": "https://github.com/mys1024/cr-asst-action.git"
   },
-  "keywords": [
-    "template"
-  ],
   "main": "dist/index.mjs",
   "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "cli": "tsx src/cli/index.ts",
-    "cli:watch": "tsx watch src/cli/index.ts",
+    "prepare": "simple-git-hooks",
     "build": "unbuild",
     "test": "vitest run",
     "test:watch": "vitest watch",
@@ -32,15 +28,17 @@
     "check:lint": "eslint .",
     "check:format": "prettier --check .",
     "taze": "taze -I",
-    "prepare": "simple-git-hooks",
     "release": "bumpp"
   },
   "devDependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.0",
     "@eslint/js": "^9.21.0",
     "@types/node": "^22.13.9",
     "@vitest/coverage-v8": "^3.0.8",
     "bump": "^0.2.5",
     "bumpp": "^10.0.3",
+    "cr-asst": "^0.12.2",
     "eslint": "^9.21.0",
     "lint-staged": "^15.4.3",
     "npm-run-all2": "^7.0.2",
@@ -60,17 +58,12 @@
     ]
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm test && pnpm check:type && pnpm lint-staged"
+    "pre-commit": "pnpm test && pnpm check:type && pnpm lint-staged && pnpm build"
   },
   "lint-staged": {
     "*": [
       "eslint --fix .",
       "prettier --write ."
     ]
-  },
-  "dependencies": {
-    "@actions/core": "^1.11.1",
-    "@actions/github": "^6.0.0",
-    "cr-asst": "^0.12.2"
   }
 }

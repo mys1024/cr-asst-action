@@ -50,7 +50,7 @@ jobs:
       #   uses: codecov/codecov-action@v5
       #   with:
       #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     slug: mys1024/starter-node
+      #     slug: mys1024/cr-asst-action
 
       - name: Build
         run: pnpm run build

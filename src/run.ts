@@ -30,7 +30,7 @@ export async function run(): Promise<void> {
     const model = core.getInput('model');
     const apiKey = core.getInput('api-key');
     const baseUrl = core.getInput('base-url') ? core.getInput('base-url') : undefined;
-    const promptFile = core.getInput('prompt-file');
+    const promptFile = core.getInput('prompt-file') || 'en';
     const diffsCmd =
       core.getInput('diffs-cmd') ||
       `git log --no-prefix -p remotes/origin/${baseRef}..remotes/origin/${headRef} -- . :!pnpm-lock.yaml :!package-lock.json :!yarn.lock`;
