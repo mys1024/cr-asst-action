@@ -58,7 +58,7 @@
     ]
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm test && pnpm check:type && pnpm lint-staged && pnpm build"
+    "pre-commit": "pnpm test && pnpm check:type && pnpm lint-staged && pnpm build && git add dist"
   },
   "lint-staged": {
     "*": [
