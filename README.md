@@ -9,37 +9,43 @@ An action powered by **[cr-asst](https://github.com/mys1024/cr-asst)** that revi
 
 ## Usage
 
-```yml
-name: Review PR
+1. Create a workflow file `.github/workflows/review-pr.yml` with the following content:
 
-on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
-    branches:
-      - main
+   ```yml
+   name: Review PR
 
-jobs:
-  review:
-    runs-on: ubuntu-latest
+   on:
+     pull_request:
+       types:
+         - opened
+         - synchronize
+       branches:
+         - main
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+   jobs:
+     review:
+       runs-on: ubuntu-latest
 
-      - name: Review
-        uses: mys1024/cr-asst-action@v1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }} # required
-          api-key: ${{ secrets.CR_API_KEY }} # required
-          model: gpt-4 # required
-          base-url: https://api.example.com/v1 #optional
-```
+       steps:
+         - name: Checkout repository
+           uses: actions/checkout@v4
+           with:
+             fetch-depth: 0
 
-See [action.yml](./action.yml) for more details about inputs.
+         - name: Review
+           uses: mys1024/cr-asst-action@v1
+           with:
+             github-token: ${{ secrets.GITHUB_TOKEN }} # required
+             api-key: ${{ secrets.CR_API_KEY }} # required
+             model: gpt-4 # required
+             base-url: https://api.example.com/v1 #optional
+   ```
+
+   Note: see [action.yml](./action.yml) for more details about inputs.
+
+2. Set the secret `CR_API_KEY` in your repository settings.
+
+3. Set the setting `Workflow permissions` to `Read and write permissions` in your repository settings.
 
 ## License
 
