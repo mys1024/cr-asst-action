@@ -12,14 +12,14 @@
     "type": "git",
     "url": "https://github.com/mys1024/cr-asst-action.git"
   },
-  "main": "dist/index.mjs",
-  "module": "dist/index.mjs",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "files": [
     "dist"
   ],
   "scripts": {
     "prepare": "simple-git-hooks",
-    "build": "unbuild",
+    "build": "rm -rf dist && rolldown -c rolldown.config.ts",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:cover": "vitest run --coverage",
@@ -30,25 +30,27 @@
     "taze": "taze -I",
     "release": "bumpp"
   },
-  "devDependencies": {
+  "dependencies": {
     "@actions/core": "^1.11.1",
     "@actions/github": "^6.0.0",
+    "cr-asst": "^0.12.2"
+  },
+  "devDependencies": {
     "@eslint/js": "^9.21.0",
     "@types/node": "^22.13.9",
     "@vitest/coverage-v8": "^3.0.8",
     "bump": "^0.2.5",
     "bumpp": "^10.0.3",
-    "cr-asst": "^0.12.2",
     "eslint": "^9.21.0",
     "lint-staged": "^15.4.3",
     "npm-run-all2": "^7.0.2",
     "prettier": "^3.5.3",
+    "rolldown": "^1.0.0-beta.4",
     "simple-git-hooks": "^2.11.1",
     "taze": "^18.6.0",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.26.0",
-    "unbuild": "^3.5.0",
     "vitest": "^3.0.8"
   },
   "pnpm": {

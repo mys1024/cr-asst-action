@@ -4,5 +4,5 @@
   },
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "cSpell.words": ["bumpp", "changelogithub", "deepseek", "nyan", "pnpx", "taze"]
+  "cSpell.words": ["bumpp", "changelogithub", "deepseek", "nyan", "pnpx", "rolldown", "taze"]
 }
