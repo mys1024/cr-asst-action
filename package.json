@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "prepare": "simple-git-hooks",
-    "build": "rolldown -c rolldown.config.ts",
+    "build": "rm -rf dist && rolldown -c rolldown.config.ts",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:cover": "vitest run --coverage",
@@ -43,7 +43,7 @@
     "lint-staged": "^15.4.3",
     "npm-run-all2": "^7.0.2",
     "prettier": "^3.5.3",
-    "rolldown": "1.0.0-beta.3",
+    "rolldown": "^1.0.0-beta.4",
     "simple-git-hooks": "^2.11.1",
     "taze": "^18.6.0",
     "tsx": "^4.19.3",
