@@ -70697,7 +70697,7 @@ const $ = createExeca(mapScriptAsync, {}, deepScriptOptions, setScriptSync);
 const { sendMessage, getOneMessage, getEachMessage, getCancelSignal } = getIpcExport();
 
 //#endregion
-//#region node_modules/.pnpm/cr-asst@0.12.2/node_modules/cr-asst/dist/shared/cr-asst.DlFfZH8P.mjs
+//#region node_modules/.pnpm/cr-asst@0.13.0/node_modules/cr-asst/dist/shared/cr-asst.CFcxXKJw.mjs
 function genEnBuiltinPrompt(replacements$1) {
 	const { $DIFFS } = replacements$1;
 	return `Below I will provide some code changes. Please read these changes, understand its intent, and review it.
@@ -70708,7 +70708,7 @@ Your response should adhere to the following rules:
 - The response template provided below will be wrapped in a code block, but your response **should not** be wrapped in code block symbols (i.e., "\`\`\`markdown" and "\`\`\`"). To emphasize, **do not use code blocks to wrap your response**.
 - The code changes provided below are represented in \`diff\` format. The file paths may be prefixed with \`a/\` or \`b/\`, but these two prefixes should not be considered as part of the file path.
 - In the response template, \`{{}}\` is the part you need to replace, for example, you should replace \`{{review comment}}\` with your actual review comment.
-- In the response template, only one item is listed for all sections, but you should list the appropriate number of items based on the actual situation.
+- In the response template, as an example, only one item item is listed in every sections. You should **list the appropriate number of items** based on the actual situation.
 
 This is the response template you need to follow:
 
@@ -70725,13 +70725,7 @@ This is the response template you need to follow:
 
 1. \`{{file path 1}}\`
 
-   Changes:
-
-   1. {{change 1}}
-
-   Review Comments:
-
-   1. {{review comment 1}}
+   1. {{change and review comment 1}}
 \`\`\`
 
 This is the code changes you need to review:
@@ -70751,7 +70745,7 @@ function genZhCnBuiltinPrompt(replacements$1, options = {}) {
 - \u4E0B\u9762\u7ED9\u51FA\u7684\u56DE\u590D\u6A21\u677F\u4F1A\u88AB\u5305\u88F9\u5728\u4EE3\u7801\u5757\u4E2D\uFF0C\u4F46\u662F\u4F60\u7684\u56DE\u590D**\u4E0D\u8981**\u7528\u4EE3\u7801\u5757\u7B26\u53F7\uFF08\u5373 "\`\`\`markdown" \u548C "\`\`\`"\uFF09\u6765\u5305\u88F9\u3002\u518D\u6B21\u5F3A\u8C03\uFF0C**\u4E0D\u8981\u7528\u4EE3\u7801\u5757\u6765\u5305\u88F9\u4F60\u7684\u56DE\u590D**\u3002
 - \u4E0B\u9762\u7ED9\u51FA\u7684\u4EE3\u7801\u6539\u52A8\u4EE5 \`diff\` \u683C\u5F0F\u8868\u793A\u3002\u5176\u4E2D\u7684\u6587\u4EF6\u8DEF\u5F84\u53EF\u80FD\u4EE5 \`a/\` \u6216 \`b/\` \u4F5C\u4E3A\u524D\u7F00\uFF0C\u4E0D\u8981\u5C06\u8FD9\u4E24\u4E2A\u524D\u7F00\u89C6\u4E3A\u6587\u4EF6\u8DEF\u5F84\u7684\u4E00\u90E8\u5206\u3002
 - \u5728\u56DE\u590D\u6A21\u677F\u4E2D\uFF0C\`{{}}\` \u662F\u4F60\u9700\u8981\u66FF\u6362\u7684\u90E8\u5206\uFF0C\u4F8B\u5982\u4F60\u9700\u8981\u5C06 \`{{\u8BC4\u5BA1\u610F\u89C1}}\` \u66FF\u6362\u4E3A\u4F60\u5B9E\u9645\u7684\u8BC4\u5BA1\u610F\u89C1\u3002
-- \u5728\u56DE\u590D\u6A21\u677F\u4E2D\uFF0C\u6240\u6709\u9879\u76EE\u4EC5\u5217\u51FA\u4E86\u4E00\u9879\uFF0C\u4F46\u4F60\u5E94\u8BE5\u6839\u636E\u5B9E\u9645\u60C5\u51B5\uFF0C\u5217\u51FA\u5408\u9002\u7684\u9879\u76EE\u6570\u91CF\u3002
+- \u5728\u56DE\u590D\u6A21\u677F\u4E2D\uFF0C\u4F5C\u4E3A\u793A\u4F8B\uFF0C\u6BCF\u4E2A\u7AE0\u8282\u4EC5\u5217\u51FA\u4E86\u4E00\u9879\u5185\u5BB9\u3002\u4F60\u7684\u56DE\u590D\u5E94\u8BE5\u6839\u636E\u5B9E\u9645\u60C5\u51B5\uFF0C\u5217\u51FA**\u5408\u9002\u7684\u9879\u76EE\u6570\u91CF**\u3002
 ${nyan ? "- 扮演一个猫娘，你的回复需要带上猫娘的语癖，例如使用“喵~”、emoji、颜表情等。你应该在句子中使用第一人称“猫猫”，包括在描述意图、改动点时，例如“猫猫觉得...”、“猫猫认为...”、“猫猫喜欢...”。" : ""}
 
 \u4F60\u7684\u56DE\u590D\u6A21\u677F\u5982\u4E0B\uFF1A
@@ -70769,13 +70763,7 @@ ${nyan ? "- 扮演一个猫娘，你的回复需要带上猫娘的语癖，例�
 
 1. \`{{\u6587\u4EF6\u8DEF\u5F841}}\`
 
-   \u6539\u52A8\u70B9\uFF1A
-
-   1. {{\u6539\u52A8\u70B91}}
-
-   \u8BC4\u5BA1\u610F\u89C1\uFF1A
-
-   1. {{\u8BC4\u5BA1\u610F\u89C11}}
+   1. {{\u6539\u52A8\u70B9\u4E0E\u8BC4\u5BA1\u610F\u89C11}}
 \`\`\`
 
 \u4EE5\u4E0B\u662F\u4F60\u9700\u8981\u8BC4\u5BA1\u7684\u4EE3\u7801\u6539\u52A8\uFF1A
@@ -70798,8 +70786,22 @@ async function getPrompt(fileOrBuiltinName, replacements$1) {
 	for (const [key, value] of Object.entries(replacements$1)) customPrompt = customPrompt.replaceAll(key, value);
 	return customPrompt;
 }
+function usageToString(usage) {
+	return ["[USAGE]", [
+		`inputTokens: ${usage.inputTokens}`,
+		`outputTokens: ${usage.outputTokens}`,
+		`totalTokens: ${usage.totalTokens}`
+	].join(", ")].join(" ");
+}
+function statsToString(stats) {
+	return ["[STATS]", [
+		`timeToFirstToken: ${(stats.timeToFirstToken / 1e3).toFixed(2)}s`,
+		`timeToFinish: ${(stats.timeToFinish / 1e3).toFixed(2)}s`,
+		`tokensPerSecond: ${stats.tokensPerSecond.toFixed(2)} tokens/s`
+	].join(", ")].join(" ");
+}
 async function codeReview(options) {
-	const { model, apiKey, baseUrl: baseUrl$1, diffsCmd = "git log --no-prefix -p -n 1 -- . :!package-lock.json :!pnpm-lock.yaml :!yarn.lock", outputFile, promptFile = "en", print = false, printReasoning = false, printDebug = false, inputPrice = 0, outputPrice = 0 } = options;
+	const { model, apiKey, baseUrl: baseUrl$1, diffsCmd = "git log --no-prefix -p -n 1 -- . :!package-lock.json :!pnpm-lock.yaml :!yarn.lock", outputFile, promptFile = "en", print = false, printReasoning = false, printDebug = false, dryRun = false } = options;
 	const client = new openai_default({
 		baseURL: baseUrl$1,
 		apiKey
@@ -70816,10 +70818,7 @@ async function codeReview(options) {
 	const usage = {
 		inputTokens: 0,
 		outputTokens: 0,
-		totalTokens: 0,
-		inputCost: 0,
-		outputCost: 0,
-		totalCost: 0
+		totalTokens: 0
 	};
 	const stats = {
 		startAt: Date.now(),
@@ -70829,46 +70828,45 @@ async function codeReview(options) {
 		timeToFinish: 0,
 		tokensPerSecond: 0
 	};
-	const stream$2 = await client.chat.completions.create({
-		stream: true,
-		model,
-		messages: [{
-			role: "user",
-			content: prompt
-		}]
-	});
-	for await (const chunk of stream$2) {
-		if (stats.firstTokenAt === 0) stats.firstTokenAt = Date.now();
-		const reasoningContentChunk = chunk.choices[0]?.delta?.reasoning_content;
-		if (reasoningContentChunk) {
-			if (print && printReasoning && !reasoningContent) stdout.write("> (Reasoning)\n> \n> ");
-			reasoningContent += reasoningContentChunk;
-			if (print && printReasoning) stdout.write(reasoningContentChunk.replaceAll("\n", "\n> "));
+	if (!dryRun) {
+		const stream$2 = await client.chat.completions.create({
+			stream: true,
+			model,
+			messages: [{
+				role: "user",
+				content: prompt
+			}]
+		});
+		for await (const chunk of stream$2) {
+			if (stats.firstTokenAt === 0) stats.firstTokenAt = Date.now();
+			const reasoningContentChunk = chunk.choices[0]?.delta?.reasoning_content;
+			if (reasoningContentChunk) {
+				if (print && printReasoning && !reasoningContent) stdout.write("> (Reasoning)\n> \n> ");
+				reasoningContent += reasoningContentChunk;
+				if (print && printReasoning) stdout.write(reasoningContentChunk.replaceAll("\n", "\n> "));
+			}
+			const contentChunk = chunk.choices[0]?.delta?.content;
+			if (contentChunk) {
+				content += contentChunk;
+				if (print) stdout.write(contentChunk);
+				if (outputFile) await appendFile(outputFile, contentChunk);
+			}
+			if (chunk.usage) {
+				usage.inputTokens = chunk.usage.prompt_tokens;
+				usage.outputTokens = chunk.usage.completion_tokens;
+				usage.totalTokens = chunk.usage.total_tokens;
+			}
 		}
-		const contentChunk = chunk.choices[0]?.delta?.content;
-		if (contentChunk) {
-			content += contentChunk;
-			if (print) stdout.write(contentChunk);
-			if (outputFile) await appendFile(outputFile, contentChunk);
-		}
-		if (chunk.usage) {
-			usage.inputTokens = chunk.usage.prompt_tokens;
-			usage.outputTokens = chunk.usage.completion_tokens;
-			usage.totalTokens = chunk.usage.total_tokens;
-			usage.inputCost = inputPrice * usage.inputTokens / 1e6;
-			usage.outputCost = outputPrice * usage.outputTokens / 1e6;
-			usage.totalCost = inputPrice * usage.inputTokens / 1e6 + outputPrice * usage.outputTokens / 1e6;
-		}
+		if (print) console.log();
 	}
-	if (print) console.log();
 	stats.finishAt = Date.now();
 	stats.timeToFirstToken = stats.firstTokenAt - stats.startAt;
 	stats.timeToFinish = stats.finishAt - stats.startAt;
 	stats.tokensPerSecond = usage.outputTokens / (stats.timeToFinish / 1e3);
 	if (printDebug) {
 		console.log();
-		console.log(`[USAGE] inputTokens: ${usage.inputTokens}, outputTokens: ${usage.outputTokens}, totalTokens: ${usage.totalTokens}, inputCost: ${usage.inputCost.toFixed(6)}, outputCost: ${usage.outputCost.toFixed(6)}, totalCost: ${usage.totalCost.toFixed(6)}`);
-		console.log(`[STATS] timeToFirstToken: ${(stats.timeToFirstToken / 1e3).toFixed(2)}s, timeToFinish: ${(stats.timeToFinish / 1e3).toFixed(2)}s, tokensPerSecond: ${stats.tokensPerSecond.toFixed(2)} tokens/s`);
+		console.log(usageToString(usage));
+		console.log(statsToString(stats));
 	}
 	return {
 		reasoningContent,
