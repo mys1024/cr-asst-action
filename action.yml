@@ -29,9 +29,3 @@ inputs:
   diffs-cmd:
     description: Command to get code diffs for review.
     required: false
-  input-price:
-    description: Price per million input tokens. For computing cost.
-    required: false
-  output-price:
-    description: Price per million output tokens. For computing cost.
-    required: false

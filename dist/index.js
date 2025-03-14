@@ -70906,8 +70906,6 @@ async function _run() {
 	const baseUrl$1 = import_core.getInput("base-url") ? import_core.getInput("base-url") : void 0;
 	const promptFile = import_core.getInput("prompt-file") || "en";
 	const diffsCmd = import_core.getInput("diffs-cmd") || `git log --no-prefix -p remotes/origin/${baseRef}..remotes/origin/${headRef} -- . :!pnpm-lock.yaml :!package-lock.json :!yarn.lock`;
-	const inputPrice = import_core.getInput("input-price") ? Number.parseFloat(import_core.getInput("input-price")) : void 0;
-	const outputPrice = import_core.getInput("output-price") ? Number.parseFloat(import_core.getInput("output-price")) : void 0;
 	import_core.info("baseRef: " + baseRef);
 	import_core.info("headRef: " + headRef);
 	import_core.info("diffsCmd: " + diffsCmd);
@@ -70920,9 +70918,7 @@ async function _run() {
 		diffsCmd,
 		print: true,
 		printReasoning: true,
-		printDebug: true,
-		inputPrice,
-		outputPrice
+		printDebug: true
 	});
 	import_core.info("\nCode review finished.\n");
 	const octokit = (0, import_github.getOctokit)(githubToken);

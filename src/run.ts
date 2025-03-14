@@ -33,12 +33,6 @@ async function _run(): Promise<void> {
   const diffsCmd =
     core.getInput('diffs-cmd') ||
     `git log --no-prefix -p remotes/origin/${baseRef}..remotes/origin/${headRef} -- . :!pnpm-lock.yaml :!package-lock.json :!yarn.lock`;
-  const inputPrice = core.getInput('input-price')
-    ? Number.parseFloat(core.getInput('input-price'))
-    : undefined;
-  const outputPrice = core.getInput('output-price')
-    ? Number.parseFloat(core.getInput('output-price'))
-    : undefined;
 
   // print debug info
   core.info('baseRef: ' + baseRef);
@@ -56,8 +50,6 @@ async function _run(): Promise<void> {
     print: true,
     printReasoning: true,
     printDebug: true,
-    inputPrice,
-    outputPrice,
   });
   core.info('\nCode review finished.\n');
 
