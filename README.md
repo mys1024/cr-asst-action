@@ -5,6 +5,8 @@
 [![workflow-ci](https://img.shields.io/github/actions/workflow/status/mys1024/cr-asst-action/ci.yml?label=ci)](https://github.com/mys1024/cr-asst-action/actions/workflows/ci.yml)
 [![workflow-release](https://img.shields.io/github/actions/workflow/status/mys1024/cr-asst-action/release.yml?label=release)](https://github.com/mys1024/cr-asst-action/actions/workflows/release.yml)
 
+Hello, world!
+
 An action powered by **[cr-asst](https://github.com/mys1024/cr-asst)** that reviews your pull requests with AI assistants.
 
 ## Usage
