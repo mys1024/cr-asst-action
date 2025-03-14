@@ -26,6 +26,9 @@ inputs:
   prompt-file:
     description: Path to a custom prompt file, or a builtin prompt ("en", "zh-cn", or "zh-cn-nyan").
     required: false
+  exclude-files:
+    description: Files (comma-seperated) to be excluded from diffing. Only available when "diffs-cmd" is not set.
+    required: false
   diffs-cmd:
     description: Command to get code diffs for review.
     required: false

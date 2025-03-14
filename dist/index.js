@@ -70905,7 +70905,12 @@ async function _run() {
 	const apiKey = import_core.getInput("api-key");
 	const baseUrl$1 = import_core.getInput("base-url") ? import_core.getInput("base-url") : void 0;
 	const promptFile = import_core.getInput("prompt-file") || "en";
-	const diffsCmd = import_core.getInput("diffs-cmd") || `git log --no-prefix -p remotes/origin/${baseRef}..remotes/origin/${headRef} -- . :!pnpm-lock.yaml :!package-lock.json :!yarn.lock`;
+	const excludeFiles = import_core.getInput("exclude-files") ? import_core.getInput("exclude-files").split(",") : [
+		"pnpm-lock.yaml",
+		"package-lock.json",
+		"yarn.lock"
+	];
+	const diffsCmd = import_core.getInput("diffs-cmd") || `git log --no-prefix -p remotes/origin/${baseRef}..remotes/origin/${headRef} -- ${excludeFiles.length > 0 ? `. ${excludeFiles.map((file) => `:!${file}`).join(" ")}` : "."}`;
 	import_core.info("baseRef: " + baseRef);
 	import_core.info("headRef: " + headRef);
 	import_core.info("diffsCmd: " + diffsCmd);

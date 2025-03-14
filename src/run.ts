@@ -30,9 +30,12 @@ async function _run(): Promise<void> {
   const apiKey = core.getInput('api-key');
   const baseUrl = core.getInput('base-url') ? core.getInput('base-url') : undefined;
   const promptFile = core.getInput('prompt-file') || 'en';
+  const excludeFiles = core.getInput('exclude-files')
+    ? core.getInput('exclude-files').split(',')
+    : ['pnpm-lock.yaml', 'package-lock.json', 'yarn.lock'];
   const diffsCmd =
     core.getInput('diffs-cmd') ||
-    `git log --no-prefix -p remotes/origin/${baseRef}..remotes/origin/${headRef} -- . :!pnpm-lock.yaml :!package-lock.json :!yarn.lock`;
+    `git log --no-prefix -p remotes/origin/${baseRef}..remotes/origin/${headRef} -- ${excludeFiles.length > 0 ? `. ${excludeFiles.map((file) => `:!${file}`).join(' ')}` : '.'}`;
 
   // print debug info
   core.info('baseRef: ' + baseRef);
