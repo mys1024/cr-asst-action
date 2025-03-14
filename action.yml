@@ -3,8 +3,8 @@ description: An action powered by cr-asst that reviews your pull requests with A
 author: mys1024
 
 branding:
-  icon: heart
-  color: red
+  icon: code
+  color: blue
 
 runs:
   using: node20
