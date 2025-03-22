@@ -5,13 +5,13 @@
 [![workflow-ci](https://img.shields.io/github/actions/workflow/status/mys1024/cr-asst-action/ci.yml?label=ci)](https://github.com/mys1024/cr-asst-action/actions/workflows/ci.yml)
 [![workflow-release](https://img.shields.io/github/actions/workflow/status/mys1024/cr-asst-action/release.yml?label=release)](https://github.com/mys1024/cr-asst-action/actions/workflows/release.yml)
 
-English | [中文](./README.zh.md)
+[English](./README.md) | 中文
 
-An action powered by **[cr-asst](https://github.com/mys1024/cr-asst)** that reviews your pull requests with AI assistants.
+这个 Action 基于 **[cr-asst](https://github.com/mys1024/cr-asst)**，实现使用 AI 对合并请求进行评审。
 
-## Usage
+## 用法
 
-1. Create a workflow file `.github/workflows/review-pr.yml` with the following content:
+1. 创建一个工作流文件 `.github/workflows/review-pr.yml`，包含以下内容：
 
    ```yml
    name: Review PR
@@ -37,17 +37,21 @@ An action powered by **[cr-asst](https://github.com/mys1024/cr-asst)** that revi
          - name: Review
            uses: mys1024/cr-asst-action@v1
            with:
-             github-token: ${{ secrets.GITHUB_TOKEN }} # required
-             api-key: ${{ secrets.CR_API_KEY }} # required
-             model: gpt-4 # required
-             base-url: https://api.example.com/v1 #optional
+             github-token: ${{ secrets.GITHUB_TOKEN }} # 必需
+             api-key: ${{ secrets.CR_API_KEY }} # 必需
+             model: gpt-4 # 必需
+             base-url: https://api.example.com/v1 # 可选
    ```
 
-   Note: see [action.yml](./action.yml) for more details about inputs.
+   注: 参数细节可以参考 [action.yml](./action.yml)。
 
-2. Set the secret `CR_API_KEY` in your repository settings.
+2. 在仓库设置中配置密钥 `CR_API_KEY`。
 
-3. Set the setting `Workflow permissions` to `Read and write permissions` in your repository settings.
+3. 在仓库设置中将配置项 `Workflow permissions` 设置为 `Read and write permissions`。
+
+## 国内镜像仓库
+
+如果在国内使用与 Github Actions 兼容的自托管 CI/CD 系统（如 Gitea Actions），为了避免网络问题，可以引用在 Gitee 上的这个[镜像仓库](https://gitee.com/mys1024/cr-asst-action)。
 
 ## License
 
