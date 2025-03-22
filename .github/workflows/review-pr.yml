@@ -25,4 +25,4 @@ jobs:
           model: deepseek-ai/DeepSeek-V3
           base-url: https://api.siliconflow.cn/v1
           api-key: ${{ secrets.CR_API_KEY }}
-          exclude-files: pnpm-lock.yaml
+          exclude-files: pnpm-lock.yaml,dist
