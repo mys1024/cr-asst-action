@@ -49,6 +49,10 @@
 
 3. 在仓库设置中将配置项 `Workflow permissions` 设置为 `Read and write permissions`。
 
+## 例子
+
+可以点[这里](https://github.com/mys1024/cr-asst-action/pull/3#issuecomment-2745088468)查看例子。
+
 ## 国内镜像仓库
 
 如果在国内使用与 Github Actions 兼容的自托管 CI/CD 系统（如 Gitea Actions），为了避免网络问题，可以引用在 Gitee 上的这个[镜像仓库](https://gitee.com/mys1024/cr-asst-action)。

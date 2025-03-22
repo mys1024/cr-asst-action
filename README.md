@@ -49,6 +49,10 @@ An action powered by **[cr-asst](https://github.com/mys1024/cr-asst)** that revi
 
 3. Set the setting `Workflow permissions` to `Read and write permissions` in your repository settings.
 
+## Example
+
+Click [here](https://github.com/mys1024/cr-asst-action/pull/3#issuecomment-2745088468) to see the example.
+
 ## License
 
 [MIT](./LICENSE) License &copy; 2025-PRESENT mys1024
