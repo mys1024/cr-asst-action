@@ -7,6 +7,8 @@
 
 English | [中文](./README.zh.md)
 
+Hello, world!
+
 An action powered by **[cr-asst](https://github.com/mys1024/cr-asst)** that reviews your pull requests with AI assistants.
 
 ## Usage
