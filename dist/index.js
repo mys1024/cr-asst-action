@@ -70910,7 +70910,7 @@ async function _run() {
 		"package-lock.json",
 		"yarn.lock"
 	];
-	const diffsCmd = import_core.getInput("diffs-cmd") || `git log --no-prefix -p remotes/origin/${baseRef}..remotes/origin/${headRef} -- ${excludeFiles.length > 0 ? `. ${excludeFiles.map((file) => `:!${file}`).join(" ")}` : "."}`;
+	const diffsCmd = import_core.getInput("diffs-cmd") || `git diff --no-prefix remotes/origin/${baseRef}...remotes/origin/${headRef} -- ${excludeFiles.length > 0 ? `. ${excludeFiles.map((file) => `:!${file}`).join(" ")}` : "."}`;
 	import_core.info("baseRef: " + baseRef);
 	import_core.info("headRef: " + headRef);
 	import_core.info("diffsCmd: " + diffsCmd);

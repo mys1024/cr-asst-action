@@ -35,7 +35,7 @@ async function _run(): Promise<void> {
     : ['pnpm-lock.yaml', 'package-lock.json', 'yarn.lock'];
   const diffsCmd =
     core.getInput('diffs-cmd') ||
-    `git log --no-prefix -p remotes/origin/${baseRef}..remotes/origin/${headRef} -- ${excludeFiles.length > 0 ? `. ${excludeFiles.map((file) => `:!${file}`).join(' ')}` : '.'}`;
+    `git diff --no-prefix remotes/origin/${baseRef}...remotes/origin/${headRef} -- ${excludeFiles.length > 0 ? `. ${excludeFiles.map((file) => `:!${file}`).join(' ')}` : '.'}`;
 
   // print debug info
   core.info('baseRef: ' + baseRef);
