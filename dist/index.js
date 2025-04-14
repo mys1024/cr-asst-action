@@ -9816,13 +9816,13 @@ var require_headers = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_module
 	var HeadersList$2 = class HeadersList$2 {
 		/** @type {[string, string][]|null} */
 		cookies = null;
-		constructor(init) {
-			if (init instanceof HeadersList$2) {
-				this[kHeadersMap] = new Map(init[kHeadersMap]);
-				this[kHeadersSortedMap] = init[kHeadersSortedMap];
-				this.cookies = init.cookies === null ? null : [...init.cookies];
+		constructor(init$1) {
+			if (init$1 instanceof HeadersList$2) {
+				this[kHeadersMap] = new Map(init$1[kHeadersMap]);
+				this[kHeadersSortedMap] = init$1[kHeadersSortedMap];
+				this.cookies = init$1.cookies === null ? null : [...init$1.cookies];
 			} else {
-				this[kHeadersMap] = new Map(init);
+				this[kHeadersMap] = new Map(init$1);
 				this[kHeadersSortedMap] = null;
 			}
 		}
@@ -9883,13 +9883,13 @@ var require_headers = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_module
 		}
 	};
 	var Headers$8 = class Headers$8 {
-		constructor(init = void 0) {
-			if (init === kConstruct$4) return;
+		constructor(init$1 = void 0) {
+			if (init$1 === kConstruct$4) return;
 			this[kHeadersList$6] = new HeadersList$2();
 			this[kGuard$4] = "none";
-			if (init !== void 0) {
-				init = webidl$10.converters.HeadersInit(init);
-				fill$1(this, init);
+			if (init$1 !== void 0) {
+				init$1 = webidl$10.converters.HeadersInit(init$1);
+				fill$1(this, init$1);
 			}
 		}
 		append(name, value) {
@@ -10086,9 +10086,9 @@ var require_response = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_modul
 			responseObject[kHeaders$3][kRealm$3] = relevantRealm;
 			return responseObject;
 		}
-		static json(data, init = {}) {
+		static json(data, init$1 = {}) {
 			webidl$9.argumentLengthCheck(arguments, 1, { header: "Response.json" });
-			if (init !== null) init = webidl$9.converters.ResponseInit(init);
+			if (init$1 !== null) init$1 = webidl$9.converters.ResponseInit(init$1);
 			const bytes = textEncoder$2.encode(serializeJavascriptValueToJSONString(data));
 			const body = extractBody$1(bytes);
 			const relevantRealm = { settingsObject: {} };
@@ -10096,7 +10096,7 @@ var require_response = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_modul
 			responseObject[kRealm$3] = relevantRealm;
 			responseObject[kHeaders$3][kGuard$3] = "response";
 			responseObject[kHeaders$3][kRealm$3] = relevantRealm;
-			initializeResponse(responseObject, init, {
+			initializeResponse(responseObject, init$1, {
 				body: body[0],
 				type: "application/json"
 			});
@@ -10123,9 +10123,9 @@ var require_response = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_modul
 			responseObject[kState$6].headersList.append("location", value);
 			return responseObject;
 		}
-		constructor(body = null, init = {}) {
+		constructor(body = null, init$1 = {}) {
 			if (body !== null) body = webidl$9.converters.BodyInit(body);
-			init = webidl$9.converters.ResponseInit(init);
+			init$1 = webidl$9.converters.ResponseInit(init$1);
 			this[kRealm$3] = { settingsObject: {} };
 			this[kState$6] = makeResponse$1({});
 			this[kHeaders$3] = new Headers$7(kConstruct$3);
@@ -10140,7 +10140,7 @@ var require_response = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_modul
 					type
 				};
 			}
-			initializeResponse(this, init, bodyWithType);
+			initializeResponse(this, init$1, bodyWithType);
 		}
 		get type() {
 			webidl$9.brandCheck(this, Response$4);
@@ -10228,7 +10228,7 @@ var require_response = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_modul
 		if (response.body != null) newResponse.body = cloneBody$1(response.body);
 		return newResponse;
 	}
-	function makeResponse$1(init) {
+	function makeResponse$1(init$1) {
 		return {
 			aborted: false,
 			rangeRequested: false,
@@ -10239,9 +10239,9 @@ var require_response = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_modul
 			timingInfo: null,
 			cacheState: "",
 			statusText: "",
-			...init,
-			headersList: init.headersList ? new HeadersList$1(init.headersList) : new HeadersList$1(),
-			urlList: init.urlList ? [...init.urlList] : []
+			...init$1,
+			headersList: init$1.headersList ? new HeadersList$1(init$1.headersList) : new HeadersList$1(),
+			urlList: init$1.urlList ? [...init$1.urlList] : []
 		};
 	}
 	function makeNetworkError$1(reason) {
@@ -10298,14 +10298,14 @@ var require_response = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_modul
 		assert$6(isCancelled$1(fetchParams));
 		return isAborted$1(fetchParams) ? makeNetworkError$1(Object.assign(new DOMException$4("The operation was aborted.", "AbortError"), { cause: err })) : makeNetworkError$1(Object.assign(new DOMException$4("Request was cancelled."), { cause: err }));
 	}
-	function initializeResponse(response, init, body) {
-		if (init.status !== null && (init.status < 200 || init.status > 599)) throw new RangeError("init[\"status\"] must be in the range of 200 to 599, inclusive.");
-		if ("statusText" in init && init.statusText != null) {
-			if (!isValidReasonPhrase(String(init.statusText))) throw new TypeError("Invalid statusText");
+	function initializeResponse(response, init$1, body) {
+		if (init$1.status !== null && (init$1.status < 200 || init$1.status > 599)) throw new RangeError("init[\"status\"] must be in the range of 200 to 599, inclusive.");
+		if ("statusText" in init$1 && init$1.statusText != null) {
+			if (!isValidReasonPhrase(String(init$1.statusText))) throw new TypeError("Invalid statusText");
 		}
-		if ("status" in init && init.status != null) response[kState$6].status = init.status;
-		if ("statusText" in init && init.statusText != null) response[kState$6].statusText = init.statusText;
-		if ("headers" in init && init.headers != null) fill(response[kHeaders$3], init.headers);
+		if ("status" in init$1 && init$1.status != null) response[kState$6].status = init$1.status;
+		if ("statusText" in init$1 && init$1.statusText != null) response[kState$6].statusText = init$1.statusText;
+		if ("headers" in init$1 && init$1.headers != null) fill(response[kHeaders$3], init$1.headers);
 		if (body) {
 			if (nullBodyStatus$1.includes(response.status)) throw webidl$9.errors.exception({
 				header: "Response constructor",
@@ -10380,11 +10380,11 @@ var require_request = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_module
 		signal.removeEventListener("abort", abort$1);
 	});
 	var Request$4 = class Request$4 {
-		constructor(input, init = {}) {
+		constructor(input, init$1 = {}) {
 			if (input === kConstruct$2) return;
 			webidl$8.argumentLengthCheck(arguments, 1, { header: "Request constructor" });
 			input = webidl$8.converters.RequestInfo(input);
-			init = webidl$8.converters.RequestInit(init);
+			init$1 = webidl$8.converters.RequestInit(init$1);
 			this[kRealm$2] = { settingsObject: {
 				baseUrl: getGlobalOrigin$1(),
 				get origin() {
@@ -10414,8 +10414,8 @@ var require_request = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_module
 			const origin = this[kRealm$2].settingsObject.origin;
 			let window$1 = "client";
 			if (request$2.window?.constructor?.name === "EnvironmentSettingsObject" && sameOrigin$1(request$2.window, origin)) window$1 = request$2.window;
-			if (init.window != null) throw new TypeError(`'window' option '${window$1}' must be null`);
-			if ("window" in init) window$1 = "no-window";
+			if (init$1.window != null) throw new TypeError(`'window' option '${window$1}' must be null`);
+			if ("window" in init$1) window$1 = "no-window";
 			request$2 = makeRequest$2({
 				method: request$2.method,
 				headersList: request$2.headersList,
@@ -10436,7 +10436,7 @@ var require_request = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_module
 				historyNavigation: request$2.historyNavigation,
 				urlList: [...request$2.urlList]
 			});
-			const initHasKey = Object.keys(init).length !== 0;
+			const initHasKey = Object.keys(init$1).length !== 0;
 			if (initHasKey) {
 				if (request$2.mode === "navigate") request$2.mode = "same-origin";
 				request$2.reloadNavigation = false;
@@ -10447,8 +10447,8 @@ var require_request = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_module
 				request$2.url = request$2.urlList[request$2.urlList.length - 1];
 				request$2.urlList = [request$2.url];
 			}
-			if (init.referrer !== void 0) {
-				const referrer = init.referrer;
+			if (init$1.referrer !== void 0) {
+				const referrer = init$1.referrer;
 				if (referrer === "") request$2.referrer = "no-referrer";
 				else {
 					let parsedReferrer;
@@ -10461,29 +10461,29 @@ var require_request = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_module
 					else request$2.referrer = parsedReferrer;
 				}
 			}
-			if (init.referrerPolicy !== void 0) request$2.referrerPolicy = init.referrerPolicy;
+			if (init$1.referrerPolicy !== void 0) request$2.referrerPolicy = init$1.referrerPolicy;
 			let mode;
-			if (init.mode !== void 0) mode = init.mode;
+			if (init$1.mode !== void 0) mode = init$1.mode;
 			else mode = fallbackMode;
 			if (mode === "navigate") throw webidl$8.errors.exception({
 				header: "Request constructor",
 				message: "invalid request mode navigate."
 			});
 			if (mode != null) request$2.mode = mode;
-			if (init.credentials !== void 0) request$2.credentials = init.credentials;
-			if (init.cache !== void 0) request$2.cache = init.cache;
+			if (init$1.credentials !== void 0) request$2.credentials = init$1.credentials;
+			if (init$1.cache !== void 0) request$2.cache = init$1.cache;
 			if (request$2.cache === "only-if-cached" && request$2.mode !== "same-origin") throw new TypeError("'only-if-cached' can be set only with 'same-origin' mode");
-			if (init.redirect !== void 0) request$2.redirect = init.redirect;
-			if (init.integrity != null) request$2.integrity = String(init.integrity);
-			if (init.keepalive !== void 0) request$2.keepalive = Boolean(init.keepalive);
-			if (init.method !== void 0) {
-				let method = init.method;
+			if (init$1.redirect !== void 0) request$2.redirect = init$1.redirect;
+			if (init$1.integrity != null) request$2.integrity = String(init$1.integrity);
+			if (init$1.keepalive !== void 0) request$2.keepalive = Boolean(init$1.keepalive);
+			if (init$1.method !== void 0) {
+				let method = init$1.method;
 				if (!isValidHTTPToken(method)) throw new TypeError(`'${method}' is not a valid HTTP method.`);
 				if (forbiddenMethodsSet.has(method.toUpperCase())) throw new TypeError(`'${method}' HTTP method is unsupported.`);
 				method = normalizeMethodRecord[method] ?? normalizeMethod(method);
 				request$2.method = method;
 			}
-			if (init.signal !== void 0) signal = init.signal;
+			if (init$1.signal !== void 0) signal = init$1.signal;
 			this[kState$5] = request$2;
 			const ac = new AbortController();
 			this[kSignal] = ac.signal;
@@ -10520,7 +10520,7 @@ var require_request = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_module
 			if (initHasKey) {
 				/** @type {HeadersList} */
 				const headersList = this[kHeaders$2][kHeadersList$4];
-				const headers = init.headers !== void 0 ? init.headers : new HeadersList(headersList);
+				const headers = init$1.headers !== void 0 ? init$1.headers : new HeadersList(headersList);
 				headersList.clear();
 				if (headers instanceof HeadersList) {
 					for (const [key, val] of headers) headersList.append(key, val);
@@ -10528,16 +10528,16 @@ var require_request = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_module
 				} else fillHeaders(this[kHeaders$2], headers);
 			}
 			const inputBody = input instanceof Request$4 ? input[kState$5].body : null;
-			if ((init.body != null || inputBody != null) && (request$2.method === "GET" || request$2.method === "HEAD")) throw new TypeError("Request with GET/HEAD method cannot have body.");
+			if ((init$1.body != null || inputBody != null) && (request$2.method === "GET" || request$2.method === "HEAD")) throw new TypeError("Request with GET/HEAD method cannot have body.");
 			let initBody = null;
-			if (init.body != null) {
-				const [extractedBody, contentType] = extractBody(init.body, request$2.keepalive);
+			if (init$1.body != null) {
+				const [extractedBody, contentType] = extractBody(init$1.body, request$2.keepalive);
 				initBody = extractedBody;
 				if (contentType && !this[kHeaders$2][kHeadersList$4].contains("content-type")) this[kHeaders$2].append("content-type", contentType);
 			}
 			const inputOrInitBody = initBody ?? inputBody;
 			if (inputOrInitBody != null && inputOrInitBody.source == null) {
-				if (initBody != null && init.duplex == null) throw new TypeError("RequestInit: duplex option is required when sending a body.");
+				if (initBody != null && init$1.duplex == null) throw new TypeError("RequestInit: duplex option is required when sending a body.");
 				if (request$2.mode !== "same-origin" && request$2.mode !== "cors") throw new TypeError("If request is made from ReadableStream, mode should be \"same-origin\" or \"cors\"");
 				request$2.useCORSPreflightFlag = true;
 			}
@@ -10649,7 +10649,7 @@ var require_request = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_module
 		}
 	};
 	mixinBody(Request$4);
-	function makeRequest$2(init) {
+	function makeRequest$2(init$1) {
 		const request$2 = {
 			method: "GET",
 			localURLsOnly: false,
@@ -10686,8 +10686,8 @@ var require_request = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_module
 			preventNoCacheCacheControlHeaderModification: false,
 			done: false,
 			timingAllowFailed: false,
-			...init,
-			headersList: init.headersList ? new HeadersList(init.headersList) : new HeadersList()
+			...init$1,
+			headersList: init$1.headersList ? new HeadersList(init$1.headersList) : new HeadersList()
 		};
 		request$2.url = request$2.urlList[0];
 		return request$2;
@@ -10852,12 +10852,12 @@ var require_fetch = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_modules/
 			this.emit("terminated", error$1);
 		}
 	};
-	function fetch$2(input, init = {}) {
+	function fetch$2(input, init$1 = {}) {
 		webidl$7.argumentLengthCheck(arguments, 1, { header: "globalThis.fetch" });
 		const p = createDeferredPromise$1();
 		let requestObject;
 		try {
-			requestObject = new Request$3(input, init);
+			requestObject = new Request$3(input, init$1);
 		} catch (e) {
 			p.reject(e);
 			return p.promise;
@@ -10902,7 +10902,7 @@ var require_fetch = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_modules/
 			request: request$2,
 			processResponseEndOfBody: handleFetchDone,
 			processResponse,
-			dispatcher: init.dispatcher ?? getGlobalDispatcher$4()
+			dispatcher: init$1.dispatcher ?? getGlobalDispatcher$4()
 		});
 		return p.promise;
 	}
@@ -11083,7 +11083,7 @@ var require_fetch = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_modules/
 			default: return Promise.resolve(makeNetworkError("unknown scheme"));
 		}
 	}
-	function finalizeResponse(fetchParams, response) {
+	function finalizeResponse$1(fetchParams, response) {
 		fetchParams.request.done = true;
 		if (fetchParams.processResponseDone != null) queueMicrotask(() => fetchParams.processResponseDone(response));
 	}
@@ -11355,7 +11355,7 @@ var require_fetch = __commonJS({ "node_modules/.pnpm/undici@5.28.5/node_modules/
 				}
 				if (bytes === void 0) {
 					readableStreamClose(fetchParams.controller.controller);
-					finalizeResponse(fetchParams, response);
+					finalizeResponse$1(fetchParams, response);
 					return;
 				}
 				timingInfo.decodedBodySize += bytes?.byteLength ?? 0;
@@ -19930,7 +19930,7 @@ var require_github = __commonJS({ "node_modules/.pnpm/@actions+github@6.0.0/node
 var import_github = __toESM(require_github(), 1);
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/internal/qs/formats.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/internal/qs/formats.mjs
 const default_format = "RFC3986";
 const formatters = {
 	RFC1738: (v) => String(v).replace(/%20/g, "+"),
@@ -19939,7 +19939,7 @@ const formatters = {
 const RFC1738 = "RFC1738";
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/internal/qs/utils.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/internal/qs/utils.mjs
 const is_array$1 = Array.isArray;
 const hex_table = (() => {
 	const array = [];
@@ -19999,7 +19999,7 @@ function maybe_map(val, fn) {
 }
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/internal/qs/stringify.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/internal/qs/stringify.mjs
 const has = Object.prototype.hasOwnProperty;
 const array_prefix_generators = {
 	brackets(prefix) {
@@ -20214,11 +20214,11 @@ function stringify(object, opts = {}) {
 }
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/version.mjs
-const VERSION = "4.86.2";
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/version.mjs
+const VERSION = "4.93.0";
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/_shims/registry.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/_shims/registry.mjs
 let auto = false;
 let kind = void 0;
 let fetch$1 = void 0;
@@ -20231,7 +20231,7 @@ let File$1 = void 0;
 let ReadableStream$1 = void 0;
 let getMultipartRequestOptions$1 = void 0;
 let getDefaultAgent = void 0;
-let fileFromPath = void 0;
+let fileFromPath$1 = void 0;
 let isFsReadStream = void 0;
 function setShims(shims, options = { auto: false }) {
 	if (auto) throw new Error(`you must \`import 'openai/shims/${shims.kind}'\` before importing anything else from openai`);
@@ -20248,7 +20248,7 @@ function setShims(shims, options = { auto: false }) {
 	ReadableStream$1 = shims.ReadableStream;
 	getMultipartRequestOptions$1 = shims.getMultipartRequestOptions;
 	getDefaultAgent = shims.getDefaultAgent;
-	fileFromPath = shims.fileFromPath;
+	fileFromPath$1 = shims.fileFromPath;
 	isFsReadStream = shims.isFsReadStream;
 }
 
@@ -57716,21 +57716,21 @@ var require_lib = __commonJS({ "node_modules/.pnpm/node-fetch@2.7.0/node_modules
 		* @return  Void
 		*/
 		constructor() {
-			let init = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : void 0;
+			let init$1 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : void 0;
 			this[MAP] = Object.create(null);
-			if (init instanceof Headers) {
-				const rawHeaders = init.raw();
+			if (init$1 instanceof Headers) {
+				const rawHeaders = init$1.raw();
 				const headerNames = Object.keys(rawHeaders);
 				for (const headerName of headerNames) for (const value of rawHeaders[headerName]) this.append(headerName, value);
 				return;
 			}
-			if (init == null);
-			else if (typeof init === "object") {
-				const method = init[Symbol.iterator];
+			if (init$1 == null);
+			else if (typeof init$1 === "object") {
+				const method = init$1[Symbol.iterator];
 				if (method != null) {
 					if (typeof method !== "function") throw new TypeError("Header pairs must be iterable");
 					const pairs = [];
-					for (const pair of init) {
+					for (const pair of init$1) {
 						if (typeof pair !== "object" || typeof pair[Symbol.iterator] !== "function") throw new TypeError("Each header pair must be iterable");
 						pairs.push(Array.from(pair));
 					}
@@ -57738,8 +57738,8 @@ var require_lib = __commonJS({ "node_modules/.pnpm/node-fetch@2.7.0/node_modules
 						if (pair.length !== 2) throw new TypeError("Each header pair must be a name/value tuple");
 						this.append(pair[0], pair[1]);
 					}
-				} else for (const key of Object.keys(init)) {
-					const value = init[key];
+				} else for (const key of Object.keys(init$1)) {
+					const value = init$1[key];
 					this.append(key, value);
 				}
 			} else throw new TypeError("Provided initializer must be an object");
@@ -58062,40 +58062,40 @@ var require_lib = __commonJS({ "node_modules/.pnpm/node-fetch@2.7.0/node_modules
 	}
 	var Request = class Request {
 		constructor(input) {
-			let init = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+			let init$1 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
 			let parsedURL;
 			if (!isRequest(input)) {
 				if (input && input.href) parsedURL = parseURL(input.href);
 				else parsedURL = parseURL(`${input}`);
 				input = {};
 			} else parsedURL = parseURL(input.url);
-			let method = init.method || input.method || "GET";
+			let method = init$1.method || input.method || "GET";
 			method = method.toUpperCase();
-			if ((init.body != null || isRequest(input) && input.body !== null) && (method === "GET" || method === "HEAD")) throw new TypeError("Request with GET/HEAD method cannot have body");
-			let inputBody = init.body != null ? init.body : isRequest(input) && input.body !== null ? clone(input) : null;
+			if ((init$1.body != null || isRequest(input) && input.body !== null) && (method === "GET" || method === "HEAD")) throw new TypeError("Request with GET/HEAD method cannot have body");
+			let inputBody = init$1.body != null ? init$1.body : isRequest(input) && input.body !== null ? clone(input) : null;
 			Body.call(this, inputBody, {
-				timeout: init.timeout || input.timeout || 0,
-				size: init.size || input.size || 0
+				timeout: init$1.timeout || input.timeout || 0,
+				size: init$1.size || input.size || 0
 			});
-			const headers = new Headers(init.headers || input.headers || {});
+			const headers = new Headers(init$1.headers || input.headers || {});
 			if (inputBody != null && !headers.has("Content-Type")) {
 				const contentType = extractContentType(inputBody);
 				if (contentType) headers.append("Content-Type", contentType);
 			}
 			let signal = isRequest(input) ? input.signal : null;
-			if ("signal" in init) signal = init.signal;
+			if ("signal" in init$1) signal = init$1.signal;
 			if (signal != null && !isAbortSignal(signal)) throw new TypeError("Expected signal to be an instanceof AbortSignal");
 			this[INTERNALS$2] = {
 				method,
-				redirect: init.redirect || input.redirect || "follow",
+				redirect: init$1.redirect || input.redirect || "follow",
 				headers,
 				parsedURL,
 				signal
 			};
-			this.follow = init.follow !== void 0 ? init.follow : input.follow !== void 0 ? input.follow : 20;
-			this.compress = init.compress !== void 0 ? init.compress : input.compress !== void 0 ? input.compress : true;
-			this.counter = init.counter || input.counter || 0;
-			this.agent = init.agent || input.agent;
+			this.follow = init$1.follow !== void 0 ? init$1.follow : input.follow !== void 0 ? input.follow : 20;
+			this.compress = init$1.compress !== void 0 ? init$1.compress : input.compress !== void 0 ? input.compress : true;
+			this.counter = init$1.counter || input.counter || 0;
+			this.agent = init$1.agent || input.agent;
 		}
 		get method() {
 			return this[INTERNALS$2].method;
@@ -58448,7 +58448,7 @@ const deprecateConstructorEntries = deprecate(() => {}, "Constructor \"entries\"
 
 //#endregion
 //#region node_modules/.pnpm/formdata-node@4.4.1/node_modules/formdata-node/lib/esm/FormData.js
-var __classPrivateFieldGet$7 = void 0 && (void 0).__classPrivateFieldGet || function(receiver, state, kind$1, f) {
+var __classPrivateFieldGet$8 = void 0 && (void 0).__classPrivateFieldGet || function(receiver, state, kind$1, f) {
 	if (kind$1 === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
 	if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
 	return kind$1 === "m" ? f : kind$1 === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
@@ -58467,7 +58467,7 @@ var FormData = class {
 		return Boolean(value && isFunction(value.constructor) && value[Symbol.toStringTag] === "FormData" && isFunction(value.append) && isFunction(value.set) && isFunction(value.get) && isFunction(value.getAll) && isFunction(value.has) && isFunction(value.delete) && isFunction(value.entries) && isFunction(value.values) && isFunction(value.keys) && isFunction(value[Symbol.iterator]) && isFunction(value.forEach));
 	}
 	append(name, value, fileName) {
-		__classPrivateFieldGet$7(this, _FormData_instances, "m", _FormData_setEntry).call(this, {
+		__classPrivateFieldGet$8(this, _FormData_instances, "m", _FormData_setEntry).call(this, {
 			name,
 			fileName,
 			append: true,
@@ -58476,7 +58476,7 @@ var FormData = class {
 		});
 	}
 	set(name, value, fileName) {
-		__classPrivateFieldGet$7(this, _FormData_instances, "m", _FormData_setEntry).call(this, {
+		__classPrivateFieldGet$8(this, _FormData_instances, "m", _FormData_setEntry).call(this, {
 			name,
 			fileName,
 			append: false,
@@ -58485,23 +58485,23 @@ var FormData = class {
 		});
 	}
 	get(name) {
-		const field = __classPrivateFieldGet$7(this, _FormData_entries, "f").get(String(name));
+		const field = __classPrivateFieldGet$8(this, _FormData_entries, "f").get(String(name));
 		if (!field) return null;
 		return field[0];
 	}
 	getAll(name) {
-		const field = __classPrivateFieldGet$7(this, _FormData_entries, "f").get(String(name));
+		const field = __classPrivateFieldGet$8(this, _FormData_entries, "f").get(String(name));
 		if (!field) return [];
 		return field.slice();
 	}
 	has(name) {
-		return __classPrivateFieldGet$7(this, _FormData_entries, "f").has(String(name));
+		return __classPrivateFieldGet$8(this, _FormData_entries, "f").has(String(name));
 	}
 	delete(name) {
-		__classPrivateFieldGet$7(this, _FormData_entries, "f").delete(String(name));
+		__classPrivateFieldGet$8(this, _FormData_entries, "f").delete(String(name));
 	}
 	*keys() {
-		for (const key of __classPrivateFieldGet$7(this, _FormData_entries, "f").keys()) yield key;
+		for (const key of __classPrivateFieldGet$8(this, _FormData_entries, "f").keys()) yield key;
 	}
 	*entries() {
 		for (const name of this.keys()) {
@@ -58524,9 +58524,9 @@ var FormData = class {
 		else if (isBlob(rawValue)) value = new File([rawValue], fileName === void 0 ? "blob" : fileName, { type: rawValue.type });
 		else if (fileName) throw new TypeError(`Failed to execute '${methodName}' on 'FormData': parameter 2 is not of type 'Blob'.`);
 		else value = String(rawValue);
-		const values = __classPrivateFieldGet$7(this, _FormData_entries, "f").get(name);
-		if (!values) return void __classPrivateFieldGet$7(this, _FormData_entries, "f").set(name, [value]);
-		if (!append) return void __classPrivateFieldGet$7(this, _FormData_entries, "f").set(name, [value]);
+		const values = __classPrivateFieldGet$8(this, _FormData_entries, "f").get(name);
+		if (!values) return void __classPrivateFieldGet$8(this, _FormData_entries, "f").set(name, [value]);
+		if (!append) return void __classPrivateFieldGet$8(this, _FormData_entries, "f").set(name, [value]);
 		values.push(value);
 	}, Symbol.iterator)]() {
 		return this.entries();
@@ -59659,13 +59659,13 @@ const isFormData = (value) => Boolean(value && isFunction_default(value.construc
 
 //#endregion
 //#region node_modules/.pnpm/form-data-encoder@1.7.2/node_modules/form-data-encoder/lib/esm/FormDataEncoder.js
-var __classPrivateFieldSet$5 = void 0 && (void 0).__classPrivateFieldSet || function(receiver, state, value, kind$1, f) {
+var __classPrivateFieldSet$6 = void 0 && (void 0).__classPrivateFieldSet || function(receiver, state, value, kind$1, f) {
 	if (kind$1 === "m") throw new TypeError("Private method is not writable");
 	if (kind$1 === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
 	if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
 	return kind$1 === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
 };
-var __classPrivateFieldGet$6 = void 0 && (void 0).__classPrivateFieldGet || function(receiver, state, kind$1, f) {
+var __classPrivateFieldGet$7 = void 0 && (void 0).__classPrivateFieldGet || function(receiver, state, kind$1, f) {
 	if (kind$1 === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
 	if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
 	return kind$1 === "m" ? f : kind$1 === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
@@ -59690,16 +59690,16 @@ var FormDataEncoder = class {
 		if (!boundary) boundary = createBoundary_default();
 		if (typeof boundary !== "string") throw new TypeError("Expected boundary argument to be a string.");
 		if (options && !isPlainObject_default(options)) throw new TypeError("Expected options argument to be an object.");
-		__classPrivateFieldSet$5(this, _FormDataEncoder_form, form, "f");
-		__classPrivateFieldSet$5(this, _FormDataEncoder_options, {
+		__classPrivateFieldSet$6(this, _FormDataEncoder_form, form, "f");
+		__classPrivateFieldSet$6(this, _FormDataEncoder_options, {
 			...defaultOptions,
 			...options
 		}, "f");
-		__classPrivateFieldSet$5(this, _FormDataEncoder_CRLF_BYTES, __classPrivateFieldGet$6(this, _FormDataEncoder_encoder, "f").encode(__classPrivateFieldGet$6(this, _FormDataEncoder_CRLF, "f")), "f");
-		__classPrivateFieldSet$5(this, _FormDataEncoder_CRLF_BYTES_LENGTH, __classPrivateFieldGet$6(this, _FormDataEncoder_CRLF_BYTES, "f").byteLength, "f");
+		__classPrivateFieldSet$6(this, _FormDataEncoder_CRLF_BYTES, __classPrivateFieldGet$7(this, _FormDataEncoder_encoder, "f").encode(__classPrivateFieldGet$7(this, _FormDataEncoder_CRLF, "f")), "f");
+		__classPrivateFieldSet$6(this, _FormDataEncoder_CRLF_BYTES_LENGTH, __classPrivateFieldGet$7(this, _FormDataEncoder_CRLF_BYTES, "f").byteLength, "f");
 		this.boundary = `form-data-boundary-${boundary}`;
 		this.contentType = `multipart/form-data; boundary=${this.boundary}`;
-		__classPrivateFieldSet$5(this, _FormDataEncoder_footer, __classPrivateFieldGet$6(this, _FormDataEncoder_encoder, "f").encode(`${__classPrivateFieldGet$6(this, _FormDataEncoder_DASHES, "f")}${this.boundary}${__classPrivateFieldGet$6(this, _FormDataEncoder_DASHES, "f")}${__classPrivateFieldGet$6(this, _FormDataEncoder_CRLF, "f").repeat(2)}`), "f");
+		__classPrivateFieldSet$6(this, _FormDataEncoder_footer, __classPrivateFieldGet$7(this, _FormDataEncoder_encoder, "f").encode(`${__classPrivateFieldGet$7(this, _FormDataEncoder_DASHES, "f")}${this.boundary}${__classPrivateFieldGet$7(this, _FormDataEncoder_DASHES, "f")}${__classPrivateFieldGet$7(this, _FormDataEncoder_CRLF, "f").repeat(2)}`), "f");
 		this.contentLength = String(this.getContentLength());
 		this.headers = Object.freeze({
 			"Content-Type": this.contentType,
@@ -59726,22 +59726,22 @@ var FormDataEncoder = class {
 	}
 	getContentLength() {
 		let length = 0;
-		for (const [name, raw] of __classPrivateFieldGet$6(this, _FormDataEncoder_form, "f")) {
-			const value = isFileLike$1(raw) ? raw : __classPrivateFieldGet$6(this, _FormDataEncoder_encoder, "f").encode(normalizeValue_default(raw));
-			length += __classPrivateFieldGet$6(this, _FormDataEncoder_instances, "m", _FormDataEncoder_getFieldHeader).call(this, name, value).byteLength;
+		for (const [name, raw] of __classPrivateFieldGet$7(this, _FormDataEncoder_form, "f")) {
+			const value = isFileLike$1(raw) ? raw : __classPrivateFieldGet$7(this, _FormDataEncoder_encoder, "f").encode(normalizeValue_default(raw));
+			length += __classPrivateFieldGet$7(this, _FormDataEncoder_instances, "m", _FormDataEncoder_getFieldHeader).call(this, name, value).byteLength;
 			length += isFileLike$1(value) ? value.size : value.byteLength;
-			length += __classPrivateFieldGet$6(this, _FormDataEncoder_CRLF_BYTES_LENGTH, "f");
+			length += __classPrivateFieldGet$7(this, _FormDataEncoder_CRLF_BYTES_LENGTH, "f");
 		}
-		return length + __classPrivateFieldGet$6(this, _FormDataEncoder_footer, "f").byteLength;
+		return length + __classPrivateFieldGet$7(this, _FormDataEncoder_footer, "f").byteLength;
 	}
 	*values() {
-		for (const [name, raw] of __classPrivateFieldGet$6(this, _FormDataEncoder_form, "f").entries()) {
-			const value = isFileLike$1(raw) ? raw : __classPrivateFieldGet$6(this, _FormDataEncoder_encoder, "f").encode(normalizeValue_default(raw));
-			yield __classPrivateFieldGet$6(this, _FormDataEncoder_instances, "m", _FormDataEncoder_getFieldHeader).call(this, name, value);
+		for (const [name, raw] of __classPrivateFieldGet$7(this, _FormDataEncoder_form, "f").entries()) {
+			const value = isFileLike$1(raw) ? raw : __classPrivateFieldGet$7(this, _FormDataEncoder_encoder, "f").encode(normalizeValue_default(raw));
+			yield __classPrivateFieldGet$7(this, _FormDataEncoder_instances, "m", _FormDataEncoder_getFieldHeader).call(this, name, value);
 			yield value;
-			yield __classPrivateFieldGet$6(this, _FormDataEncoder_CRLF_BYTES, "f");
+			yield __classPrivateFieldGet$7(this, _FormDataEncoder_CRLF_BYTES, "f");
 		}
-		yield __classPrivateFieldGet$6(this, _FormDataEncoder_footer, "f");
+		yield __classPrivateFieldGet$7(this, _FormDataEncoder_footer, "f");
 	}
 	async *encode() {
 		for (const part of this.values()) if (isFileLike$1(part)) yield* part.stream();
@@ -59749,14 +59749,14 @@ var FormDataEncoder = class {
 	}
 	[(_FormDataEncoder_CRLF = new WeakMap(), _FormDataEncoder_CRLF_BYTES = new WeakMap(), _FormDataEncoder_CRLF_BYTES_LENGTH = new WeakMap(), _FormDataEncoder_DASHES = new WeakMap(), _FormDataEncoder_encoder = new WeakMap(), _FormDataEncoder_footer = new WeakMap(), _FormDataEncoder_form = new WeakMap(), _FormDataEncoder_options = new WeakMap(), _FormDataEncoder_instances = new WeakSet(), _FormDataEncoder_getFieldHeader = function _FormDataEncoder_getFieldHeader$1(name, value) {
 		let header = "";
-		header += `${__classPrivateFieldGet$6(this, _FormDataEncoder_DASHES, "f")}${this.boundary}${__classPrivateFieldGet$6(this, _FormDataEncoder_CRLF, "f")}`;
+		header += `${__classPrivateFieldGet$7(this, _FormDataEncoder_DASHES, "f")}${this.boundary}${__classPrivateFieldGet$7(this, _FormDataEncoder_CRLF, "f")}`;
 		header += `Content-Disposition: form-data; name="${escapeName_default(name)}"`;
 		if (isFileLike$1(value)) {
-			header += `; filename="${escapeName_default(value.name)}"${__classPrivateFieldGet$6(this, _FormDataEncoder_CRLF, "f")}`;
+			header += `; filename="${escapeName_default(value.name)}"${__classPrivateFieldGet$7(this, _FormDataEncoder_CRLF, "f")}`;
 			header += `Content-Type: ${value.type || "application/octet-stream"}`;
 		}
-		if (__classPrivateFieldGet$6(this, _FormDataEncoder_options, "f").enableAdditionalHeaders === true) header += `${__classPrivateFieldGet$6(this, _FormDataEncoder_CRLF, "f")}Content-Length: ${isFileLike$1(value) ? value.size : value.byteLength}`;
-		return __classPrivateFieldGet$6(this, _FormDataEncoder_encoder, "f").encode(`${header}${__classPrivateFieldGet$6(this, _FormDataEncoder_CRLF, "f").repeat(2)}`);
+		if (__classPrivateFieldGet$7(this, _FormDataEncoder_options, "f").enableAdditionalHeaders === true) header += `${__classPrivateFieldGet$7(this, _FormDataEncoder_CRLF, "f")}Content-Length: ${isFileLike$1(value) ? value.size : value.byteLength}`;
+		return __classPrivateFieldGet$7(this, _FormDataEncoder_encoder, "f").encode(`${header}${__classPrivateFieldGet$7(this, _FormDataEncoder_CRLF, "f").repeat(2)}`);
 	}, Symbol.iterator)]() {
 		return this.values();
 	}
@@ -59766,7 +59766,7 @@ var FormDataEncoder = class {
 };
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/_shims/MultipartBody.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/_shims/MultipartBody.mjs
 var MultipartBody = class {
 	constructor(body) {
 		this.body = body;
@@ -59777,9 +59777,9 @@ var MultipartBody = class {
 };
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/_shims/node-runtime.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/_shims/node-runtime.mjs
 let fileFromPathWarned = false;
-async function fileFromPath$1(path$9, ...args) {
+async function fileFromPath(path$9, ...args) {
 	const { fileFromPath: _fileFromPath } = await import("./fileFromPath-DV1O8Dz6.js");
 	if (!fileFromPathWarned) {
 		console.warn(`fileFromPath is deprecated; use fs.createReadStream(${JSON.stringify(path$9)}) instead`);
@@ -59824,17 +59824,20 @@ function getRuntime() {
 		ReadableStream,
 		getMultipartRequestOptions,
 		getDefaultAgent: (url) => url.startsWith("https") ? defaultHttpsAgent : defaultHttpAgent,
-		fileFromPath: fileFromPath$1,
+		fileFromPath,
 		isFsReadStream: (value) => value instanceof ReadStream
 	};
 }
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/_shims/index.mjs
-if (!kind) setShims(getRuntime(), { auto: true });
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/_shims/index.mjs
+const init = () => {
+	if (!kind) setShims(getRuntime(), { auto: true });
+};
+init();
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/error.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/error.mjs
 var OpenAIError = class extends Error {};
 var APIError = class APIError extends OpenAIError {
 	constructor(status, error$1, message, headers) {
@@ -59908,14 +59911,14 @@ var ContentFilterFinishReasonError = class extends OpenAIError {
 };
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/internal/decoders/line.mjs
-var __classPrivateFieldSet$4 = void 0 && (void 0).__classPrivateFieldSet || function(receiver, state, value, kind$1, f) {
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/internal/decoders/line.mjs
+var __classPrivateFieldSet$5 = void 0 && (void 0).__classPrivateFieldSet || function(receiver, state, value, kind$1, f) {
 	if (kind$1 === "m") throw new TypeError("Private method is not writable");
 	if (kind$1 === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
 	if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
 	return kind$1 === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
 };
-var __classPrivateFieldGet$5 = void 0 && (void 0).__classPrivateFieldGet || function(receiver, state, kind$1, f) {
+var __classPrivateFieldGet$6 = void 0 && (void 0).__classPrivateFieldGet || function(receiver, state, kind$1, f) {
 	if (kind$1 === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
 	if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
 	return kind$1 === "m" ? f : kind$1 === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
@@ -59925,7 +59928,7 @@ var LineDecoder = class {
 	constructor() {
 		_LineDecoder_carriageReturnIndex.set(this, void 0);
 		this.buffer = new Uint8Array();
-		__classPrivateFieldSet$4(this, _LineDecoder_carriageReturnIndex, null, "f");
+		__classPrivateFieldSet$5(this, _LineDecoder_carriageReturnIndex, null, "f");
 	}
 	decode(chunk) {
 		if (chunk == null) return [];
@@ -59936,22 +59939,22 @@ var LineDecoder = class {
 		this.buffer = newData;
 		const lines = [];
 		let patternIndex;
-		while ((patternIndex = findNewlineIndex(this.buffer, __classPrivateFieldGet$5(this, _LineDecoder_carriageReturnIndex, "f"))) != null) {
-			if (patternIndex.carriage && __classPrivateFieldGet$5(this, _LineDecoder_carriageReturnIndex, "f") == null) {
-				__classPrivateFieldSet$4(this, _LineDecoder_carriageReturnIndex, patternIndex.index, "f");
+		while ((patternIndex = findNewlineIndex(this.buffer, __classPrivateFieldGet$6(this, _LineDecoder_carriageReturnIndex, "f"))) != null) {
+			if (patternIndex.carriage && __classPrivateFieldGet$6(this, _LineDecoder_carriageReturnIndex, "f") == null) {
+				__classPrivateFieldSet$5(this, _LineDecoder_carriageReturnIndex, patternIndex.index, "f");
 				continue;
 			}
-			if (__classPrivateFieldGet$5(this, _LineDecoder_carriageReturnIndex, "f") != null && (patternIndex.index !== __classPrivateFieldGet$5(this, _LineDecoder_carriageReturnIndex, "f") + 1 || patternIndex.carriage)) {
-				lines.push(this.decodeText(this.buffer.slice(0, __classPrivateFieldGet$5(this, _LineDecoder_carriageReturnIndex, "f") - 1)));
-				this.buffer = this.buffer.slice(__classPrivateFieldGet$5(this, _LineDecoder_carriageReturnIndex, "f"));
-				__classPrivateFieldSet$4(this, _LineDecoder_carriageReturnIndex, null, "f");
+			if (__classPrivateFieldGet$6(this, _LineDecoder_carriageReturnIndex, "f") != null && (patternIndex.index !== __classPrivateFieldGet$6(this, _LineDecoder_carriageReturnIndex, "f") + 1 || patternIndex.carriage)) {
+				lines.push(this.decodeText(this.buffer.slice(0, __classPrivateFieldGet$6(this, _LineDecoder_carriageReturnIndex, "f") - 1)));
+				this.buffer = this.buffer.slice(__classPrivateFieldGet$6(this, _LineDecoder_carriageReturnIndex, "f"));
+				__classPrivateFieldSet$5(this, _LineDecoder_carriageReturnIndex, null, "f");
 				continue;
 			}
-			const endIndex = __classPrivateFieldGet$5(this, _LineDecoder_carriageReturnIndex, "f") !== null ? patternIndex.preceding - 1 : patternIndex.preceding;
+			const endIndex = __classPrivateFieldGet$6(this, _LineDecoder_carriageReturnIndex, "f") !== null ? patternIndex.preceding - 1 : patternIndex.preceding;
 			const line = this.decodeText(this.buffer.slice(0, endIndex));
 			lines.push(line);
 			this.buffer = this.buffer.slice(patternIndex.index);
-			__classPrivateFieldSet$4(this, _LineDecoder_carriageReturnIndex, null, "f");
+			__classPrivateFieldSet$5(this, _LineDecoder_carriageReturnIndex, null, "f");
 		}
 		return lines;
 	}
@@ -60018,7 +60021,7 @@ function findDoubleNewlineIndex(buffer) {
 }
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/internal/stream-utils.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/internal/stream-utils.mjs
 function ReadableStreamToAsyncIterable(stream$2) {
 	if (stream$2[Symbol.asyncIterator]) return stream$2;
 	const reader = stream$2.getReader();
@@ -60049,7 +60052,7 @@ function ReadableStreamToAsyncIterable(stream$2) {
 }
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/streaming.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/streaming.mjs
 var Stream = class Stream {
 	constructor(iterator$1, controller) {
 		this.iterator = iterator$1;
@@ -60068,7 +60071,7 @@ var Stream = class Stream {
 						done = true;
 						continue;
 					}
-					if (sse.event === null) {
+					if (sse.event === null || sse.event.startsWith("response.") || sse.event.startsWith("transcript.")) {
 						let data;
 						try {
 							data = JSON.parse(sse.data);
@@ -60077,7 +60080,7 @@ var Stream = class Stream {
 							console.error(`From chunk:`, sse.raw);
 							throw e;
 						}
-						if (data && data.error) throw new APIError(void 0, data.error, void 0, void 0);
+						if (data && data.error) throw new APIError(void 0, data.error, void 0, createResponseHeaders(response.headers));
 						yield data;
 					} else {
 						let data;
@@ -60270,7 +60273,7 @@ function partition(str$1, delimiter) {
 }
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/uploads.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/uploads.mjs
 const isResponseLike = (value) => value != null && typeof value === "object" && typeof value.url === "string" && typeof value.blob === "function";
 const isFileLike = (value) => value != null && typeof value === "object" && typeof value.name === "string" && typeof value.lastModified === "number" && isBlobLike(value);
 const isBlobLike = (value) => value != null && typeof value === "object" && typeof value.size === "number" && typeof value.type === "string" && typeof value.text === "function" && typeof value.slice === "function" && typeof value.arrayBuffer === "function";
@@ -60341,19 +60344,20 @@ const addFormValue = async (form, key, value) => {
 };
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/core.mjs
-var __classPrivateFieldSet$3 = void 0 && (void 0).__classPrivateFieldSet || function(receiver, state, value, kind$1, f) {
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/core.mjs
+var __classPrivateFieldSet$4 = void 0 && (void 0).__classPrivateFieldSet || function(receiver, state, value, kind$1, f) {
 	if (kind$1 === "m") throw new TypeError("Private method is not writable");
 	if (kind$1 === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
 	if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
 	return kind$1 === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
 };
-var __classPrivateFieldGet$4 = void 0 && (void 0).__classPrivateFieldGet || function(receiver, state, kind$1, f) {
+var __classPrivateFieldGet$5 = void 0 && (void 0).__classPrivateFieldGet || function(receiver, state, kind$1, f) {
 	if (kind$1 === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
 	if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
 	return kind$1 === "m" ? f : kind$1 === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _AbstractPage_client;
+init();
 async function defaultParseResponse(props) {
 	const { response } = props;
 	if (props.options.stream) {
@@ -60364,7 +60368,8 @@ async function defaultParseResponse(props) {
 	if (response.status === 204) return null;
 	if (props.options.__binaryResponse) return response;
 	const contentType = response.headers.get("content-type");
-	const isJSON = contentType?.includes("application/json") || contentType?.includes("application/vnd.api+json");
+	const mediaType = contentType?.split(";")[0]?.trim();
+	const isJSON = mediaType?.includes("application/json") || mediaType?.endsWith("+json");
 	if (isJSON) {
 		const json = await response.json();
 		debug("response", response.status, response.url, response.headers, json);
@@ -60382,12 +60387,12 @@ function _addRequestID(value, response) {
 	});
 }
 var APIPromise = class APIPromise extends Promise {
-	constructor(responsePromise, parseResponse = defaultParseResponse) {
+	constructor(responsePromise, parseResponse$1 = defaultParseResponse) {
 		super((resolve) => {
 			resolve(null);
 		});
 		this.responsePromise = responsePromise;
-		this.parseResponse = parseResponse;
+		this.parseResponse = parseResponse$1;
 	}
 	_thenUnwrap(transform) {
 		return new APIPromise(this.responsePromise, async (props) => _addRequestID(transform(await this.parseResponse(props), props), props.response));
@@ -60566,7 +60571,7 @@ var APIClient = class {
 		applyHeadersMut(reqHeaders, headers);
 		if (isMultipartBody(options.body) && kind !== "node") delete reqHeaders["content-type"];
 		if (getHeader(defaultHeaders, "x-stainless-retry-count") === void 0 && getHeader(headers, "x-stainless-retry-count") === void 0) reqHeaders["x-stainless-retry-count"] = String(retryCount);
-		if (getHeader(defaultHeaders, "x-stainless-timeout") === void 0 && getHeader(headers, "x-stainless-timeout") === void 0 && options.timeout) reqHeaders["x-stainless-timeout"] = String(options.timeout);
+		if (getHeader(defaultHeaders, "x-stainless-timeout") === void 0 && getHeader(headers, "x-stainless-timeout") === void 0 && options.timeout) reqHeaders["x-stainless-timeout"] = String(Math.trunc(options.timeout / 1e3));
 		this.validateHeaders(reqHeaders, headers);
 		return reqHeaders;
 	}
@@ -60652,8 +60657,8 @@ var APIClient = class {
 			throw new OpenAIError(`Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`);
 		}).join("&");
 	}
-	async fetchWithTimeout(url, init, ms$2, controller) {
-		const { signal,...options } = init || {};
+	async fetchWithTimeout(url, init$1, ms$2, controller) {
+		const { signal,...options } = init$1 || {};
 		if (signal) signal.addEventListener("abort", () => controller.abort());
 		const timeout = setTimeout(() => controller.abort(), ms$2);
 		const fetchOptions = {
@@ -60710,7 +60715,7 @@ var APIClient = class {
 var AbstractPage = class {
 	constructor(client, response, body, options) {
 		_AbstractPage_client.set(this, void 0);
-		__classPrivateFieldSet$3(this, _AbstractPage_client, client, "f");
+		__classPrivateFieldSet$4(this, _AbstractPage_client, client, "f");
 		this.options = options;
 		this.response = response;
 		this.body = body;
@@ -60734,7 +60739,7 @@ var AbstractPage = class {
 			nextOptions.query = void 0;
 			nextOptions.path = nextInfo.url.toString();
 		}
-		return await __classPrivateFieldGet$4(this, _AbstractPage_client, "f").requestAPIList(this.constructor, nextOptions);
+		return await __classPrivateFieldGet$5(this, _AbstractPage_client, "f").requestAPIList(this.constructor, nextOptions);
 	}
 	async *iterPages() {
 		let page = this;
@@ -61018,12 +61023,24 @@ const getHeader = (headers, header) => {
 	}
 	return void 0;
 };
+const toFloat32Array = (base64Str) => {
+	if (typeof Buffer !== "undefined") {
+		const buf = Buffer.from(base64Str, "base64");
+		return Array.from(new Float32Array(buf.buffer, buf.byteOffset, buf.length / Float32Array.BYTES_PER_ELEMENT));
+	} else {
+		const binaryStr = atob(base64Str);
+		const len = binaryStr.length;
+		const bytes = new Uint8Array(len);
+		for (let i$1 = 0; i$1 < len; i$1++) bytes[i$1] = binaryStr.charCodeAt(i$1);
+		return Array.from(new Float32Array(bytes.buffer));
+	}
+};
 function isObj(obj) {
 	return obj != null && typeof obj === "object" && !Array.isArray(obj);
 }
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/pagination.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/pagination.mjs
 var Page = class extends AbstractPage {
 	constructor(client, response, body, options) {
 		super(client, response, body, options);
@@ -61075,7 +61092,7 @@ var CursorPage = class extends AbstractPage {
 };
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resource.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resource.mjs
 var APIResource = class {
 	constructor(client) {
 		this._client = client;
@@ -61083,7 +61100,7 @@ var APIResource = class {
 };
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/chat/completions/messages.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/chat/completions/messages.mjs
 var Messages$1 = class extends APIResource {
 	list(completionId, query = {}, options) {
 		if (isRequestOptions(query)) return this.list(completionId, {}, query);
@@ -61095,7 +61112,7 @@ var Messages$1 = class extends APIResource {
 };
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/chat/completions/completions.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/chat/completions/completions.mjs
 var Completions$2 = class extends APIResource {
 	constructor() {
 		super(...arguments);
@@ -61109,14 +61126,14 @@ var Completions$2 = class extends APIResource {
 		});
 	}
 	/**
-	* Get a stored chat completion. Only chat completions that have been created with
+	* Get a stored chat completion. Only Chat Completions that have been created with
 	* the `store` parameter set to `true` will be returned.
 	*/
 	retrieve(completionId, options) {
 		return this._client.get(`/chat/completions/${completionId}`, options);
 	}
 	/**
-	* Modify a stored chat completion. Only chat completions that have been created
+	* Modify a stored chat completion. Only Chat Completions that have been created
 	* with the `store` parameter set to `true` can be modified. Currently, the only
 	* supported modification is to update the `metadata` field.
 	*/
@@ -61134,7 +61151,7 @@ var Completions$2 = class extends APIResource {
 		});
 	}
 	/**
-	* Delete a stored chat completion. Only chat completions that have been created
+	* Delete a stored chat completion. Only Chat Completions that have been created
 	* with the `store` parameter set to `true` can be deleted.
 	*/
 	del(completionId, options) {
@@ -61147,7 +61164,7 @@ Completions$2.ChatCompletionsPage = ChatCompletionsPage;
 Completions$2.Messages = Messages$1;
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/chat/chat.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/chat/chat.mjs
 var Chat$1 = class extends APIResource {
 	constructor() {
 		super(...arguments);
@@ -61158,7 +61175,7 @@ Chat$1.Completions = Completions$2;
 Chat$1.ChatCompletionsPage = ChatCompletionsPage;
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/audio/speech.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/audio/speech.mjs
 var Speech = class extends APIResource {
 	/**
 	* Generates audio from the input text.
@@ -61177,19 +61194,20 @@ var Speech = class extends APIResource {
 };
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/audio/transcriptions.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/audio/transcriptions.mjs
 var Transcriptions = class extends APIResource {
 	create(body, options) {
 		return this._client.post("/audio/transcriptions", multipartFormRequestOptions({
 			body,
 			...options,
+			stream: body.stream ?? false,
 			__metadata: { model: body.model }
 		}));
 	}
 };
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/audio/translations.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/audio/translations.mjs
 var Translations = class extends APIResource {
 	create(body, options) {
 		return this._client.post("/audio/translations", multipartFormRequestOptions({
@@ -61201,7 +61219,7 @@ var Translations = class extends APIResource {
 };
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/audio/audio.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/audio/audio.mjs
 var Audio = class extends APIResource {
 	constructor() {
 		super(...arguments);
@@ -61215,7 +61233,7 @@ Audio.Translations = Translations;
 Audio.Speech = Speech;
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/batches.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/batches.mjs
 var Batches = class extends APIResource {
 	/**
 	* Creates and executes a batch from an uploaded file of requests
@@ -61252,7 +61270,7 @@ var BatchesPage = class extends CursorPage {};
 Batches.BatchesPage = BatchesPage;
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/beta/assistants.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/beta/assistants.mjs
 var Assistants = class extends APIResource {
 	/**
 	* Create an assistant with a model and instructions.
@@ -61320,13 +61338,13 @@ var AssistantsPage = class extends CursorPage {};
 Assistants.AssistantsPage = AssistantsPage;
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/lib/RunnableFunction.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/lib/RunnableFunction.mjs
 function isRunnableFunctionWithParse(fn) {
 	return typeof fn.parse === "function";
 }
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/lib/chatCompletionUtils.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/lib/chatCompletionUtils.mjs
 const isAssistantMessage = (message) => {
 	return message?.role === "assistant";
 };
@@ -61338,14 +61356,14 @@ const isToolMessage = (message) => {
 };
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/lib/EventStream.mjs
-var __classPrivateFieldSet$2 = void 0 && (void 0).__classPrivateFieldSet || function(receiver, state, value, kind$1, f) {
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/lib/EventStream.mjs
+var __classPrivateFieldSet$3 = void 0 && (void 0).__classPrivateFieldSet || function(receiver, state, value, kind$1, f) {
 	if (kind$1 === "m") throw new TypeError("Private method is not writable");
 	if (kind$1 === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
 	if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
 	return kind$1 === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
 };
-var __classPrivateFieldGet$3 = void 0 && (void 0).__classPrivateFieldGet || function(receiver, state, kind$1, f) {
+var __classPrivateFieldGet$4 = void 0 && (void 0).__classPrivateFieldGet || function(receiver, state, kind$1, f) {
 	if (kind$1 === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
 	if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
 	return kind$1 === "m" ? f : kind$1 === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
@@ -61366,38 +61384,38 @@ var EventStream = class {
 		_EventStream_errored.set(this, false);
 		_EventStream_aborted.set(this, false);
 		_EventStream_catchingPromiseCreated.set(this, false);
-		__classPrivateFieldSet$2(this, _EventStream_connectedPromise, new Promise((resolve, reject) => {
-			__classPrivateFieldSet$2(this, _EventStream_resolveConnectedPromise, resolve, "f");
-			__classPrivateFieldSet$2(this, _EventStream_rejectConnectedPromise, reject, "f");
+		__classPrivateFieldSet$3(this, _EventStream_connectedPromise, new Promise((resolve, reject) => {
+			__classPrivateFieldSet$3(this, _EventStream_resolveConnectedPromise, resolve, "f");
+			__classPrivateFieldSet$3(this, _EventStream_rejectConnectedPromise, reject, "f");
 		}), "f");
-		__classPrivateFieldSet$2(this, _EventStream_endPromise, new Promise((resolve, reject) => {
-			__classPrivateFieldSet$2(this, _EventStream_resolveEndPromise, resolve, "f");
-			__classPrivateFieldSet$2(this, _EventStream_rejectEndPromise, reject, "f");
+		__classPrivateFieldSet$3(this, _EventStream_endPromise, new Promise((resolve, reject) => {
+			__classPrivateFieldSet$3(this, _EventStream_resolveEndPromise, resolve, "f");
+			__classPrivateFieldSet$3(this, _EventStream_rejectEndPromise, reject, "f");
 		}), "f");
-		__classPrivateFieldGet$3(this, _EventStream_connectedPromise, "f").catch(() => {});
-		__classPrivateFieldGet$3(this, _EventStream_endPromise, "f").catch(() => {});
+		__classPrivateFieldGet$4(this, _EventStream_connectedPromise, "f").catch(() => {});
+		__classPrivateFieldGet$4(this, _EventStream_endPromise, "f").catch(() => {});
 	}
 	_run(executor) {
 		setTimeout(() => {
 			executor().then(() => {
 				this._emitFinal();
 				this._emit("end");
-			}, __classPrivateFieldGet$3(this, _EventStream_instances, "m", _EventStream_handleError).bind(this));
+			}, __classPrivateFieldGet$4(this, _EventStream_instances, "m", _EventStream_handleError).bind(this));
 		}, 0);
 	}
 	_connected() {
 		if (this.ended) return;
-		__classPrivateFieldGet$3(this, _EventStream_resolveConnectedPromise, "f").call(this);
+		__classPrivateFieldGet$4(this, _EventStream_resolveConnectedPromise, "f").call(this);
 		this._emit("connect");
 	}
 	get ended() {
-		return __classPrivateFieldGet$3(this, _EventStream_ended, "f");
+		return __classPrivateFieldGet$4(this, _EventStream_ended, "f");
 	}
 	get errored() {
-		return __classPrivateFieldGet$3(this, _EventStream_errored, "f");
+		return __classPrivateFieldGet$4(this, _EventStream_errored, "f");
 	}
 	get aborted() {
-		return __classPrivateFieldGet$3(this, _EventStream_aborted, "f");
+		return __classPrivateFieldGet$4(this, _EventStream_aborted, "f");
 	}
 	abort() {
 		this.controller.abort();
@@ -61410,7 +61428,7 @@ var EventStream = class {
 	* @returns this ChatCompletionStream, so that calls can be chained
 	*/
 	on(event, listener) {
-		const listeners = __classPrivateFieldGet$3(this, _EventStream_listeners, "f")[event] || (__classPrivateFieldGet$3(this, _EventStream_listeners, "f")[event] = []);
+		const listeners = __classPrivateFieldGet$4(this, _EventStream_listeners, "f")[event] || (__classPrivateFieldGet$4(this, _EventStream_listeners, "f")[event] = []);
 		listeners.push({ listener });
 		return this;
 	}
@@ -61422,7 +61440,7 @@ var EventStream = class {
 	* @returns this ChatCompletionStream, so that calls can be chained
 	*/
 	off(event, listener) {
-		const listeners = __classPrivateFieldGet$3(this, _EventStream_listeners, "f")[event];
+		const listeners = __classPrivateFieldGet$4(this, _EventStream_listeners, "f")[event];
 		if (!listeners) return this;
 		const index = listeners.findIndex((l) => l.listener === listener);
 		if (index >= 0) listeners.splice(index, 1);
@@ -61434,7 +61452,7 @@ var EventStream = class {
 	* @returns this ChatCompletionStream, so that calls can be chained
 	*/
 	once(event, listener) {
-		const listeners = __classPrivateFieldGet$3(this, _EventStream_listeners, "f")[event] || (__classPrivateFieldGet$3(this, _EventStream_listeners, "f")[event] = []);
+		const listeners = __classPrivateFieldGet$4(this, _EventStream_listeners, "f")[event] || (__classPrivateFieldGet$4(this, _EventStream_listeners, "f")[event] = []);
 		listeners.push({
 			listener,
 			once: true
@@ -61454,49 +61472,49 @@ var EventStream = class {
 	*/
 	emitted(event) {
 		return new Promise((resolve, reject) => {
-			__classPrivateFieldSet$2(this, _EventStream_catchingPromiseCreated, true, "f");
+			__classPrivateFieldSet$3(this, _EventStream_catchingPromiseCreated, true, "f");
 			if (event !== "error") this.once("error", reject);
 			this.once(event, resolve);
 		});
 	}
 	async done() {
-		__classPrivateFieldSet$2(this, _EventStream_catchingPromiseCreated, true, "f");
-		await __classPrivateFieldGet$3(this, _EventStream_endPromise, "f");
+		__classPrivateFieldSet$3(this, _EventStream_catchingPromiseCreated, true, "f");
+		await __classPrivateFieldGet$4(this, _EventStream_endPromise, "f");
 	}
 	_emit(event, ...args) {
-		if (__classPrivateFieldGet$3(this, _EventStream_ended, "f")) return;
+		if (__classPrivateFieldGet$4(this, _EventStream_ended, "f")) return;
 		if (event === "end") {
-			__classPrivateFieldSet$2(this, _EventStream_ended, true, "f");
-			__classPrivateFieldGet$3(this, _EventStream_resolveEndPromise, "f").call(this);
+			__classPrivateFieldSet$3(this, _EventStream_ended, true, "f");
+			__classPrivateFieldGet$4(this, _EventStream_resolveEndPromise, "f").call(this);
 		}
-		const listeners = __classPrivateFieldGet$3(this, _EventStream_listeners, "f")[event];
+		const listeners = __classPrivateFieldGet$4(this, _EventStream_listeners, "f")[event];
 		if (listeners) {
-			__classPrivateFieldGet$3(this, _EventStream_listeners, "f")[event] = listeners.filter((l) => !l.once);
+			__classPrivateFieldGet$4(this, _EventStream_listeners, "f")[event] = listeners.filter((l) => !l.once);
 			listeners.forEach(({ listener }) => listener(...args));
 		}
 		if (event === "abort") {
 			const error$1 = args[0];
-			if (!__classPrivateFieldGet$3(this, _EventStream_catchingPromiseCreated, "f") && !listeners?.length) Promise.reject(error$1);
-			__classPrivateFieldGet$3(this, _EventStream_rejectConnectedPromise, "f").call(this, error$1);
-			__classPrivateFieldGet$3(this, _EventStream_rejectEndPromise, "f").call(this, error$1);
+			if (!__classPrivateFieldGet$4(this, _EventStream_catchingPromiseCreated, "f") && !listeners?.length) Promise.reject(error$1);
+			__classPrivateFieldGet$4(this, _EventStream_rejectConnectedPromise, "f").call(this, error$1);
+			__classPrivateFieldGet$4(this, _EventStream_rejectEndPromise, "f").call(this, error$1);
 			this._emit("end");
 			return;
 		}
 		if (event === "error") {
 			const error$1 = args[0];
-			if (!__classPrivateFieldGet$3(this, _EventStream_catchingPromiseCreated, "f") && !listeners?.length) Promise.reject(error$1);
-			__classPrivateFieldGet$3(this, _EventStream_rejectConnectedPromise, "f").call(this, error$1);
-			__classPrivateFieldGet$3(this, _EventStream_rejectEndPromise, "f").call(this, error$1);
+			if (!__classPrivateFieldGet$4(this, _EventStream_catchingPromiseCreated, "f") && !listeners?.length) Promise.reject(error$1);
+			__classPrivateFieldGet$4(this, _EventStream_rejectConnectedPromise, "f").call(this, error$1);
+			__classPrivateFieldGet$4(this, _EventStream_rejectEndPromise, "f").call(this, error$1);
 			this._emit("end");
 		}
 	}
 	_emitFinal() {}
 };
 _EventStream_connectedPromise = new WeakMap(), _EventStream_resolveConnectedPromise = new WeakMap(), _EventStream_rejectConnectedPromise = new WeakMap(), _EventStream_endPromise = new WeakMap(), _EventStream_resolveEndPromise = new WeakMap(), _EventStream_rejectEndPromise = new WeakMap(), _EventStream_listeners = new WeakMap(), _EventStream_ended = new WeakMap(), _EventStream_errored = new WeakMap(), _EventStream_aborted = new WeakMap(), _EventStream_catchingPromiseCreated = new WeakMap(), _EventStream_instances = new WeakSet(), _EventStream_handleError = function _EventStream_handleError$1(error$1) {
-	__classPrivateFieldSet$2(this, _EventStream_errored, true, "f");
+	__classPrivateFieldSet$3(this, _EventStream_errored, true, "f");
 	if (error$1 instanceof Error && error$1.name === "AbortError") error$1 = new APIUserAbortError();
 	if (error$1 instanceof APIUserAbortError) {
-		__classPrivateFieldSet$2(this, _EventStream_aborted, true, "f");
+		__classPrivateFieldSet$3(this, _EventStream_aborted, true, "f");
 		return this._emit("abort", error$1);
 	}
 	if (error$1 instanceof OpenAIError) return this._emit("error", error$1);
@@ -61509,15 +61527,15 @@ _EventStream_connectedPromise = new WeakMap(), _EventStream_resolveConnectedProm
 };
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/lib/parser.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/lib/parser.mjs
 function isAutoParsableResponseFormat(response_format) {
 	return response_format?.["$brand"] === "auto-parseable-response-format";
 }
-function isAutoParsableTool(tool) {
+function isAutoParsableTool$1(tool) {
 	return tool?.["$brand"] === "auto-parseable-tool";
 }
 function maybeParseChatCompletion(completion, params) {
-	if (!params || !hasAutoParseableInput(params)) return {
+	if (!params || !hasAutoParseableInput$1(params)) return {
 		...completion,
 		choices: completion.choices.map((choice) => ({
 			...choice,
@@ -61538,7 +61556,7 @@ function parseChatCompletion(completion, params) {
 			...choice,
 			message: {
 				...choice.message,
-				...choice.message.tool_calls ? { tool_calls: choice.message.tool_calls?.map((toolCall) => parseToolCall(params, toolCall)) ?? void 0 } : void 0,
+				...choice.message.tool_calls ? { tool_calls: choice.message.tool_calls?.map((toolCall) => parseToolCall$1(params, toolCall)) ?? void 0 } : void 0,
 				parsed: choice.message.content && !choice.message.refusal ? parseResponseFormat(params, choice.message.content) : null
 			}
 		};
@@ -61559,24 +61577,24 @@ function parseResponseFormat(params, content) {
 	}
 	return null;
 }
-function parseToolCall(params, toolCall) {
+function parseToolCall$1(params, toolCall) {
 	const inputTool = params.tools?.find((inputTool$1) => inputTool$1.function?.name === toolCall.function.name);
 	return {
 		...toolCall,
 		function: {
 			...toolCall.function,
-			parsed_arguments: isAutoParsableTool(inputTool) ? inputTool.$parseRaw(toolCall.function.arguments) : inputTool?.function.strict ? JSON.parse(toolCall.function.arguments) : null
+			parsed_arguments: isAutoParsableTool$1(inputTool) ? inputTool.$parseRaw(toolCall.function.arguments) : inputTool?.function.strict ? JSON.parse(toolCall.function.arguments) : null
 		}
 	};
 }
 function shouldParseToolCall(params, toolCall) {
 	if (!params) return false;
 	const inputTool = params.tools?.find((inputTool$1) => inputTool$1.function?.name === toolCall.function.name);
-	return isAutoParsableTool(inputTool) || inputTool?.function.strict || false;
+	return isAutoParsableTool$1(inputTool) || inputTool?.function.strict || false;
 }
-function hasAutoParseableInput(params) {
+function hasAutoParseableInput$1(params) {
 	if (isAutoParsableResponseFormat(params.response_format)) return true;
-	return params.tools?.some((t) => isAutoParsableTool(t) || t.type === "function" && t.function.strict === true) ?? false;
+	return params.tools?.some((t) => isAutoParsableTool$1(t) || t.type === "function" && t.function.strict === true) ?? false;
 }
 function validateInputTools(tools) {
 	for (const tool of tools ?? []) {
@@ -61586,8 +61604,8 @@ function validateInputTools(tools) {
 }
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/lib/AbstractChatCompletionRunner.mjs
-var __classPrivateFieldGet$2 = void 0 && (void 0).__classPrivateFieldGet || function(receiver, state, kind$1, f) {
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/lib/AbstractChatCompletionRunner.mjs
+var __classPrivateFieldGet$3 = void 0 && (void 0).__classPrivateFieldGet || function(receiver, state, kind$1, f) {
 	if (kind$1 === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
 	if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
 	return kind$1 === "m" ? f : kind$1 === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
@@ -61636,7 +61654,7 @@ var AbstractChatCompletionRunner = class extends EventStream {
 	*/
 	async finalContent() {
 		await this.done();
-		return __classPrivateFieldGet$2(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_getFinalContent).call(this);
+		return __classPrivateFieldGet$3(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_getFinalContent).call(this);
 	}
 	/**
 	* @returns a promise that resolves with the the final assistant ChatCompletionMessage response,
@@ -61644,7 +61662,7 @@ var AbstractChatCompletionRunner = class extends EventStream {
 	*/
 	async finalMessage() {
 		await this.done();
-		return __classPrivateFieldGet$2(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_getFinalMessage).call(this);
+		return __classPrivateFieldGet$3(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_getFinalMessage).call(this);
 	}
 	/**
 	* @returns a promise that resolves with the content of the final FunctionCall, or rejects
@@ -61652,15 +61670,15 @@ var AbstractChatCompletionRunner = class extends EventStream {
 	*/
 	async finalFunctionCall() {
 		await this.done();
-		return __classPrivateFieldGet$2(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_getFinalFunctionCall).call(this);
+		return __classPrivateFieldGet$3(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_getFinalFunctionCall).call(this);
 	}
 	async finalFunctionCallResult() {
 		await this.done();
-		return __classPrivateFieldGet$2(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_getFinalFunctionCallResult).call(this);
+		return __classPrivateFieldGet$3(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_getFinalFunctionCallResult).call(this);
 	}
 	async totalUsage() {
 		await this.done();
-		return __classPrivateFieldGet$2(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_calculateTotalUsage).call(this);
+		return __classPrivateFieldGet$3(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_calculateTotalUsage).call(this);
 	}
 	allChatCompletions() {
 		return [...this._chatCompletions];
@@ -61668,15 +61686,15 @@ var AbstractChatCompletionRunner = class extends EventStream {
 	_emitFinal() {
 		const completion = this._chatCompletions[this._chatCompletions.length - 1];
 		if (completion) this._emit("finalChatCompletion", completion);
-		const finalMessage = __classPrivateFieldGet$2(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_getFinalMessage).call(this);
+		const finalMessage = __classPrivateFieldGet$3(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_getFinalMessage).call(this);
 		if (finalMessage) this._emit("finalMessage", finalMessage);
-		const finalContent = __classPrivateFieldGet$2(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_getFinalContent).call(this);
+		const finalContent = __classPrivateFieldGet$3(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_getFinalContent).call(this);
 		if (finalContent) this._emit("finalContent", finalContent);
-		const finalFunctionCall = __classPrivateFieldGet$2(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_getFinalFunctionCall).call(this);
+		const finalFunctionCall = __classPrivateFieldGet$3(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_getFinalFunctionCall).call(this);
 		if (finalFunctionCall) this._emit("finalFunctionCall", finalFunctionCall);
-		const finalFunctionCallResult = __classPrivateFieldGet$2(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_getFinalFunctionCallResult).call(this);
+		const finalFunctionCallResult = __classPrivateFieldGet$3(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_getFinalFunctionCallResult).call(this);
 		if (finalFunctionCallResult != null) this._emit("finalFunctionCallResult", finalFunctionCallResult);
-		if (this._chatCompletions.some((c$1) => c$1.usage)) this._emit("totalUsage", __classPrivateFieldGet$2(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_calculateTotalUsage).call(this));
+		if (this._chatCompletions.some((c$1) => c$1.usage)) this._emit("totalUsage", __classPrivateFieldGet$3(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_calculateTotalUsage).call(this));
 	}
 	async _createChatCompletion(client, params, options) {
 		const signal = options?.signal;
@@ -61684,7 +61702,7 @@ var AbstractChatCompletionRunner = class extends EventStream {
 			if (signal.aborted) this.controller.abort();
 			signal.addEventListener("abort", () => this.controller.abort());
 		}
-		__classPrivateFieldGet$2(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_validateParams).call(this, params);
+		__classPrivateFieldGet$3(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_validateParams).call(this, params);
 		const chatCompletion = await client.chat.completions.create({
 			...params,
 			stream: false
@@ -61753,7 +61771,7 @@ var AbstractChatCompletionRunner = class extends EventStream {
 				continue;
 			}
 			const rawContent = await fn.function(parsed, this);
-			const content = __classPrivateFieldGet$2(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_stringifyFunctionCallResult).call(this, rawContent);
+			const content = __classPrivateFieldGet$3(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_stringifyFunctionCallResult).call(this, rawContent);
 			this._addMessage({
 				role,
 				name,
@@ -61768,7 +61786,7 @@ var AbstractChatCompletionRunner = class extends EventStream {
 		const singleFunctionToCall = typeof tool_choice !== "string" && tool_choice?.function?.name;
 		const { maxChatCompletions = DEFAULT_MAX_CHAT_COMPLETIONS } = options || {};
 		const inputTools = params.tools.map((tool) => {
-			if (isAutoParsableTool(tool)) {
+			if (isAutoParsableTool$1(tool)) {
 				if (!tool.$callback) throw new OpenAIError("Tool given to `.runTools()` that does not have an associated function");
 				return {
 					type: "function",
@@ -61841,7 +61859,7 @@ var AbstractChatCompletionRunner = class extends EventStream {
 					continue;
 				}
 				const rawContent = await fn.function(parsed, this);
-				const content = __classPrivateFieldGet$2(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_stringifyFunctionCallResult).call(this, rawContent);
+				const content = __classPrivateFieldGet$3(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_stringifyFunctionCallResult).call(this, rawContent);
 				this._addMessage({
 					role,
 					tool_call_id,
@@ -61854,7 +61872,7 @@ var AbstractChatCompletionRunner = class extends EventStream {
 	}
 };
 _AbstractChatCompletionRunner_instances = new WeakSet(), _AbstractChatCompletionRunner_getFinalContent = function _AbstractChatCompletionRunner_getFinalContent$1() {
-	return __classPrivateFieldGet$2(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_getFinalMessage).call(this).content ?? null;
+	return __classPrivateFieldGet$3(this, _AbstractChatCompletionRunner_instances, "m", _AbstractChatCompletionRunner_getFinalMessage).call(this).content ?? null;
 }, _AbstractChatCompletionRunner_getFinalMessage = function _AbstractChatCompletionRunner_getFinalMessage$1() {
 	let i$1 = this.messages.length;
 	while (i$1-- > 0) {
@@ -61904,7 +61922,7 @@ _AbstractChatCompletionRunner_instances = new WeakSet(), _AbstractChatCompletion
 };
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/lib/ChatCompletionRunner.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/lib/ChatCompletionRunner.mjs
 var ChatCompletionRunner = class ChatCompletionRunner extends AbstractChatCompletionRunner {
 	/** @deprecated - please use `runTools` instead. */
 	static runFunctions(client, params, options) {
@@ -61938,7 +61956,7 @@ var ChatCompletionRunner = class ChatCompletionRunner extends AbstractChatComple
 };
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/_vendor/partial-json-parser/parser.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/_vendor/partial-json-parser/parser.mjs
 const STR = 1;
 const NUM = 2;
 const ARR = 4;
@@ -62130,14 +62148,14 @@ const _parseJSON = (jsonString, allow) => {
 const partialParse = (input) => parseJSON(input, Allow.ALL ^ Allow.NUM);
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/lib/ChatCompletionStream.mjs
-var __classPrivateFieldSet$1 = void 0 && (void 0).__classPrivateFieldSet || function(receiver, state, value, kind$1, f) {
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/lib/ChatCompletionStream.mjs
+var __classPrivateFieldSet$2 = void 0 && (void 0).__classPrivateFieldSet || function(receiver, state, value, kind$1, f) {
 	if (kind$1 === "m") throw new TypeError("Private method is not writable");
 	if (kind$1 === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
 	if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
 	return kind$1 === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
 };
-var __classPrivateFieldGet$1 = void 0 && (void 0).__classPrivateFieldGet || function(receiver, state, kind$1, f) {
+var __classPrivateFieldGet$2 = void 0 && (void 0).__classPrivateFieldGet || function(receiver, state, kind$1, f) {
 	if (kind$1 === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
 	if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
 	return kind$1 === "m" ? f : kind$1 === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
@@ -62150,11 +62168,11 @@ var ChatCompletionStream = class ChatCompletionStream extends AbstractChatComple
 		_ChatCompletionStream_params.set(this, void 0);
 		_ChatCompletionStream_choiceEventStates.set(this, void 0);
 		_ChatCompletionStream_currentChatCompletionSnapshot.set(this, void 0);
-		__classPrivateFieldSet$1(this, _ChatCompletionStream_params, params, "f");
-		__classPrivateFieldSet$1(this, _ChatCompletionStream_choiceEventStates, [], "f");
+		__classPrivateFieldSet$2(this, _ChatCompletionStream_params, params, "f");
+		__classPrivateFieldSet$2(this, _ChatCompletionStream_choiceEventStates, [], "f");
 	}
 	get currentChatCompletionSnapshot() {
-		return __classPrivateFieldGet$1(this, _ChatCompletionStream_currentChatCompletionSnapshot, "f");
+		return __classPrivateFieldGet$2(this, _ChatCompletionStream_currentChatCompletionSnapshot, "f");
 	}
 	/**
 	* Intended for use on the frontend, consuming a stream produced with
@@ -62189,7 +62207,7 @@ var ChatCompletionStream = class ChatCompletionStream extends AbstractChatComple
 			if (signal.aborted) this.controller.abort();
 			signal.addEventListener("abort", () => this.controller.abort());
 		}
-		__classPrivateFieldGet$1(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_beginRequest).call(this);
+		__classPrivateFieldGet$2(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_beginRequest).call(this);
 		const stream$2 = await client.chat.completions.create({
 			...params,
 			stream: true
@@ -62198,9 +62216,9 @@ var ChatCompletionStream = class ChatCompletionStream extends AbstractChatComple
 			signal: this.controller.signal
 		});
 		this._connected();
-		for await (const chunk of stream$2) __classPrivateFieldGet$1(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_addChunk).call(this, chunk);
+		for await (const chunk of stream$2) __classPrivateFieldGet$2(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_addChunk).call(this, chunk);
 		if (stream$2.controller.signal?.aborted) throw new APIUserAbortError();
-		return this._addChatCompletion(__classPrivateFieldGet$1(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_endRequest).call(this));
+		return this._addChatCompletion(__classPrivateFieldGet$2(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_endRequest).call(this));
 	}
 	async _fromReadableStream(readableStream, options) {
 		const signal = options?.signal;
@@ -62208,23 +62226,23 @@ var ChatCompletionStream = class ChatCompletionStream extends AbstractChatComple
 			if (signal.aborted) this.controller.abort();
 			signal.addEventListener("abort", () => this.controller.abort());
 		}
-		__classPrivateFieldGet$1(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_beginRequest).call(this);
+		__classPrivateFieldGet$2(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_beginRequest).call(this);
 		this._connected();
 		const stream$2 = Stream.fromReadableStream(readableStream, this.controller);
 		let chatId;
 		for await (const chunk of stream$2) {
-			if (chatId && chatId !== chunk.id) this._addChatCompletion(__classPrivateFieldGet$1(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_endRequest).call(this));
-			__classPrivateFieldGet$1(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_addChunk).call(this, chunk);
+			if (chatId && chatId !== chunk.id) this._addChatCompletion(__classPrivateFieldGet$2(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_endRequest).call(this));
+			__classPrivateFieldGet$2(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_addChunk).call(this, chunk);
 			chatId = chunk.id;
 		}
 		if (stream$2.controller.signal?.aborted) throw new APIUserAbortError();
-		return this._addChatCompletion(__classPrivateFieldGet$1(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_endRequest).call(this));
+		return this._addChatCompletion(__classPrivateFieldGet$2(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_endRequest).call(this));
 	}
 	[(_ChatCompletionStream_params = new WeakMap(), _ChatCompletionStream_choiceEventStates = new WeakMap(), _ChatCompletionStream_currentChatCompletionSnapshot = new WeakMap(), _ChatCompletionStream_instances = new WeakSet(), _ChatCompletionStream_beginRequest = function _ChatCompletionStream_beginRequest$1() {
 		if (this.ended) return;
-		__classPrivateFieldSet$1(this, _ChatCompletionStream_currentChatCompletionSnapshot, void 0, "f");
+		__classPrivateFieldSet$2(this, _ChatCompletionStream_currentChatCompletionSnapshot, void 0, "f");
 	}, _ChatCompletionStream_getChoiceEventState = function _ChatCompletionStream_getChoiceEventState$1(choice) {
-		let state = __classPrivateFieldGet$1(this, _ChatCompletionStream_choiceEventStates, "f")[choice.index];
+		let state = __classPrivateFieldGet$2(this, _ChatCompletionStream_choiceEventStates, "f")[choice.index];
 		if (state) return state;
 		state = {
 			content_done: false,
@@ -62234,11 +62252,11 @@ var ChatCompletionStream = class ChatCompletionStream extends AbstractChatComple
 			done_tool_calls: new Set(),
 			current_tool_call_index: null
 		};
-		__classPrivateFieldGet$1(this, _ChatCompletionStream_choiceEventStates, "f")[choice.index] = state;
+		__classPrivateFieldGet$2(this, _ChatCompletionStream_choiceEventStates, "f")[choice.index] = state;
 		return state;
 	}, _ChatCompletionStream_addChunk = function _ChatCompletionStream_addChunk$1(chunk) {
 		if (this.ended) return;
-		const completion = __classPrivateFieldGet$1(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_accumulateChatCompletion).call(this, chunk);
+		const completion = __classPrivateFieldGet$2(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_accumulateChatCompletion).call(this, chunk);
 		this._emit("chunk", chunk, completion);
 		for (const choice of chunk.choices) {
 			const choiceSnapshot = completion.choices[choice.index];
@@ -62262,15 +62280,15 @@ var ChatCompletionStream = class ChatCompletionStream extends AbstractChatComple
 				refusal: choice.logprobs?.refusal,
 				snapshot: choiceSnapshot.logprobs?.refusal ?? []
 			});
-			const state = __classPrivateFieldGet$1(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_getChoiceEventState).call(this, choiceSnapshot);
+			const state = __classPrivateFieldGet$2(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_getChoiceEventState).call(this, choiceSnapshot);
 			if (choiceSnapshot.finish_reason) {
-				__classPrivateFieldGet$1(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_emitContentDoneEvents).call(this, choiceSnapshot);
-				if (state.current_tool_call_index != null) __classPrivateFieldGet$1(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_emitToolCallDoneEvent).call(this, choiceSnapshot, state.current_tool_call_index);
+				__classPrivateFieldGet$2(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_emitContentDoneEvents).call(this, choiceSnapshot);
+				if (state.current_tool_call_index != null) __classPrivateFieldGet$2(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_emitToolCallDoneEvent).call(this, choiceSnapshot, state.current_tool_call_index);
 			}
 			for (const toolCall of choice.delta.tool_calls ?? []) {
 				if (state.current_tool_call_index !== toolCall.index) {
-					__classPrivateFieldGet$1(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_emitContentDoneEvents).call(this, choiceSnapshot);
-					if (state.current_tool_call_index != null) __classPrivateFieldGet$1(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_emitToolCallDoneEvent).call(this, choiceSnapshot, state.current_tool_call_index);
+					__classPrivateFieldGet$2(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_emitContentDoneEvents).call(this, choiceSnapshot);
+					if (state.current_tool_call_index != null) __classPrivateFieldGet$2(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_emitToolCallDoneEvent).call(this, choiceSnapshot, state.current_tool_call_index);
 				}
 				state.current_tool_call_index = toolCall.index;
 			}
@@ -62288,25 +62306,25 @@ var ChatCompletionStream = class ChatCompletionStream extends AbstractChatComple
 			}
 		}
 	}, _ChatCompletionStream_emitToolCallDoneEvent = function _ChatCompletionStream_emitToolCallDoneEvent$1(choiceSnapshot, toolCallIndex) {
-		const state = __classPrivateFieldGet$1(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_getChoiceEventState).call(this, choiceSnapshot);
+		const state = __classPrivateFieldGet$2(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_getChoiceEventState).call(this, choiceSnapshot);
 		if (state.done_tool_calls.has(toolCallIndex)) return;
 		const toolCallSnapshot = choiceSnapshot.message.tool_calls?.[toolCallIndex];
 		if (!toolCallSnapshot) throw new Error("no tool call snapshot");
 		if (!toolCallSnapshot.type) throw new Error("tool call snapshot missing `type`");
 		if (toolCallSnapshot.type === "function") {
-			const inputTool = __classPrivateFieldGet$1(this, _ChatCompletionStream_params, "f")?.tools?.find((tool) => tool.type === "function" && tool.function.name === toolCallSnapshot.function.name);
+			const inputTool = __classPrivateFieldGet$2(this, _ChatCompletionStream_params, "f")?.tools?.find((tool) => tool.type === "function" && tool.function.name === toolCallSnapshot.function.name);
 			this._emit("tool_calls.function.arguments.done", {
 				name: toolCallSnapshot.function.name,
 				index: toolCallIndex,
 				arguments: toolCallSnapshot.function.arguments,
-				parsed_arguments: isAutoParsableTool(inputTool) ? inputTool.$parseRaw(toolCallSnapshot.function.arguments) : inputTool?.function.strict ? JSON.parse(toolCallSnapshot.function.arguments) : null
+				parsed_arguments: isAutoParsableTool$1(inputTool) ? inputTool.$parseRaw(toolCallSnapshot.function.arguments) : inputTool?.function.strict ? JSON.parse(toolCallSnapshot.function.arguments) : null
 			});
 		} else assertNever$1(toolCallSnapshot.type);
 	}, _ChatCompletionStream_emitContentDoneEvents = function _ChatCompletionStream_emitContentDoneEvents$1(choiceSnapshot) {
-		const state = __classPrivateFieldGet$1(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_getChoiceEventState).call(this, choiceSnapshot);
+		const state = __classPrivateFieldGet$2(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_getChoiceEventState).call(this, choiceSnapshot);
 		if (choiceSnapshot.message.content && !state.content_done) {
 			state.content_done = true;
-			const responseFormat = __classPrivateFieldGet$1(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_getAutoParseableResponseFormat).call(this);
+			const responseFormat = __classPrivateFieldGet$2(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_getAutoParseableResponseFormat).call(this);
 			this._emit("content.done", {
 				content: choiceSnapshot.message.content,
 				parsed: responseFormat ? responseFormat.$parseRaw(choiceSnapshot.message.content) : null
@@ -62326,20 +62344,20 @@ var ChatCompletionStream = class ChatCompletionStream extends AbstractChatComple
 		}
 	}, _ChatCompletionStream_endRequest = function _ChatCompletionStream_endRequest$1() {
 		if (this.ended) throw new OpenAIError(`stream has ended, this shouldn't happen`);
-		const snapshot = __classPrivateFieldGet$1(this, _ChatCompletionStream_currentChatCompletionSnapshot, "f");
+		const snapshot = __classPrivateFieldGet$2(this, _ChatCompletionStream_currentChatCompletionSnapshot, "f");
 		if (!snapshot) throw new OpenAIError(`request ended without sending any chunks`);
-		__classPrivateFieldSet$1(this, _ChatCompletionStream_currentChatCompletionSnapshot, void 0, "f");
-		__classPrivateFieldSet$1(this, _ChatCompletionStream_choiceEventStates, [], "f");
-		return finalizeChatCompletion(snapshot, __classPrivateFieldGet$1(this, _ChatCompletionStream_params, "f"));
+		__classPrivateFieldSet$2(this, _ChatCompletionStream_currentChatCompletionSnapshot, void 0, "f");
+		__classPrivateFieldSet$2(this, _ChatCompletionStream_choiceEventStates, [], "f");
+		return finalizeChatCompletion(snapshot, __classPrivateFieldGet$2(this, _ChatCompletionStream_params, "f"));
 	}, _ChatCompletionStream_getAutoParseableResponseFormat = function _ChatCompletionStream_getAutoParseableResponseFormat$1() {
-		const responseFormat = __classPrivateFieldGet$1(this, _ChatCompletionStream_params, "f")?.response_format;
+		const responseFormat = __classPrivateFieldGet$2(this, _ChatCompletionStream_params, "f")?.response_format;
 		if (isAutoParsableResponseFormat(responseFormat)) return responseFormat;
 		return null;
 	}, _ChatCompletionStream_accumulateChatCompletion = function _ChatCompletionStream_accumulateChatCompletion$1(chunk) {
 		var _a$2, _b, _c, _d;
-		let snapshot = __classPrivateFieldGet$1(this, _ChatCompletionStream_currentChatCompletionSnapshot, "f");
+		let snapshot = __classPrivateFieldGet$2(this, _ChatCompletionStream_currentChatCompletionSnapshot, "f");
 		const { choices,...rest } = chunk;
-		if (!snapshot) snapshot = __classPrivateFieldSet$1(this, _ChatCompletionStream_currentChatCompletionSnapshot, {
+		if (!snapshot) snapshot = __classPrivateFieldSet$2(this, _ChatCompletionStream_currentChatCompletionSnapshot, {
 			...rest,
 			choices: []
 		}, "f");
@@ -62369,7 +62387,7 @@ var ChatCompletionStream = class ChatCompletionStream extends AbstractChatComple
 			}
 			if (finish_reason) {
 				choice.finish_reason = finish_reason;
-				if (__classPrivateFieldGet$1(this, _ChatCompletionStream_params, "f") && hasAutoParseableInput(__classPrivateFieldGet$1(this, _ChatCompletionStream_params, "f"))) {
+				if (__classPrivateFieldGet$2(this, _ChatCompletionStream_params, "f") && hasAutoParseableInput$1(__classPrivateFieldGet$2(this, _ChatCompletionStream_params, "f"))) {
 					if (finish_reason === "length") throw new LengthFinishReasonError();
 					if (finish_reason === "content_filter") throw new ContentFilterFinishReasonError();
 				}
@@ -62391,7 +62409,7 @@ var ChatCompletionStream = class ChatCompletionStream extends AbstractChatComple
 			}
 			if (content) {
 				choice.message.content = (choice.message.content || "") + content;
-				if (!choice.message.refusal && __classPrivateFieldGet$1(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_getAutoParseableResponseFormat).call(this)) choice.message.parsed = partialParse(choice.message.content);
+				if (!choice.message.refusal && __classPrivateFieldGet$2(this, _ChatCompletionStream_instances, "m", _ChatCompletionStream_getAutoParseableResponseFormat).call(this)) choice.message.parsed = partialParse(choice.message.content);
 			}
 			if (tool_calls) {
 				if (!choice.message.tool_calls) choice.message.tool_calls = [];
@@ -62407,7 +62425,7 @@ var ChatCompletionStream = class ChatCompletionStream extends AbstractChatComple
 					if (fn?.name) tool_call.function.name = fn.name;
 					if (fn?.arguments) {
 						tool_call.function.arguments += fn.arguments;
-						if (shouldParseToolCall(__classPrivateFieldGet$1(this, _ChatCompletionStream_params, "f"), tool_call)) tool_call.function.parsed_arguments = partialParse(tool_call.function.arguments);
+						if (shouldParseToolCall(__classPrivateFieldGet$2(this, _ChatCompletionStream_params, "f"), tool_call)) tool_call.function.parsed_arguments = partialParse(tool_call.function.arguments);
 					}
 				}
 			}
@@ -62569,7 +62587,7 @@ function assertIsEmpty(obj) {
 function assertNever$1(_x) {}
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/lib/ChatCompletionStreamingRunner.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/lib/ChatCompletionStreamingRunner.mjs
 var ChatCompletionStreamingRunner = class ChatCompletionStreamingRunner extends ChatCompletionStream {
 	static fromReadableStream(stream$2) {
 		const runner = new ChatCompletionStreamingRunner(null);
@@ -62607,7 +62625,7 @@ var ChatCompletionStreamingRunner = class ChatCompletionStreamingRunner extends 
 };
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/beta/chat/completions.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/beta/chat/completions.mjs
 var Completions$1 = class extends APIResource {
 	parse(body, options) {
 		validateInputTools(body.tools);
@@ -62636,7 +62654,7 @@ var Completions$1 = class extends APIResource {
 };
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/beta/chat/chat.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/beta/chat/chat.mjs
 var Chat = class extends APIResource {
 	constructor() {
 		super(...arguments);
@@ -62648,7 +62666,7 @@ var Chat = class extends APIResource {
 })(Chat || (Chat = {}));
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/beta/realtime/sessions.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/beta/realtime/sessions.mjs
 var Sessions = class extends APIResource {
 	/**
 	* Create an ephemeral API token for use in client-side applications with the
@@ -62672,23 +62690,49 @@ var Sessions = class extends APIResource {
 };
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/beta/realtime/realtime.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/beta/realtime/transcription-sessions.mjs
+var TranscriptionSessions = class extends APIResource {
+	/**
+	* Create an ephemeral API token for use in client-side applications with the
+	* Realtime API specifically for realtime transcriptions. Can be configured with
+	* the same session parameters as the `transcription_session.update` client event.
+	*
+	* It responds with a session object, plus a `client_secret` key which contains a
+	* usable ephemeral API token that can be used to authenticate browser clients for
+	* the Realtime API.
+	*/
+	create(body, options) {
+		return this._client.post("/realtime/transcription_sessions", {
+			body,
+			...options,
+			headers: {
+				"OpenAI-Beta": "assistants=v2",
+				...options?.headers
+			}
+		});
+	}
+};
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/beta/realtime/realtime.mjs
 var Realtime = class extends APIResource {
 	constructor() {
 		super(...arguments);
 		this.sessions = new Sessions(this._client);
+		this.transcriptionSessions = new TranscriptionSessions(this._client);
 	}
 };
 Realtime.Sessions = Sessions;
+Realtime.TranscriptionSessions = TranscriptionSessions;
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/lib/AssistantStream.mjs
-var __classPrivateFieldGet = void 0 && (void 0).__classPrivateFieldGet || function(receiver, state, kind$1, f) {
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/lib/AssistantStream.mjs
+var __classPrivateFieldGet$1 = void 0 && (void 0).__classPrivateFieldGet || function(receiver, state, kind$1, f) {
 	if (kind$1 === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
 	if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
 	return kind$1 === "m" ? f : kind$1 === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var __classPrivateFieldSet = void 0 && (void 0).__classPrivateFieldSet || function(receiver, state, value, kind$1, f) {
+var __classPrivateFieldSet$1 = void 0 && (void 0).__classPrivateFieldSet || function(receiver, state, value, kind$1, f) {
 	if (kind$1 === "m") throw new TypeError("Private method is not writable");
 	if (kind$1 === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
 	if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
@@ -62782,9 +62826,9 @@ var AssistantStream = class AssistantStream extends EventStream {
 		}
 		this._connected();
 		const stream$2 = Stream.fromReadableStream(readableStream, this.controller);
-		for await (const event of stream$2) __classPrivateFieldGet(this, _AssistantStream_instances, "m", _AssistantStream_addEvent).call(this, event);
+		for await (const event of stream$2) __classPrivateFieldGet$1(this, _AssistantStream_instances, "m", _AssistantStream_addEvent).call(this, event);
 		if (stream$2.controller.signal?.aborted) throw new APIUserAbortError();
-		return this._addRun(__classPrivateFieldGet(this, _AssistantStream_instances, "m", _AssistantStream_endRequest).call(this));
+		return this._addRun(__classPrivateFieldGet$1(this, _AssistantStream_instances, "m", _AssistantStream_endRequest).call(this));
 	}
 	toReadableStream() {
 		const stream$2 = new Stream(this[Symbol.asyncIterator].bind(this), this.controller);
@@ -62816,9 +62860,9 @@ var AssistantStream = class AssistantStream extends EventStream {
 			signal: this.controller.signal
 		});
 		this._connected();
-		for await (const event of stream$2) __classPrivateFieldGet(this, _AssistantStream_instances, "m", _AssistantStream_addEvent).call(this, event);
+		for await (const event of stream$2) __classPrivateFieldGet$1(this, _AssistantStream_instances, "m", _AssistantStream_addEvent).call(this, event);
 		if (stream$2.controller.signal?.aborted) throw new APIUserAbortError();
-		return this._addRun(__classPrivateFieldGet(this, _AssistantStream_instances, "m", _AssistantStream_endRequest).call(this));
+		return this._addRun(__classPrivateFieldGet$1(this, _AssistantStream_instances, "m", _AssistantStream_endRequest).call(this));
 	}
 	static createThreadAssistantStream(params, thread, options) {
 		const runner = new AssistantStream();
@@ -62843,29 +62887,29 @@ var AssistantStream = class AssistantStream extends EventStream {
 		return runner;
 	}
 	currentEvent() {
-		return __classPrivateFieldGet(this, _AssistantStream_currentEvent, "f");
+		return __classPrivateFieldGet$1(this, _AssistantStream_currentEvent, "f");
 	}
 	currentRun() {
-		return __classPrivateFieldGet(this, _AssistantStream_currentRunSnapshot, "f");
+		return __classPrivateFieldGet$1(this, _AssistantStream_currentRunSnapshot, "f");
 	}
 	currentMessageSnapshot() {
-		return __classPrivateFieldGet(this, _AssistantStream_messageSnapshot, "f");
+		return __classPrivateFieldGet$1(this, _AssistantStream_messageSnapshot, "f");
 	}
 	currentRunStepSnapshot() {
-		return __classPrivateFieldGet(this, _AssistantStream_currentRunStepSnapshot, "f");
+		return __classPrivateFieldGet$1(this, _AssistantStream_currentRunStepSnapshot, "f");
 	}
 	async finalRunSteps() {
 		await this.done();
-		return Object.values(__classPrivateFieldGet(this, _AssistantStream_runStepSnapshots, "f"));
+		return Object.values(__classPrivateFieldGet$1(this, _AssistantStream_runStepSnapshots, "f"));
 	}
 	async finalMessages() {
 		await this.done();
-		return Object.values(__classPrivateFieldGet(this, _AssistantStream_messageSnapshots, "f"));
+		return Object.values(__classPrivateFieldGet$1(this, _AssistantStream_messageSnapshots, "f"));
 	}
 	async finalRun() {
 		await this.done();
-		if (!__classPrivateFieldGet(this, _AssistantStream_finalRun, "f")) throw Error("Final run was not received.");
-		return __classPrivateFieldGet(this, _AssistantStream_finalRun, "f");
+		if (!__classPrivateFieldGet$1(this, _AssistantStream_finalRun, "f")) throw Error("Final run was not received.");
+		return __classPrivateFieldGet$1(this, _AssistantStream_finalRun, "f");
 	}
 	async _createThreadAssistantStream(thread, params, options) {
 		const signal = options?.signal;
@@ -62882,9 +62926,9 @@ var AssistantStream = class AssistantStream extends EventStream {
 			signal: this.controller.signal
 		});
 		this._connected();
-		for await (const event of stream$2) __classPrivateFieldGet(this, _AssistantStream_instances, "m", _AssistantStream_addEvent).call(this, event);
+		for await (const event of stream$2) __classPrivateFieldGet$1(this, _AssistantStream_instances, "m", _AssistantStream_addEvent).call(this, event);
 		if (stream$2.controller.signal?.aborted) throw new APIUserAbortError();
-		return this._addRun(__classPrivateFieldGet(this, _AssistantStream_instances, "m", _AssistantStream_endRequest).call(this));
+		return this._addRun(__classPrivateFieldGet$1(this, _AssistantStream_instances, "m", _AssistantStream_endRequest).call(this));
 	}
 	async _createAssistantStream(run$1, threadId, params, options) {
 		const signal = options?.signal;
@@ -62901,9 +62945,9 @@ var AssistantStream = class AssistantStream extends EventStream {
 			signal: this.controller.signal
 		});
 		this._connected();
-		for await (const event of stream$2) __classPrivateFieldGet(this, _AssistantStream_instances, "m", _AssistantStream_addEvent).call(this, event);
+		for await (const event of stream$2) __classPrivateFieldGet$1(this, _AssistantStream_instances, "m", _AssistantStream_addEvent).call(this, event);
 		if (stream$2.controller.signal?.aborted) throw new APIUserAbortError();
-		return this._addRun(__classPrivateFieldGet(this, _AssistantStream_instances, "m", _AssistantStream_endRequest).call(this));
+		return this._addRun(__classPrivateFieldGet$1(this, _AssistantStream_instances, "m", _AssistantStream_endRequest).call(this));
 	}
 	static accumulateDelta(acc, delta) {
 		for (const [key, deltaValue] of Object.entries(delta)) {
@@ -62961,8 +63005,8 @@ var AssistantStream = class AssistantStream extends EventStream {
 };
 _AssistantStream_addEvent = function _AssistantStream_addEvent$1(event) {
 	if (this.ended) return;
-	__classPrivateFieldSet(this, _AssistantStream_currentEvent, event, "f");
-	__classPrivateFieldGet(this, _AssistantStream_instances, "m", _AssistantStream_handleEvent).call(this, event);
+	__classPrivateFieldSet$1(this, _AssistantStream_currentEvent, event, "f");
+	__classPrivateFieldGet$1(this, _AssistantStream_instances, "m", _AssistantStream_handleEvent).call(this, event);
 	switch (event.event) {
 		case "thread.created": break;
 		case "thread.run.created":
@@ -62975,7 +63019,7 @@ _AssistantStream_addEvent = function _AssistantStream_addEvent$1(event) {
 		case "thread.run.cancelling":
 		case "thread.run.cancelled":
 		case "thread.run.expired":
-			__classPrivateFieldGet(this, _AssistantStream_instances, "m", _AssistantStream_handleRun).call(this, event);
+			__classPrivateFieldGet$1(this, _AssistantStream_instances, "m", _AssistantStream_handleRun).call(this, event);
 			break;
 		case "thread.run.step.created":
 		case "thread.run.step.in_progress":
@@ -62984,26 +63028,26 @@ _AssistantStream_addEvent = function _AssistantStream_addEvent$1(event) {
 		case "thread.run.step.failed":
 		case "thread.run.step.cancelled":
 		case "thread.run.step.expired":
-			__classPrivateFieldGet(this, _AssistantStream_instances, "m", _AssistantStream_handleRunStep).call(this, event);
+			__classPrivateFieldGet$1(this, _AssistantStream_instances, "m", _AssistantStream_handleRunStep).call(this, event);
 			break;
 		case "thread.message.created":
 		case "thread.message.in_progress":
 		case "thread.message.delta":
 		case "thread.message.completed":
 		case "thread.message.incomplete":
-			__classPrivateFieldGet(this, _AssistantStream_instances, "m", _AssistantStream_handleMessage).call(this, event);
+			__classPrivateFieldGet$1(this, _AssistantStream_instances, "m", _AssistantStream_handleMessage).call(this, event);
 			break;
 		case "error": throw new Error("Encountered an error event in event processing - errors should be processed earlier");
 		default: assertNever(event);
 	}
 }, _AssistantStream_endRequest = function _AssistantStream_endRequest$1() {
 	if (this.ended) throw new OpenAIError(`stream has ended, this shouldn't happen`);
-	if (!__classPrivateFieldGet(this, _AssistantStream_finalRun, "f")) throw Error("Final run has not been received");
-	return __classPrivateFieldGet(this, _AssistantStream_finalRun, "f");
+	if (!__classPrivateFieldGet$1(this, _AssistantStream_finalRun, "f")) throw Error("Final run has not been received");
+	return __classPrivateFieldGet$1(this, _AssistantStream_finalRun, "f");
 }, _AssistantStream_handleMessage = function _AssistantStream_handleMessage$1(event) {
-	const [accumulatedMessage, newContent] = __classPrivateFieldGet(this, _AssistantStream_instances, "m", _AssistantStream_accumulateMessage).call(this, event, __classPrivateFieldGet(this, _AssistantStream_messageSnapshot, "f"));
-	__classPrivateFieldSet(this, _AssistantStream_messageSnapshot, accumulatedMessage, "f");
-	__classPrivateFieldGet(this, _AssistantStream_messageSnapshots, "f")[accumulatedMessage.id] = accumulatedMessage;
+	const [accumulatedMessage, newContent] = __classPrivateFieldGet$1(this, _AssistantStream_instances, "m", _AssistantStream_accumulateMessage).call(this, event, __classPrivateFieldGet$1(this, _AssistantStream_messageSnapshot, "f"));
+	__classPrivateFieldSet$1(this, _AssistantStream_messageSnapshot, accumulatedMessage, "f");
+	__classPrivateFieldGet$1(this, _AssistantStream_messageSnapshots, "f")[accumulatedMessage.id] = accumulatedMessage;
 	for (const content of newContent) {
 		const snapshotContent = accumulatedMessage.content[content.index];
 		if (snapshotContent?.type == "text") this._emit("textCreated", snapshotContent.text);
@@ -63022,51 +63066,51 @@ _AssistantStream_addEvent = function _AssistantStream_addEvent$1(event) {
 					if (snapshot && snapshot.type == "text") this._emit("textDelta", textDelta, snapshot.text);
 					else throw Error("The snapshot associated with this text delta is not text or missing");
 				}
-				if (content.index != __classPrivateFieldGet(this, _AssistantStream_currentContentIndex, "f")) {
-					if (__classPrivateFieldGet(this, _AssistantStream_currentContent, "f")) switch (__classPrivateFieldGet(this, _AssistantStream_currentContent, "f").type) {
+				if (content.index != __classPrivateFieldGet$1(this, _AssistantStream_currentContentIndex, "f")) {
+					if (__classPrivateFieldGet$1(this, _AssistantStream_currentContent, "f")) switch (__classPrivateFieldGet$1(this, _AssistantStream_currentContent, "f").type) {
 						case "text":
-							this._emit("textDone", __classPrivateFieldGet(this, _AssistantStream_currentContent, "f").text, __classPrivateFieldGet(this, _AssistantStream_messageSnapshot, "f"));
+							this._emit("textDone", __classPrivateFieldGet$1(this, _AssistantStream_currentContent, "f").text, __classPrivateFieldGet$1(this, _AssistantStream_messageSnapshot, "f"));
 							break;
 						case "image_file":
-							this._emit("imageFileDone", __classPrivateFieldGet(this, _AssistantStream_currentContent, "f").image_file, __classPrivateFieldGet(this, _AssistantStream_messageSnapshot, "f"));
+							this._emit("imageFileDone", __classPrivateFieldGet$1(this, _AssistantStream_currentContent, "f").image_file, __classPrivateFieldGet$1(this, _AssistantStream_messageSnapshot, "f"));
 							break;
 					}
-					__classPrivateFieldSet(this, _AssistantStream_currentContentIndex, content.index, "f");
+					__classPrivateFieldSet$1(this, _AssistantStream_currentContentIndex, content.index, "f");
 				}
-				__classPrivateFieldSet(this, _AssistantStream_currentContent, accumulatedMessage.content[content.index], "f");
+				__classPrivateFieldSet$1(this, _AssistantStream_currentContent, accumulatedMessage.content[content.index], "f");
 			}
 			break;
 		case "thread.message.completed":
 		case "thread.message.incomplete":
-			if (__classPrivateFieldGet(this, _AssistantStream_currentContentIndex, "f") !== void 0) {
-				const currentContent = event.data.content[__classPrivateFieldGet(this, _AssistantStream_currentContentIndex, "f")];
+			if (__classPrivateFieldGet$1(this, _AssistantStream_currentContentIndex, "f") !== void 0) {
+				const currentContent = event.data.content[__classPrivateFieldGet$1(this, _AssistantStream_currentContentIndex, "f")];
 				if (currentContent) switch (currentContent.type) {
 					case "image_file":
-						this._emit("imageFileDone", currentContent.image_file, __classPrivateFieldGet(this, _AssistantStream_messageSnapshot, "f"));
+						this._emit("imageFileDone", currentContent.image_file, __classPrivateFieldGet$1(this, _AssistantStream_messageSnapshot, "f"));
 						break;
 					case "text":
-						this._emit("textDone", currentContent.text, __classPrivateFieldGet(this, _AssistantStream_messageSnapshot, "f"));
+						this._emit("textDone", currentContent.text, __classPrivateFieldGet$1(this, _AssistantStream_messageSnapshot, "f"));
 						break;
 				}
 			}
-			if (__classPrivateFieldGet(this, _AssistantStream_messageSnapshot, "f")) this._emit("messageDone", event.data);
-			__classPrivateFieldSet(this, _AssistantStream_messageSnapshot, void 0, "f");
+			if (__classPrivateFieldGet$1(this, _AssistantStream_messageSnapshot, "f")) this._emit("messageDone", event.data);
+			__classPrivateFieldSet$1(this, _AssistantStream_messageSnapshot, void 0, "f");
 	}
 }, _AssistantStream_handleRunStep = function _AssistantStream_handleRunStep$1(event) {
-	const accumulatedRunStep = __classPrivateFieldGet(this, _AssistantStream_instances, "m", _AssistantStream_accumulateRunStep).call(this, event);
-	__classPrivateFieldSet(this, _AssistantStream_currentRunStepSnapshot, accumulatedRunStep, "f");
+	const accumulatedRunStep = __classPrivateFieldGet$1(this, _AssistantStream_instances, "m", _AssistantStream_accumulateRunStep).call(this, event);
+	__classPrivateFieldSet$1(this, _AssistantStream_currentRunStepSnapshot, accumulatedRunStep, "f");
 	switch (event.event) {
 		case "thread.run.step.created":
 			this._emit("runStepCreated", event.data);
 			break;
 		case "thread.run.step.delta":
 			const delta = event.data.delta;
-			if (delta.step_details && delta.step_details.type == "tool_calls" && delta.step_details.tool_calls && accumulatedRunStep.step_details.type == "tool_calls") for (const toolCall of delta.step_details.tool_calls) if (toolCall.index == __classPrivateFieldGet(this, _AssistantStream_currentToolCallIndex, "f")) this._emit("toolCallDelta", toolCall, accumulatedRunStep.step_details.tool_calls[toolCall.index]);
+			if (delta.step_details && delta.step_details.type == "tool_calls" && delta.step_details.tool_calls && accumulatedRunStep.step_details.type == "tool_calls") for (const toolCall of delta.step_details.tool_calls) if (toolCall.index == __classPrivateFieldGet$1(this, _AssistantStream_currentToolCallIndex, "f")) this._emit("toolCallDelta", toolCall, accumulatedRunStep.step_details.tool_calls[toolCall.index]);
 			else {
-				if (__classPrivateFieldGet(this, _AssistantStream_currentToolCall, "f")) this._emit("toolCallDone", __classPrivateFieldGet(this, _AssistantStream_currentToolCall, "f"));
-				__classPrivateFieldSet(this, _AssistantStream_currentToolCallIndex, toolCall.index, "f");
-				__classPrivateFieldSet(this, _AssistantStream_currentToolCall, accumulatedRunStep.step_details.tool_calls[toolCall.index], "f");
-				if (__classPrivateFieldGet(this, _AssistantStream_currentToolCall, "f")) this._emit("toolCallCreated", __classPrivateFieldGet(this, _AssistantStream_currentToolCall, "f"));
+				if (__classPrivateFieldGet$1(this, _AssistantStream_currentToolCall, "f")) this._emit("toolCallDone", __classPrivateFieldGet$1(this, _AssistantStream_currentToolCall, "f"));
+				__classPrivateFieldSet$1(this, _AssistantStream_currentToolCallIndex, toolCall.index, "f");
+				__classPrivateFieldSet$1(this, _AssistantStream_currentToolCall, accumulatedRunStep.step_details.tool_calls[toolCall.index], "f");
+				if (__classPrivateFieldGet$1(this, _AssistantStream_currentToolCall, "f")) this._emit("toolCallCreated", __classPrivateFieldGet$1(this, _AssistantStream_currentToolCall, "f"));
 			}
 			this._emit("runStepDelta", event.data.delta, accumulatedRunStep);
 			break;
@@ -63074,12 +63118,12 @@ _AssistantStream_addEvent = function _AssistantStream_addEvent$1(event) {
 		case "thread.run.step.failed":
 		case "thread.run.step.cancelled":
 		case "thread.run.step.expired":
-			__classPrivateFieldSet(this, _AssistantStream_currentRunStepSnapshot, void 0, "f");
+			__classPrivateFieldSet$1(this, _AssistantStream_currentRunStepSnapshot, void 0, "f");
 			const details = event.data.step_details;
 			if (details.type == "tool_calls") {
-				if (__classPrivateFieldGet(this, _AssistantStream_currentToolCall, "f")) {
-					this._emit("toolCallDone", __classPrivateFieldGet(this, _AssistantStream_currentToolCall, "f"));
-					__classPrivateFieldSet(this, _AssistantStream_currentToolCall, void 0, "f");
+				if (__classPrivateFieldGet$1(this, _AssistantStream_currentToolCall, "f")) {
+					this._emit("toolCallDone", __classPrivateFieldGet$1(this, _AssistantStream_currentToolCall, "f"));
+					__classPrivateFieldSet$1(this, _AssistantStream_currentToolCall, void 0, "f");
 				}
 			}
 			this._emit("runStepDone", event.data, accumulatedRunStep);
@@ -63087,31 +63131,31 @@ _AssistantStream_addEvent = function _AssistantStream_addEvent$1(event) {
 		case "thread.run.step.in_progress": break;
 	}
 }, _AssistantStream_handleEvent = function _AssistantStream_handleEvent$1(event) {
-	__classPrivateFieldGet(this, _AssistantStream_events, "f").push(event);
+	__classPrivateFieldGet$1(this, _AssistantStream_events, "f").push(event);
 	this._emit("event", event);
 }, _AssistantStream_accumulateRunStep = function _AssistantStream_accumulateRunStep$1(event) {
 	switch (event.event) {
 		case "thread.run.step.created":
-			__classPrivateFieldGet(this, _AssistantStream_runStepSnapshots, "f")[event.data.id] = event.data;
+			__classPrivateFieldGet$1(this, _AssistantStream_runStepSnapshots, "f")[event.data.id] = event.data;
 			return event.data;
 		case "thread.run.step.delta":
-			let snapshot = __classPrivateFieldGet(this, _AssistantStream_runStepSnapshots, "f")[event.data.id];
+			let snapshot = __classPrivateFieldGet$1(this, _AssistantStream_runStepSnapshots, "f")[event.data.id];
 			if (!snapshot) throw Error("Received a RunStepDelta before creation of a snapshot");
 			let data = event.data;
 			if (data.delta) {
 				const accumulated = AssistantStream.accumulateDelta(snapshot, data.delta);
-				__classPrivateFieldGet(this, _AssistantStream_runStepSnapshots, "f")[event.data.id] = accumulated;
+				__classPrivateFieldGet$1(this, _AssistantStream_runStepSnapshots, "f")[event.data.id] = accumulated;
 			}
-			return __classPrivateFieldGet(this, _AssistantStream_runStepSnapshots, "f")[event.data.id];
+			return __classPrivateFieldGet$1(this, _AssistantStream_runStepSnapshots, "f")[event.data.id];
 		case "thread.run.step.completed":
 		case "thread.run.step.failed":
 		case "thread.run.step.cancelled":
 		case "thread.run.step.expired":
 		case "thread.run.step.in_progress":
-			__classPrivateFieldGet(this, _AssistantStream_runStepSnapshots, "f")[event.data.id] = event.data;
+			__classPrivateFieldGet$1(this, _AssistantStream_runStepSnapshots, "f")[event.data.id] = event.data;
 			break;
 	}
-	if (__classPrivateFieldGet(this, _AssistantStream_runStepSnapshots, "f")[event.data.id]) return __classPrivateFieldGet(this, _AssistantStream_runStepSnapshots, "f")[event.data.id];
+	if (__classPrivateFieldGet$1(this, _AssistantStream_runStepSnapshots, "f")[event.data.id]) return __classPrivateFieldGet$1(this, _AssistantStream_runStepSnapshots, "f")[event.data.id];
 	throw new Error("No snapshot available");
 }, _AssistantStream_accumulateMessage = function _AssistantStream_accumulateMessage$1(event, snapshot) {
 	let newContent = [];
@@ -63122,7 +63166,7 @@ _AssistantStream_addEvent = function _AssistantStream_addEvent$1(event) {
 			let data = event.data;
 			if (data.delta.content) for (const contentElement of data.delta.content) if (contentElement.index in snapshot.content) {
 				let currentContent = snapshot.content[contentElement.index];
-				snapshot.content[contentElement.index] = __classPrivateFieldGet(this, _AssistantStream_instances, "m", _AssistantStream_accumulateContent).call(this, contentElement, currentContent);
+				snapshot.content[contentElement.index] = __classPrivateFieldGet$1(this, _AssistantStream_instances, "m", _AssistantStream_accumulateContent).call(this, contentElement, currentContent);
 			} else {
 				snapshot.content[contentElement.index] = contentElement;
 				newContent.push(contentElement);
@@ -63137,7 +63181,7 @@ _AssistantStream_addEvent = function _AssistantStream_addEvent$1(event) {
 }, _AssistantStream_accumulateContent = function _AssistantStream_accumulateContent$1(contentElement, currentContent) {
 	return AssistantStream.accumulateDelta(currentContent, contentElement);
 }, _AssistantStream_handleRun = function _AssistantStream_handleRun$1(event) {
-	__classPrivateFieldSet(this, _AssistantStream_currentRunSnapshot, event.data, "f");
+	__classPrivateFieldSet$1(this, _AssistantStream_currentRunSnapshot, event.data, "f");
 	switch (event.event) {
 		case "thread.run.created": break;
 		case "thread.run.queued": break;
@@ -63147,10 +63191,10 @@ _AssistantStream_addEvent = function _AssistantStream_addEvent$1(event) {
 		case "thread.run.failed":
 		case "thread.run.completed":
 		case "thread.run.expired":
-			__classPrivateFieldSet(this, _AssistantStream_finalRun, event.data, "f");
-			if (__classPrivateFieldGet(this, _AssistantStream_currentToolCall, "f")) {
-				this._emit("toolCallDone", __classPrivateFieldGet(this, _AssistantStream_currentToolCall, "f"));
-				__classPrivateFieldSet(this, _AssistantStream_currentToolCall, void 0, "f");
+			__classPrivateFieldSet$1(this, _AssistantStream_finalRun, event.data, "f");
+			if (__classPrivateFieldGet$1(this, _AssistantStream_currentToolCall, "f")) {
+				this._emit("toolCallDone", __classPrivateFieldGet$1(this, _AssistantStream_currentToolCall, "f"));
+				__classPrivateFieldSet$1(this, _AssistantStream_currentToolCall, void 0, "f");
 			}
 			break;
 		case "thread.run.cancelling": break;
@@ -63159,7 +63203,7 @@ _AssistantStream_addEvent = function _AssistantStream_addEvent$1(event) {
 function assertNever(_x) {}
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/beta/threads/messages.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/beta/threads/messages.mjs
 var Messages = class extends APIResource {
 	/**
 	* Create a message.
@@ -63227,7 +63271,7 @@ var MessagesPage = class extends CursorPage {};
 Messages.MessagesPage = MessagesPage;
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/beta/threads/runs/steps.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/beta/threads/runs/steps.mjs
 var Steps = class extends APIResource {
 	retrieve(threadId, runId, stepId, query = {}, options) {
 		if (isRequestOptions(query)) return this.retrieve(threadId, runId, stepId, {}, query);
@@ -63256,8 +63300,8 @@ var RunStepsPage = class extends CursorPage {};
 Steps.RunStepsPage = RunStepsPage;
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/beta/threads/runs/runs.mjs
-var Runs = class extends APIResource {
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/beta/threads/runs/runs.mjs
+var Runs$1 = class extends APIResource {
 	constructor() {
 		super(...arguments);
 		this.steps = new Steps(this._client);
@@ -63419,16 +63463,16 @@ var Runs = class extends APIResource {
 	}
 };
 var RunsPage = class extends CursorPage {};
-Runs.RunsPage = RunsPage;
-Runs.Steps = Steps;
-Runs.RunStepsPage = RunStepsPage;
+Runs$1.RunsPage = RunsPage;
+Runs$1.Steps = Steps;
+Runs$1.RunStepsPage = RunStepsPage;
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/beta/threads/threads.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/beta/threads/threads.mjs
 var Threads = class extends APIResource {
 	constructor() {
 		super(...arguments);
-		this.runs = new Runs(this._client);
+		this.runs = new Runs$1(this._client);
 		this.messages = new Messages(this._client);
 	}
 	create(body = {}, options) {
@@ -63506,13 +63550,944 @@ var Threads = class extends APIResource {
 		return AssistantStream.createThreadAssistantStream(body, this._client.beta.threads, options);
 	}
 };
-Threads.Runs = Runs;
+Threads.Runs = Runs$1;
 Threads.RunsPage = RunsPage;
 Threads.Messages = Messages;
 Threads.MessagesPage = MessagesPage;
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/lib/Util.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/beta/beta.mjs
+var Beta = class extends APIResource {
+	constructor() {
+		super(...arguments);
+		this.realtime = new Realtime(this._client);
+		this.chat = new Chat(this._client);
+		this.assistants = new Assistants(this._client);
+		this.threads = new Threads(this._client);
+	}
+};
+Beta.Realtime = Realtime;
+Beta.Assistants = Assistants;
+Beta.AssistantsPage = AssistantsPage;
+Beta.Threads = Threads;
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/completions.mjs
+var Completions = class extends APIResource {
+	create(body, options) {
+		return this._client.post("/completions", {
+			body,
+			...options,
+			stream: body.stream ?? false
+		});
+	}
+};
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/embeddings.mjs
+var Embeddings = class extends APIResource {
+	/**
+	* Creates an embedding vector representing the input text.
+	*/
+	create(body, options) {
+		const hasUserProvidedEncodingFormat = !!body.encoding_format;
+		let encoding_format = hasUserProvidedEncodingFormat ? body.encoding_format : "base64";
+		if (hasUserProvidedEncodingFormat) debug("Request", "User defined encoding_format:", body.encoding_format);
+		const response = this._client.post("/embeddings", {
+			body: {
+				...body,
+				encoding_format
+			},
+			...options
+		});
+		if (hasUserProvidedEncodingFormat) return response;
+		debug("response", "Decoding base64 embeddings to float32 array");
+		return response._thenUnwrap((response$1) => {
+			if (response$1 && response$1.data) response$1.data.forEach((embeddingBase64Obj) => {
+				const embeddingBase64Str = embeddingBase64Obj.embedding;
+				embeddingBase64Obj.embedding = toFloat32Array(embeddingBase64Str);
+			});
+			return response$1;
+		});
+	}
+};
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/evals/runs/output-items.mjs
+var OutputItems = class extends APIResource {
+	/**
+	* Get an evaluation run output item by ID.
+	*/
+	retrieve(evalId, runId, outputItemId, options) {
+		return this._client.get(`/evals/${evalId}/runs/${runId}/output_items/${outputItemId}`, options);
+	}
+	list(evalId, runId, query = {}, options) {
+		if (isRequestOptions(query)) return this.list(evalId, runId, {}, query);
+		return this._client.getAPIList(`/evals/${evalId}/runs/${runId}/output_items`, OutputItemListResponsesPage, {
+			query,
+			...options
+		});
+	}
+};
+var OutputItemListResponsesPage = class extends CursorPage {};
+OutputItems.OutputItemListResponsesPage = OutputItemListResponsesPage;
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/evals/runs/runs.mjs
+var Runs = class extends APIResource {
+	constructor() {
+		super(...arguments);
+		this.outputItems = new OutputItems(this._client);
+	}
+	/**
+	* Create a new evaluation run. This is the endpoint that will kick off grading.
+	*/
+	create(evalId, body, options) {
+		return this._client.post(`/evals/${evalId}/runs`, {
+			body,
+			...options
+		});
+	}
+	/**
+	* Get an evaluation run by ID.
+	*/
+	retrieve(evalId, runId, options) {
+		return this._client.get(`/evals/${evalId}/runs/${runId}`, options);
+	}
+	list(evalId, query = {}, options) {
+		if (isRequestOptions(query)) return this.list(evalId, {}, query);
+		return this._client.getAPIList(`/evals/${evalId}/runs`, RunListResponsesPage, {
+			query,
+			...options
+		});
+	}
+	/**
+	* Delete an eval run.
+	*/
+	del(evalId, runId, options) {
+		return this._client.delete(`/evals/${evalId}/runs/${runId}`, options);
+	}
+	/**
+	* Cancel an ongoing evaluation run.
+	*/
+	cancel(evalId, runId, options) {
+		return this._client.post(`/evals/${evalId}/runs/${runId}`, options);
+	}
+};
+var RunListResponsesPage = class extends CursorPage {};
+Runs.RunListResponsesPage = RunListResponsesPage;
+Runs.OutputItems = OutputItems;
+Runs.OutputItemListResponsesPage = OutputItemListResponsesPage;
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/evals/evals.mjs
+var Evals = class extends APIResource {
+	constructor() {
+		super(...arguments);
+		this.runs = new Runs(this._client);
+	}
+	/**
+	* Create the structure of an evaluation that can be used to test a model's
+	* performance. An evaluation is a set of testing criteria and a datasource. After
+	* creating an evaluation, you can run it on different models and model parameters.
+	* We support several types of graders and datasources. For more information, see
+	* the [Evals guide](https://platform.openai.com/docs/guides/evals).
+	*/
+	create(body, options) {
+		return this._client.post("/evals", {
+			body,
+			...options
+		});
+	}
+	/**
+	* Get an evaluation by ID.
+	*/
+	retrieve(evalId, options) {
+		return this._client.get(`/evals/${evalId}`, options);
+	}
+	/**
+	* Update certain properties of an evaluation.
+	*/
+	update(evalId, body, options) {
+		return this._client.post(`/evals/${evalId}`, {
+			body,
+			...options
+		});
+	}
+	list(query = {}, options) {
+		if (isRequestOptions(query)) return this.list({}, query);
+		return this._client.getAPIList("/evals", EvalListResponsesPage, {
+			query,
+			...options
+		});
+	}
+	/**
+	* Delete an evaluation.
+	*/
+	del(evalId, options) {
+		return this._client.delete(`/evals/${evalId}`, options);
+	}
+};
+var EvalListResponsesPage = class extends CursorPage {};
+Evals.EvalListResponsesPage = EvalListResponsesPage;
+Evals.Runs = Runs;
+Evals.RunListResponsesPage = RunListResponsesPage;
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/files.mjs
+var Files$1 = class extends APIResource {
+	/**
+	* Upload a file that can be used across various endpoints. Individual files can be
+	* up to 512 MB, and the size of all files uploaded by one organization can be up
+	* to 100 GB.
+	*
+	* The Assistants API supports files up to 2 million tokens and of specific file
+	* types. See the
+	* [Assistants Tools guide](https://platform.openai.com/docs/assistants/tools) for
+	* details.
+	*
+	* The Fine-tuning API only supports `.jsonl` files. The input also has certain
+	* required formats for fine-tuning
+	* [chat](https://platform.openai.com/docs/api-reference/fine-tuning/chat-input) or
+	* [completions](https://platform.openai.com/docs/api-reference/fine-tuning/completions-input)
+	* models.
+	*
+	* The Batch API only supports `.jsonl` files up to 200 MB in size. The input also
+	* has a specific required
+	* [format](https://platform.openai.com/docs/api-reference/batch/request-input).
+	*
+	* Please [contact us](https://help.openai.com/) if you need to increase these
+	* storage limits.
+	*/
+	create(body, options) {
+		return this._client.post("/files", multipartFormRequestOptions({
+			body,
+			...options
+		}));
+	}
+	/**
+	* Returns information about a specific file.
+	*/
+	retrieve(fileId, options) {
+		return this._client.get(`/files/${fileId}`, options);
+	}
+	list(query = {}, options) {
+		if (isRequestOptions(query)) return this.list({}, query);
+		return this._client.getAPIList("/files", FileObjectsPage, {
+			query,
+			...options
+		});
+	}
+	/**
+	* Delete a file.
+	*/
+	del(fileId, options) {
+		return this._client.delete(`/files/${fileId}`, options);
+	}
+	/**
+	* Returns the contents of the specified file.
+	*/
+	content(fileId, options) {
+		return this._client.get(`/files/${fileId}/content`, {
+			...options,
+			headers: {
+				Accept: "application/binary",
+				...options?.headers
+			},
+			__binaryResponse: true
+		});
+	}
+	/**
+	* Returns the contents of the specified file.
+	*
+	* @deprecated The `.content()` method should be used instead
+	*/
+	retrieveContent(fileId, options) {
+		return this._client.get(`/files/${fileId}/content`, options);
+	}
+	/**
+	* Waits for the given file to be processed, default timeout is 30 mins.
+	*/
+	async waitForProcessing(id, { pollInterval = 5e3, maxWait = 30 * 60 * 1e3 } = {}) {
+		const TERMINAL_STATES = new Set([
+			"processed",
+			"error",
+			"deleted"
+		]);
+		const start = Date.now();
+		let file = await this.retrieve(id);
+		while (!file.status || !TERMINAL_STATES.has(file.status)) {
+			await sleep(pollInterval);
+			file = await this.retrieve(id);
+			if (Date.now() - start > maxWait) throw new APIConnectionTimeoutError({ message: `Giving up on waiting for file ${id} to finish processing after ${maxWait} milliseconds.` });
+		}
+		return file;
+	}
+};
+var FileObjectsPage = class extends CursorPage {};
+Files$1.FileObjectsPage = FileObjectsPage;
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/fine-tuning/checkpoints/permissions.mjs
+var Permissions = class extends APIResource {
+	/**
+	* **NOTE:** Calling this endpoint requires an [admin API key](../admin-api-keys).
+	*
+	* This enables organization owners to share fine-tuned models with other projects
+	* in their organization.
+	*/
+	create(fineTunedModelCheckpoint, body, options) {
+		return this._client.getAPIList(`/fine_tuning/checkpoints/${fineTunedModelCheckpoint}/permissions`, PermissionCreateResponsesPage, {
+			body,
+			method: "post",
+			...options
+		});
+	}
+	retrieve(fineTunedModelCheckpoint, query = {}, options) {
+		if (isRequestOptions(query)) return this.retrieve(fineTunedModelCheckpoint, {}, query);
+		return this._client.get(`/fine_tuning/checkpoints/${fineTunedModelCheckpoint}/permissions`, {
+			query,
+			...options
+		});
+	}
+	/**
+	* **NOTE:** This endpoint requires an [admin API key](../admin-api-keys).
+	*
+	* Organization owners can use this endpoint to delete a permission for a
+	* fine-tuned model checkpoint.
+	*/
+	del(fineTunedModelCheckpoint, options) {
+		return this._client.delete(`/fine_tuning/checkpoints/${fineTunedModelCheckpoint}/permissions`, options);
+	}
+};
+var PermissionCreateResponsesPage = class extends Page {};
+Permissions.PermissionCreateResponsesPage = PermissionCreateResponsesPage;
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/fine-tuning/checkpoints/checkpoints.mjs
+var Checkpoints$1 = class extends APIResource {
+	constructor() {
+		super(...arguments);
+		this.permissions = new Permissions(this._client);
+	}
+};
+Checkpoints$1.Permissions = Permissions;
+Checkpoints$1.PermissionCreateResponsesPage = PermissionCreateResponsesPage;
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/fine-tuning/jobs/checkpoints.mjs
+var Checkpoints = class extends APIResource {
+	list(fineTuningJobId, query = {}, options) {
+		if (isRequestOptions(query)) return this.list(fineTuningJobId, {}, query);
+		return this._client.getAPIList(`/fine_tuning/jobs/${fineTuningJobId}/checkpoints`, FineTuningJobCheckpointsPage, {
+			query,
+			...options
+		});
+	}
+};
+var FineTuningJobCheckpointsPage = class extends CursorPage {};
+Checkpoints.FineTuningJobCheckpointsPage = FineTuningJobCheckpointsPage;
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/fine-tuning/jobs/jobs.mjs
+var Jobs = class extends APIResource {
+	constructor() {
+		super(...arguments);
+		this.checkpoints = new Checkpoints(this._client);
+	}
+	/**
+	* Creates a fine-tuning job which begins the process of creating a new model from
+	* a given dataset.
+	*
+	* Response includes details of the enqueued job including job status and the name
+	* of the fine-tuned models once complete.
+	*
+	* [Learn more about fine-tuning](https://platform.openai.com/docs/guides/fine-tuning)
+	*/
+	create(body, options) {
+		return this._client.post("/fine_tuning/jobs", {
+			body,
+			...options
+		});
+	}
+	/**
+	* Get info about a fine-tuning job.
+	*
+	* [Learn more about fine-tuning](https://platform.openai.com/docs/guides/fine-tuning)
+	*/
+	retrieve(fineTuningJobId, options) {
+		return this._client.get(`/fine_tuning/jobs/${fineTuningJobId}`, options);
+	}
+	list(query = {}, options) {
+		if (isRequestOptions(query)) return this.list({}, query);
+		return this._client.getAPIList("/fine_tuning/jobs", FineTuningJobsPage, {
+			query,
+			...options
+		});
+	}
+	/**
+	* Immediately cancel a fine-tune job.
+	*/
+	cancel(fineTuningJobId, options) {
+		return this._client.post(`/fine_tuning/jobs/${fineTuningJobId}/cancel`, options);
+	}
+	listEvents(fineTuningJobId, query = {}, options) {
+		if (isRequestOptions(query)) return this.listEvents(fineTuningJobId, {}, query);
+		return this._client.getAPIList(`/fine_tuning/jobs/${fineTuningJobId}/events`, FineTuningJobEventsPage, {
+			query,
+			...options
+		});
+	}
+};
+var FineTuningJobsPage = class extends CursorPage {};
+var FineTuningJobEventsPage = class extends CursorPage {};
+Jobs.FineTuningJobsPage = FineTuningJobsPage;
+Jobs.FineTuningJobEventsPage = FineTuningJobEventsPage;
+Jobs.Checkpoints = Checkpoints;
+Jobs.FineTuningJobCheckpointsPage = FineTuningJobCheckpointsPage;
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/fine-tuning/fine-tuning.mjs
+var FineTuning = class extends APIResource {
+	constructor() {
+		super(...arguments);
+		this.jobs = new Jobs(this._client);
+		this.checkpoints = new Checkpoints$1(this._client);
+	}
+};
+FineTuning.Jobs = Jobs;
+FineTuning.FineTuningJobsPage = FineTuningJobsPage;
+FineTuning.FineTuningJobEventsPage = FineTuningJobEventsPage;
+FineTuning.Checkpoints = Checkpoints$1;
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/images.mjs
+var Images = class extends APIResource {
+	/**
+	* Creates a variation of a given image.
+	*/
+	createVariation(body, options) {
+		return this._client.post("/images/variations", multipartFormRequestOptions({
+			body,
+			...options
+		}));
+	}
+	/**
+	* Creates an edited or extended image given an original image and a prompt.
+	*/
+	edit(body, options) {
+		return this._client.post("/images/edits", multipartFormRequestOptions({
+			body,
+			...options
+		}));
+	}
+	/**
+	* Creates an image given a prompt.
+	*/
+	generate(body, options) {
+		return this._client.post("/images/generations", {
+			body,
+			...options
+		});
+	}
+};
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/models.mjs
+var Models = class extends APIResource {
+	/**
+	* Retrieves a model instance, providing basic information about the model such as
+	* the owner and permissioning.
+	*/
+	retrieve(model, options) {
+		return this._client.get(`/models/${model}`, options);
+	}
+	/**
+	* Lists the currently available models, and provides basic information about each
+	* one such as the owner and availability.
+	*/
+	list(options) {
+		return this._client.getAPIList("/models", ModelsPage, options);
+	}
+	/**
+	* Delete a fine-tuned model. You must have the Owner role in your organization to
+	* delete a model.
+	*/
+	del(model, options) {
+		return this._client.delete(`/models/${model}`, options);
+	}
+};
+var ModelsPage = class extends Page {};
+Models.ModelsPage = ModelsPage;
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/moderations.mjs
+var Moderations = class extends APIResource {
+	/**
+	* Classifies if text and/or image inputs are potentially harmful. Learn more in
+	* the [moderation guide](https://platform.openai.com/docs/guides/moderation).
+	*/
+	create(body, options) {
+		return this._client.post("/moderations", {
+			body,
+			...options
+		});
+	}
+};
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/lib/ResponsesParser.mjs
+function maybeParseResponse(response, params) {
+	if (!params || !hasAutoParseableInput(params)) return {
+		...response,
+		output_parsed: null,
+		output: response.output.map((item) => {
+			if (item.type === "function_call") return {
+				...item,
+				parsed_arguments: null
+			};
+			if (item.type === "message") return {
+				...item,
+				content: item.content.map((content) => ({
+					...content,
+					parsed: null
+				}))
+			};
+			else return item;
+		})
+	};
+	return parseResponse(response, params);
+}
+function parseResponse(response, params) {
+	const output = response.output.map((item) => {
+		if (item.type === "function_call") return {
+			...item,
+			parsed_arguments: parseToolCall(params, item)
+		};
+		if (item.type === "message") {
+			const content = item.content.map((content$1) => {
+				if (content$1.type === "output_text") return {
+					...content$1,
+					parsed: parseTextFormat(params, content$1.text)
+				};
+				return content$1;
+			});
+			return {
+				...item,
+				content
+			};
+		}
+		return item;
+	});
+	const parsed = Object.assign({}, response, { output });
+	if (!Object.getOwnPropertyDescriptor(response, "output_text")) addOutputText(parsed);
+	Object.defineProperty(parsed, "output_parsed", {
+		enumerable: true,
+		get() {
+			for (const output$1 of parsed.output) {
+				if (output$1.type !== "message") continue;
+				for (const content of output$1.content) if (content.type === "output_text" && content.parsed !== null) return content.parsed;
+			}
+			return null;
+		}
+	});
+	return parsed;
+}
+function parseTextFormat(params, content) {
+	if (params.text?.format?.type !== "json_schema") return null;
+	if ("$parseRaw" in params.text?.format) {
+		const text_format = params.text?.format;
+		return text_format.$parseRaw(content);
+	}
+	return JSON.parse(content);
+}
+function hasAutoParseableInput(params) {
+	if (isAutoParsableResponseFormat(params.text?.format)) return true;
+	return false;
+}
+function isAutoParsableTool(tool) {
+	return tool?.["$brand"] === "auto-parseable-tool";
+}
+function getInputToolByName(input_tools, name) {
+	return input_tools.find((tool) => tool.type === "function" && tool.name === name);
+}
+function parseToolCall(params, toolCall) {
+	const inputTool = getInputToolByName(params.tools ?? [], toolCall.name);
+	return {
+		...toolCall,
+		...toolCall,
+		parsed_arguments: isAutoParsableTool(inputTool) ? inputTool.$parseRaw(toolCall.arguments) : inputTool?.strict ? JSON.parse(toolCall.arguments) : null
+	};
+}
+function addOutputText(rsp) {
+	const texts = [];
+	for (const output of rsp.output) {
+		if (output.type !== "message") continue;
+		for (const content of output.content) if (content.type === "output_text") texts.push(content.text);
+	}
+	rsp.output_text = texts.join("");
+}
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/responses/input-items.mjs
+var InputItems = class extends APIResource {
+	list(responseId, query = {}, options) {
+		if (isRequestOptions(query)) return this.list(responseId, {}, query);
+		return this._client.getAPIList(`/responses/${responseId}/input_items`, ResponseItemsPage, {
+			query,
+			...options
+		});
+	}
+};
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/lib/responses/ResponseStream.mjs
+var __classPrivateFieldSet = void 0 && (void 0).__classPrivateFieldSet || function(receiver, state, value, kind$1, f) {
+	if (kind$1 === "m") throw new TypeError("Private method is not writable");
+	if (kind$1 === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+	if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+	return kind$1 === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
+};
+var __classPrivateFieldGet = void 0 && (void 0).__classPrivateFieldGet || function(receiver, state, kind$1, f) {
+	if (kind$1 === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+	if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+	return kind$1 === "m" ? f : kind$1 === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+};
+var _ResponseStream_instances, _ResponseStream_params, _ResponseStream_currentResponseSnapshot, _ResponseStream_finalResponse, _ResponseStream_beginRequest, _ResponseStream_addEvent, _ResponseStream_endRequest, _ResponseStream_accumulateResponse;
+var ResponseStream = class ResponseStream extends EventStream {
+	constructor(params) {
+		super();
+		_ResponseStream_instances.add(this);
+		_ResponseStream_params.set(this, void 0);
+		_ResponseStream_currentResponseSnapshot.set(this, void 0);
+		_ResponseStream_finalResponse.set(this, void 0);
+		__classPrivateFieldSet(this, _ResponseStream_params, params, "f");
+	}
+	static createResponse(client, params, options) {
+		const runner = new ResponseStream(params);
+		runner._run(() => runner._createResponse(client, params, {
+			...options,
+			headers: {
+				...options?.headers,
+				"X-Stainless-Helper-Method": "stream"
+			}
+		}));
+		return runner;
+	}
+	async _createResponse(client, params, options) {
+		const signal = options?.signal;
+		if (signal) {
+			if (signal.aborted) this.controller.abort();
+			signal.addEventListener("abort", () => this.controller.abort());
+		}
+		__classPrivateFieldGet(this, _ResponseStream_instances, "m", _ResponseStream_beginRequest).call(this);
+		const stream$2 = await client.responses.create({
+			...params,
+			stream: true
+		}, {
+			...options,
+			signal: this.controller.signal
+		});
+		this._connected();
+		for await (const event of stream$2) __classPrivateFieldGet(this, _ResponseStream_instances, "m", _ResponseStream_addEvent).call(this, event);
+		if (stream$2.controller.signal?.aborted) throw new APIUserAbortError();
+		return __classPrivateFieldGet(this, _ResponseStream_instances, "m", _ResponseStream_endRequest).call(this);
+	}
+	[(_ResponseStream_params = new WeakMap(), _ResponseStream_currentResponseSnapshot = new WeakMap(), _ResponseStream_finalResponse = new WeakMap(), _ResponseStream_instances = new WeakSet(), _ResponseStream_beginRequest = function _ResponseStream_beginRequest$1() {
+		if (this.ended) return;
+		__classPrivateFieldSet(this, _ResponseStream_currentResponseSnapshot, void 0, "f");
+	}, _ResponseStream_addEvent = function _ResponseStream_addEvent$1(event) {
+		if (this.ended) return;
+		const response = __classPrivateFieldGet(this, _ResponseStream_instances, "m", _ResponseStream_accumulateResponse).call(this, event);
+		this._emit("event", event);
+		switch (event.type) {
+			case "response.output_text.delta": {
+				const output = response.output[event.output_index];
+				if (!output) throw new OpenAIError(`missing output at index ${event.output_index}`);
+				if (output.type === "message") {
+					const content = output.content[event.content_index];
+					if (!content) throw new OpenAIError(`missing content at index ${event.content_index}`);
+					if (content.type !== "output_text") throw new OpenAIError(`expected content to be 'output_text', got ${content.type}`);
+					this._emit("response.output_text.delta", {
+						...event,
+						snapshot: content.text
+					});
+				}
+				break;
+			}
+			case "response.function_call_arguments.delta": {
+				const output = response.output[event.output_index];
+				if (!output) throw new OpenAIError(`missing output at index ${event.output_index}`);
+				if (output.type === "function_call") this._emit("response.function_call_arguments.delta", {
+					...event,
+					snapshot: output.arguments
+				});
+				break;
+			}
+			default:
+				this._emit(event.type, event);
+				break;
+		}
+	}, _ResponseStream_endRequest = function _ResponseStream_endRequest$1() {
+		if (this.ended) throw new OpenAIError(`stream has ended, this shouldn't happen`);
+		const snapshot = __classPrivateFieldGet(this, _ResponseStream_currentResponseSnapshot, "f");
+		if (!snapshot) throw new OpenAIError(`request ended without sending any events`);
+		__classPrivateFieldSet(this, _ResponseStream_currentResponseSnapshot, void 0, "f");
+		const parsedResponse = finalizeResponse(snapshot, __classPrivateFieldGet(this, _ResponseStream_params, "f"));
+		__classPrivateFieldSet(this, _ResponseStream_finalResponse, parsedResponse, "f");
+		return parsedResponse;
+	}, _ResponseStream_accumulateResponse = function _ResponseStream_accumulateResponse$1(event) {
+		let snapshot = __classPrivateFieldGet(this, _ResponseStream_currentResponseSnapshot, "f");
+		if (!snapshot) {
+			if (event.type !== "response.created") throw new OpenAIError(`When snapshot hasn't been set yet, expected 'response.created' event, got ${event.type}`);
+			snapshot = __classPrivateFieldSet(this, _ResponseStream_currentResponseSnapshot, event.response, "f");
+			return snapshot;
+		}
+		switch (event.type) {
+			case "response.output_item.added": {
+				snapshot.output.push(event.item);
+				break;
+			}
+			case "response.content_part.added": {
+				const output = snapshot.output[event.output_index];
+				if (!output) throw new OpenAIError(`missing output at index ${event.output_index}`);
+				if (output.type === "message") output.content.push(event.part);
+				break;
+			}
+			case "response.output_text.delta": {
+				const output = snapshot.output[event.output_index];
+				if (!output) throw new OpenAIError(`missing output at index ${event.output_index}`);
+				if (output.type === "message") {
+					const content = output.content[event.content_index];
+					if (!content) throw new OpenAIError(`missing content at index ${event.content_index}`);
+					if (content.type !== "output_text") throw new OpenAIError(`expected content to be 'output_text', got ${content.type}`);
+					content.text += event.delta;
+				}
+				break;
+			}
+			case "response.function_call_arguments.delta": {
+				const output = snapshot.output[event.output_index];
+				if (!output) throw new OpenAIError(`missing output at index ${event.output_index}`);
+				if (output.type === "function_call") output.arguments += event.delta;
+				break;
+			}
+			case "response.completed": {
+				__classPrivateFieldSet(this, _ResponseStream_currentResponseSnapshot, event.response, "f");
+				break;
+			}
+		}
+		return snapshot;
+	}, Symbol.asyncIterator)]() {
+		const pushQueue = [];
+		const readQueue = [];
+		let done = false;
+		this.on("event", (event) => {
+			const reader = readQueue.shift();
+			if (reader) reader.resolve(event);
+			else pushQueue.push(event);
+		});
+		this.on("end", () => {
+			done = true;
+			for (const reader of readQueue) reader.resolve(void 0);
+			readQueue.length = 0;
+		});
+		this.on("abort", (err) => {
+			done = true;
+			for (const reader of readQueue) reader.reject(err);
+			readQueue.length = 0;
+		});
+		this.on("error", (err) => {
+			done = true;
+			for (const reader of readQueue) reader.reject(err);
+			readQueue.length = 0;
+		});
+		return {
+			next: async () => {
+				if (!pushQueue.length) {
+					if (done) return {
+						value: void 0,
+						done: true
+					};
+					return new Promise((resolve, reject) => readQueue.push({
+						resolve,
+						reject
+					})).then((event$1) => event$1 ? {
+						value: event$1,
+						done: false
+					} : {
+						value: void 0,
+						done: true
+					});
+				}
+				const event = pushQueue.shift();
+				return {
+					value: event,
+					done: false
+				};
+			},
+			return: async () => {
+				this.abort();
+				return {
+					value: void 0,
+					done: true
+				};
+			}
+		};
+	}
+	/**
+	* @returns a promise that resolves with the final Response, or rejects
+	* if an error occurred or the stream ended prematurely without producing a REsponse.
+	*/
+	async finalResponse() {
+		await this.done();
+		const response = __classPrivateFieldGet(this, _ResponseStream_finalResponse, "f");
+		if (!response) throw new OpenAIError("stream ended without producing a ChatCompletion");
+		return response;
+	}
+};
+function finalizeResponse(snapshot, params) {
+	return maybeParseResponse(snapshot, params);
+}
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/responses/responses.mjs
+var Responses = class extends APIResource {
+	constructor() {
+		super(...arguments);
+		this.inputItems = new InputItems(this._client);
+	}
+	create(body, options) {
+		return this._client.post("/responses", {
+			body,
+			...options,
+			stream: body.stream ?? false
+		})._thenUnwrap((rsp) => {
+			if ("object" in rsp && rsp.object === "response") addOutputText(rsp);
+			return rsp;
+		});
+	}
+	retrieve(responseId, query = {}, options) {
+		if (isRequestOptions(query)) return this.retrieve(responseId, {}, query);
+		return this._client.get(`/responses/${responseId}`, {
+			query,
+			...options
+		});
+	}
+	/**
+	* Deletes a model response with the given ID.
+	*/
+	del(responseId, options) {
+		return this._client.delete(`/responses/${responseId}`, {
+			...options,
+			headers: {
+				Accept: "*/*",
+				...options?.headers
+			}
+		});
+	}
+	parse(body, options) {
+		return this._client.responses.create(body, options)._thenUnwrap((response) => parseResponse(response, body));
+	}
+	/**
+	* Creates a model response stream
+	*/
+	stream(body, options) {
+		return ResponseStream.createResponse(this._client, body, options);
+	}
+};
+var ResponseItemsPage = class extends CursorPage {};
+Responses.InputItems = InputItems;
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/uploads/parts.mjs
+var Parts = class extends APIResource {
+	/**
+	* Adds a
+	* [Part](https://platform.openai.com/docs/api-reference/uploads/part-object) to an
+	* [Upload](https://platform.openai.com/docs/api-reference/uploads/object) object.
+	* A Part represents a chunk of bytes from the file you are trying to upload.
+	*
+	* Each Part can be at most 64 MB, and you can add Parts until you hit the Upload
+	* maximum of 8 GB.
+	*
+	* It is possible to add multiple Parts in parallel. You can decide the intended
+	* order of the Parts when you
+	* [complete the Upload](https://platform.openai.com/docs/api-reference/uploads/complete).
+	*/
+	create(uploadId, body, options) {
+		return this._client.post(`/uploads/${uploadId}/parts`, multipartFormRequestOptions({
+			body,
+			...options
+		}));
+	}
+};
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/uploads/uploads.mjs
+var Uploads = class extends APIResource {
+	constructor() {
+		super(...arguments);
+		this.parts = new Parts(this._client);
+	}
+	/**
+	* Creates an intermediate
+	* [Upload](https://platform.openai.com/docs/api-reference/uploads/object) object
+	* that you can add
+	* [Parts](https://platform.openai.com/docs/api-reference/uploads/part-object) to.
+	* Currently, an Upload can accept at most 8 GB in total and expires after an hour
+	* after you create it.
+	*
+	* Once you complete the Upload, we will create a
+	* [File](https://platform.openai.com/docs/api-reference/files/object) object that
+	* contains all the parts you uploaded. This File is usable in the rest of our
+	* platform as a regular File object.
+	*
+	* For certain `purpose` values, the correct `mime_type` must be specified. Please
+	* refer to documentation for the
+	* [supported MIME types for your use case](https://platform.openai.com/docs/assistants/tools/file-search#supported-files).
+	*
+	* For guidance on the proper filename extensions for each purpose, please follow
+	* the documentation on
+	* [creating a File](https://platform.openai.com/docs/api-reference/files/create).
+	*/
+	create(body, options) {
+		return this._client.post("/uploads", {
+			body,
+			...options
+		});
+	}
+	/**
+	* Cancels the Upload. No Parts may be added after an Upload is cancelled.
+	*/
+	cancel(uploadId, options) {
+		return this._client.post(`/uploads/${uploadId}/cancel`, options);
+	}
+	/**
+	* Completes the
+	* [Upload](https://platform.openai.com/docs/api-reference/uploads/object).
+	*
+	* Within the returned Upload object, there is a nested
+	* [File](https://platform.openai.com/docs/api-reference/files/object) object that
+	* is ready to use in the rest of the platform.
+	*
+	* You can specify the order of the Parts by passing in an ordered list of the Part
+	* IDs.
+	*
+	* The number of bytes uploaded upon completion must match the number of bytes
+	* initially specified when creating the Upload object. No Parts may be added after
+	* an Upload is completed.
+	*/
+	complete(uploadId, body, options) {
+		return this._client.post(`/uploads/${uploadId}/complete`, {
+			body,
+			...options
+		});
+	}
+};
+Uploads.Parts = Parts;
+
+//#endregion
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/lib/Util.mjs
 const allSettledWithThrow = async (promises) => {
 	const results = await Promise.allSettled(promises);
 	const rejected = results.filter((result) => result.status === "rejected");
@@ -63526,8 +64501,8 @@ const allSettledWithThrow = async (promises) => {
 };
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/beta/vector-stores/files.mjs
-var Files$1 = class extends APIResource {
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/vector-stores/files.mjs
+var Files = class extends APIResource {
 	/**
 	* Create a vector store file by attaching a
 	* [File](https://platform.openai.com/docs/api-reference/files) to a
@@ -63548,6 +64523,19 @@ var Files$1 = class extends APIResource {
 	*/
 	retrieve(vectorStoreId, fileId, options) {
 		return this._client.get(`/vector_stores/${vectorStoreId}/files/${fileId}`, {
+			...options,
+			headers: {
+				"OpenAI-Beta": "assistants=v2",
+				...options?.headers
+			}
+		});
+	}
+	/**
+	* Update attributes on a vector store file.
+	*/
+	update(vectorStoreId, fileId, body, options) {
+		return this._client.post(`/vector_stores/${vectorStoreId}/files/${fileId}`, {
+			body,
 			...options,
 			headers: {
 				"OpenAI-Beta": "assistants=v2",
@@ -63644,12 +64632,26 @@ var Files$1 = class extends APIResource {
 		const fileInfo = await this.upload(vectorStoreId, file, options);
 		return await this.poll(vectorStoreId, fileInfo.id, options);
 	}
+	/**
+	* Retrieve the parsed contents of a vector store file.
+	*/
+	content(vectorStoreId, fileId, options) {
+		return this._client.getAPIList(`/vector_stores/${vectorStoreId}/files/${fileId}/content`, FileContentResponsesPage, {
+			...options,
+			headers: {
+				"OpenAI-Beta": "assistants=v2",
+				...options?.headers
+			}
+		});
+	}
 };
 var VectorStoreFilesPage = class extends CursorPage {};
-Files$1.VectorStoreFilesPage = VectorStoreFilesPage;
+var FileContentResponsesPage = class extends Page {};
+Files.VectorStoreFilesPage = VectorStoreFilesPage;
+Files.FileContentResponsesPage = FileContentResponsesPage;
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/beta/vector-stores/file-batches.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/vector-stores/file-batches.mjs
 var FileBatches = class extends APIResource {
 	/**
 	* Create a vector store file batch.
@@ -63771,11 +64773,11 @@ var FileBatches = class extends APIResource {
 };
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/beta/vector-stores/vector-stores.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/resources/vector-stores/vector-stores.mjs
 var VectorStores = class extends APIResource {
 	constructor() {
 		super(...arguments);
-		this.files = new Files$1(this._client);
+		this.files = new Files(this._client);
 		this.fileBatches = new FileBatches(this._client);
 	}
 	/**
@@ -63839,402 +64841,33 @@ var VectorStores = class extends APIResource {
 			}
 		});
 	}
+	/**
+	* Search a vector store for relevant chunks based on a query and file attributes
+	* filter.
+	*/
+	search(vectorStoreId, body, options) {
+		return this._client.getAPIList(`/vector_stores/${vectorStoreId}/search`, VectorStoreSearchResponsesPage, {
+			body,
+			method: "post",
+			...options,
+			headers: {
+				"OpenAI-Beta": "assistants=v2",
+				...options?.headers
+			}
+		});
+	}
 };
 var VectorStoresPage = class extends CursorPage {};
+var VectorStoreSearchResponsesPage = class extends Page {};
 VectorStores.VectorStoresPage = VectorStoresPage;
-VectorStores.Files = Files$1;
+VectorStores.VectorStoreSearchResponsesPage = VectorStoreSearchResponsesPage;
+VectorStores.Files = Files;
 VectorStores.VectorStoreFilesPage = VectorStoreFilesPage;
+VectorStores.FileContentResponsesPage = FileContentResponsesPage;
 VectorStores.FileBatches = FileBatches;
 
 //#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/beta/beta.mjs
-var Beta = class extends APIResource {
-	constructor() {
-		super(...arguments);
-		this.realtime = new Realtime(this._client);
-		this.vectorStores = new VectorStores(this._client);
-		this.chat = new Chat(this._client);
-		this.assistants = new Assistants(this._client);
-		this.threads = new Threads(this._client);
-	}
-};
-Beta.Realtime = Realtime;
-Beta.VectorStores = VectorStores;
-Beta.VectorStoresPage = VectorStoresPage;
-Beta.Assistants = Assistants;
-Beta.AssistantsPage = AssistantsPage;
-Beta.Threads = Threads;
-
-//#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/completions.mjs
-var Completions = class extends APIResource {
-	create(body, options) {
-		return this._client.post("/completions", {
-			body,
-			...options,
-			stream: body.stream ?? false
-		});
-	}
-};
-
-//#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/embeddings.mjs
-var Embeddings = class extends APIResource {
-	/**
-	* Creates an embedding vector representing the input text.
-	*/
-	create(body, options) {
-		return this._client.post("/embeddings", {
-			body,
-			...options
-		});
-	}
-};
-
-//#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/files.mjs
-var Files = class extends APIResource {
-	/**
-	* Upload a file that can be used across various endpoints. Individual files can be
-	* up to 512 MB, and the size of all files uploaded by one organization can be up
-	* to 100 GB.
-	*
-	* The Assistants API supports files up to 2 million tokens and of specific file
-	* types. See the
-	* [Assistants Tools guide](https://platform.openai.com/docs/assistants/tools) for
-	* details.
-	*
-	* The Fine-tuning API only supports `.jsonl` files. The input also has certain
-	* required formats for fine-tuning
-	* [chat](https://platform.openai.com/docs/api-reference/fine-tuning/chat-input) or
-	* [completions](https://platform.openai.com/docs/api-reference/fine-tuning/completions-input)
-	* models.
-	*
-	* The Batch API only supports `.jsonl` files up to 200 MB in size. The input also
-	* has a specific required
-	* [format](https://platform.openai.com/docs/api-reference/batch/request-input).
-	*
-	* Please [contact us](https://help.openai.com/) if you need to increase these
-	* storage limits.
-	*/
-	create(body, options) {
-		return this._client.post("/files", multipartFormRequestOptions({
-			body,
-			...options
-		}));
-	}
-	/**
-	* Returns information about a specific file.
-	*/
-	retrieve(fileId, options) {
-		return this._client.get(`/files/${fileId}`, options);
-	}
-	list(query = {}, options) {
-		if (isRequestOptions(query)) return this.list({}, query);
-		return this._client.getAPIList("/files", FileObjectsPage, {
-			query,
-			...options
-		});
-	}
-	/**
-	* Delete a file.
-	*/
-	del(fileId, options) {
-		return this._client.delete(`/files/${fileId}`, options);
-	}
-	/**
-	* Returns the contents of the specified file.
-	*/
-	content(fileId, options) {
-		return this._client.get(`/files/${fileId}/content`, {
-			...options,
-			headers: {
-				Accept: "application/binary",
-				...options?.headers
-			},
-			__binaryResponse: true
-		});
-	}
-	/**
-	* Returns the contents of the specified file.
-	*
-	* @deprecated The `.content()` method should be used instead
-	*/
-	retrieveContent(fileId, options) {
-		return this._client.get(`/files/${fileId}/content`, options);
-	}
-	/**
-	* Waits for the given file to be processed, default timeout is 30 mins.
-	*/
-	async waitForProcessing(id, { pollInterval = 5e3, maxWait = 30 * 60 * 1e3 } = {}) {
-		const TERMINAL_STATES = new Set([
-			"processed",
-			"error",
-			"deleted"
-		]);
-		const start = Date.now();
-		let file = await this.retrieve(id);
-		while (!file.status || !TERMINAL_STATES.has(file.status)) {
-			await sleep(pollInterval);
-			file = await this.retrieve(id);
-			if (Date.now() - start > maxWait) throw new APIConnectionTimeoutError({ message: `Giving up on waiting for file ${id} to finish processing after ${maxWait} milliseconds.` });
-		}
-		return file;
-	}
-};
-var FileObjectsPage = class extends CursorPage {};
-Files.FileObjectsPage = FileObjectsPage;
-
-//#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/fine-tuning/jobs/checkpoints.mjs
-var Checkpoints = class extends APIResource {
-	list(fineTuningJobId, query = {}, options) {
-		if (isRequestOptions(query)) return this.list(fineTuningJobId, {}, query);
-		return this._client.getAPIList(`/fine_tuning/jobs/${fineTuningJobId}/checkpoints`, FineTuningJobCheckpointsPage, {
-			query,
-			...options
-		});
-	}
-};
-var FineTuningJobCheckpointsPage = class extends CursorPage {};
-Checkpoints.FineTuningJobCheckpointsPage = FineTuningJobCheckpointsPage;
-
-//#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/fine-tuning/jobs/jobs.mjs
-var Jobs = class extends APIResource {
-	constructor() {
-		super(...arguments);
-		this.checkpoints = new Checkpoints(this._client);
-	}
-	/**
-	* Creates a fine-tuning job which begins the process of creating a new model from
-	* a given dataset.
-	*
-	* Response includes details of the enqueued job including job status and the name
-	* of the fine-tuned models once complete.
-	*
-	* [Learn more about fine-tuning](https://platform.openai.com/docs/guides/fine-tuning)
-	*/
-	create(body, options) {
-		return this._client.post("/fine_tuning/jobs", {
-			body,
-			...options
-		});
-	}
-	/**
-	* Get info about a fine-tuning job.
-	*
-	* [Learn more about fine-tuning](https://platform.openai.com/docs/guides/fine-tuning)
-	*/
-	retrieve(fineTuningJobId, options) {
-		return this._client.get(`/fine_tuning/jobs/${fineTuningJobId}`, options);
-	}
-	list(query = {}, options) {
-		if (isRequestOptions(query)) return this.list({}, query);
-		return this._client.getAPIList("/fine_tuning/jobs", FineTuningJobsPage, {
-			query,
-			...options
-		});
-	}
-	/**
-	* Immediately cancel a fine-tune job.
-	*/
-	cancel(fineTuningJobId, options) {
-		return this._client.post(`/fine_tuning/jobs/${fineTuningJobId}/cancel`, options);
-	}
-	listEvents(fineTuningJobId, query = {}, options) {
-		if (isRequestOptions(query)) return this.listEvents(fineTuningJobId, {}, query);
-		return this._client.getAPIList(`/fine_tuning/jobs/${fineTuningJobId}/events`, FineTuningJobEventsPage, {
-			query,
-			...options
-		});
-	}
-};
-var FineTuningJobsPage = class extends CursorPage {};
-var FineTuningJobEventsPage = class extends CursorPage {};
-Jobs.FineTuningJobsPage = FineTuningJobsPage;
-Jobs.FineTuningJobEventsPage = FineTuningJobEventsPage;
-Jobs.Checkpoints = Checkpoints;
-Jobs.FineTuningJobCheckpointsPage = FineTuningJobCheckpointsPage;
-
-//#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/fine-tuning/fine-tuning.mjs
-var FineTuning = class extends APIResource {
-	constructor() {
-		super(...arguments);
-		this.jobs = new Jobs(this._client);
-	}
-};
-FineTuning.Jobs = Jobs;
-FineTuning.FineTuningJobsPage = FineTuningJobsPage;
-FineTuning.FineTuningJobEventsPage = FineTuningJobEventsPage;
-
-//#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/images.mjs
-var Images = class extends APIResource {
-	/**
-	* Creates a variation of a given image.
-	*/
-	createVariation(body, options) {
-		return this._client.post("/images/variations", multipartFormRequestOptions({
-			body,
-			...options
-		}));
-	}
-	/**
-	* Creates an edited or extended image given an original image and a prompt.
-	*/
-	edit(body, options) {
-		return this._client.post("/images/edits", multipartFormRequestOptions({
-			body,
-			...options
-		}));
-	}
-	/**
-	* Creates an image given a prompt.
-	*/
-	generate(body, options) {
-		return this._client.post("/images/generations", {
-			body,
-			...options
-		});
-	}
-};
-
-//#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/models.mjs
-var Models = class extends APIResource {
-	/**
-	* Retrieves a model instance, providing basic information about the model such as
-	* the owner and permissioning.
-	*/
-	retrieve(model, options) {
-		return this._client.get(`/models/${model}`, options);
-	}
-	/**
-	* Lists the currently available models, and provides basic information about each
-	* one such as the owner and availability.
-	*/
-	list(options) {
-		return this._client.getAPIList("/models", ModelsPage, options);
-	}
-	/**
-	* Delete a fine-tuned model. You must have the Owner role in your organization to
-	* delete a model.
-	*/
-	del(model, options) {
-		return this._client.delete(`/models/${model}`, options);
-	}
-};
-var ModelsPage = class extends Page {};
-Models.ModelsPage = ModelsPage;
-
-//#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/moderations.mjs
-var Moderations = class extends APIResource {
-	/**
-	* Classifies if text and/or image inputs are potentially harmful. Learn more in
-	* the [moderation guide](https://platform.openai.com/docs/guides/moderation).
-	*/
-	create(body, options) {
-		return this._client.post("/moderations", {
-			body,
-			...options
-		});
-	}
-};
-
-//#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/uploads/parts.mjs
-var Parts = class extends APIResource {
-	/**
-	* Adds a
-	* [Part](https://platform.openai.com/docs/api-reference/uploads/part-object) to an
-	* [Upload](https://platform.openai.com/docs/api-reference/uploads/object) object.
-	* A Part represents a chunk of bytes from the file you are trying to upload.
-	*
-	* Each Part can be at most 64 MB, and you can add Parts until you hit the Upload
-	* maximum of 8 GB.
-	*
-	* It is possible to add multiple Parts in parallel. You can decide the intended
-	* order of the Parts when you
-	* [complete the Upload](https://platform.openai.com/docs/api-reference/uploads/complete).
-	*/
-	create(uploadId, body, options) {
-		return this._client.post(`/uploads/${uploadId}/parts`, multipartFormRequestOptions({
-			body,
-			...options
-		}));
-	}
-};
-
-//#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/resources/uploads/uploads.mjs
-var Uploads = class extends APIResource {
-	constructor() {
-		super(...arguments);
-		this.parts = new Parts(this._client);
-	}
-	/**
-	* Creates an intermediate
-	* [Upload](https://platform.openai.com/docs/api-reference/uploads/object) object
-	* that you can add
-	* [Parts](https://platform.openai.com/docs/api-reference/uploads/part-object) to.
-	* Currently, an Upload can accept at most 8 GB in total and expires after an hour
-	* after you create it.
-	*
-	* Once you complete the Upload, we will create a
-	* [File](https://platform.openai.com/docs/api-reference/files/object) object that
-	* contains all the parts you uploaded. This File is usable in the rest of our
-	* platform as a regular File object.
-	*
-	* For certain `purpose`s, the correct `mime_type` must be specified. Please refer
-	* to documentation for the supported MIME types for your use case:
-	*
-	* - [Assistants](https://platform.openai.com/docs/assistants/tools/file-search#supported-files)
-	*
-	* For guidance on the proper filename extensions for each purpose, please follow
-	* the documentation on
-	* [creating a File](https://platform.openai.com/docs/api-reference/files/create).
-	*/
-	create(body, options) {
-		return this._client.post("/uploads", {
-			body,
-			...options
-		});
-	}
-	/**
-	* Cancels the Upload. No Parts may be added after an Upload is cancelled.
-	*/
-	cancel(uploadId, options) {
-		return this._client.post(`/uploads/${uploadId}/cancel`, options);
-	}
-	/**
-	* Completes the
-	* [Upload](https://platform.openai.com/docs/api-reference/uploads/object).
-	*
-	* Within the returned Upload object, there is a nested
-	* [File](https://platform.openai.com/docs/api-reference/files/object) object that
-	* is ready to use in the rest of the platform.
-	*
-	* You can specify the order of the Parts by passing in an ordered list of the Part
-	* IDs.
-	*
-	* The number of bytes uploaded upon completion must match the number of bytes
-	* initially specified when creating the Upload object. No Parts may be added after
-	* an Upload is completed.
-	*/
-	complete(uploadId, body, options) {
-		return this._client.post(`/uploads/${uploadId}/complete`, {
-			body,
-			...options
-		});
-	}
-};
-Uploads.Parts = Parts;
-
-//#endregion
-//#region node_modules/.pnpm/openai@4.86.2/node_modules/openai/index.mjs
+//#region node_modules/.pnpm/openai@4.93.0/node_modules/openai/index.mjs
 var _a;
 var OpenAI = class extends APIClient {
 	/**
@@ -64272,15 +64905,18 @@ var OpenAI = class extends APIClient {
 		this.completions = new Completions(this);
 		this.chat = new Chat$1(this);
 		this.embeddings = new Embeddings(this);
-		this.files = new Files(this);
+		this.files = new Files$1(this);
 		this.images = new Images(this);
 		this.audio = new Audio(this);
 		this.moderations = new Moderations(this);
 		this.models = new Models(this);
 		this.fineTuning = new FineTuning(this);
+		this.vectorStores = new VectorStores(this);
 		this.beta = new Beta(this);
 		this.batches = new Batches(this);
 		this.uploads = new Uploads(this);
+		this.responses = new Responses(this);
+		this.evals = new Evals(this);
 		this._options = options;
 		this.apiKey = apiKey;
 		this.organization = organization;
@@ -64321,12 +64957,12 @@ OpenAI.InternalServerError = InternalServerError;
 OpenAI.PermissionDeniedError = PermissionDeniedError;
 OpenAI.UnprocessableEntityError = UnprocessableEntityError;
 OpenAI.toFile = toFile;
-OpenAI.fileFromPath = fileFromPath;
+OpenAI.fileFromPath = fileFromPath$1;
 OpenAI.Completions = Completions;
 OpenAI.Chat = Chat$1;
 OpenAI.ChatCompletionsPage = ChatCompletionsPage;
 OpenAI.Embeddings = Embeddings;
-OpenAI.Files = Files;
+OpenAI.Files = Files$1;
 OpenAI.FileObjectsPage = FileObjectsPage;
 OpenAI.Images = Images;
 OpenAI.Audio = Audio;
@@ -64334,10 +64970,16 @@ OpenAI.Moderations = Moderations;
 OpenAI.Models = Models;
 OpenAI.ModelsPage = ModelsPage;
 OpenAI.FineTuning = FineTuning;
+OpenAI.VectorStores = VectorStores;
+OpenAI.VectorStoresPage = VectorStoresPage;
+OpenAI.VectorStoreSearchResponsesPage = VectorStoreSearchResponsesPage;
 OpenAI.Beta = Beta;
 OpenAI.Batches = Batches;
 OpenAI.BatchesPage = BatchesPage;
 OpenAI.Uploads = Uploads;
+OpenAI.Responses = Responses;
+OpenAI.Evals = Evals;
+OpenAI.EvalListResponsesPage = EvalListResponsesPage;
 var openai_default = OpenAI;
 
 //#endregion
@@ -66949,9 +67591,9 @@ const nodeImports = {};
 
 //#endregion
 //#region node_modules/.pnpm/get-stream@9.0.1/node_modules/get-stream/source/contents.js
-const getStreamContents$1 = async (stream$2, { init, convertChunk, getSize, truncateChunk, addChunk, getFinalChunk, finalize }, { maxBuffer = Number.POSITIVE_INFINITY } = {}) => {
+const getStreamContents$1 = async (stream$2, { init: init$1, convertChunk, getSize, truncateChunk, addChunk, getFinalChunk, finalize }, { maxBuffer = Number.POSITIVE_INFINITY } = {}) => {
 	const asyncIterable = getAsyncIterable(stream$2);
-	const state = init();
+	const state = init$1();
 	state.length = 0;
 	try {
 		for await (const chunk of asyncIterable) {
@@ -70697,7 +71339,7 @@ const $ = createExeca(mapScriptAsync, {}, deepScriptOptions, setScriptSync);
 const { sendMessage, getOneMessage, getEachMessage, getCancelSignal } = getIpcExport();
 
 //#endregion
-//#region node_modules/.pnpm/cr-asst@0.12.2/node_modules/cr-asst/dist/shared/cr-asst.DlFfZH8P.mjs
+//#region node_modules/.pnpm/cr-asst@0.14.0/node_modules/cr-asst/dist/shared/cr-asst.24X5B4jE.mjs
 function genEnBuiltinPrompt(replacements$1) {
 	const { $DIFFS } = replacements$1;
 	return `Below I will provide some code changes. Please read these changes, understand its intent, and review it.
@@ -70706,32 +71348,31 @@ Your response should adhere to the following rules:
 
 - Your response should follow the format of the response template.
 - The response template provided below will be wrapped in a code block, but your response **should not** be wrapped in code block symbols (i.e., "\`\`\`markdown" and "\`\`\`"). To emphasize, **do not use code blocks to wrap your response**.
-- The code changes provided below are represented in \`diff\` format. The file paths may be prefixed with \`a/\` or \`b/\`, but these two prefixes should not be considered as part of the file path.
 - In the response template, \`{{}}\` is the part you need to replace, for example, you should replace \`{{review comment}}\` with your actual review comment.
-- In the response template, only one item is listed for all sections, but you should list the appropriate number of items based on the actual situation.
+- In the response template, as an example, only one item item is listed in every sections. You should **list the appropriate number of items** based on the actual situation.
+- The code changes provided below are represented in \`diff\` format. The file paths may be prefixed with \`a/\` or \`b/\`, but these two prefixes should not be considered as part of the file path.
+- Review comments should point out potential improvements in the code, but there's no need to be overly nitpicky.
+- Review comments should point out syntax issues in the code, such as incorrect syntax usage, unclosed brackets, etc.
+- Review comments should point out logical issues in the code, such as infinite loops, incorrect conditions, wrong expressions, etc.
+- Review comments should **especially point out** security issues in the code, which refer to vulnerabilities that could lead to attacks, such as SQL injection, XSS, CSRF, etc.
+- In the section "Issues and Potential Improvements", **only** point out the issues and potential improvements in the code, and do not provide review comments for reasonable code.
 
 This is the response template you need to follow:
 
 \`\`\`markdown
 # Overall Changes
 
-1. {{overall change 1}}
+1. {{overall change}}
 
 # Overall Review Comments
 
-1. {{overall review comment 1}}
+1. {{overall review comment}}
 
-# File-wise Review
+# Issues and Potential Improvements
 
-1. \`{{file path 1}}\`
+1. \`{{path of the file with issue or potential improvement}}\`
 
-   Changes:
-
-   1. {{change 1}}
-
-   Review Comments:
-
-   1. {{review comment 1}}
+   1. {{issue or potential improvement}}
 \`\`\`
 
 This is the code changes you need to review:
@@ -70749,9 +71390,14 @@ function genZhCnBuiltinPrompt(replacements$1, options = {}) {
 
 - \u4F60\u7684\u56DE\u590D\u5E94\u8BE5\u9075\u5B88\u56DE\u590D\u6A21\u677F\u7684\u683C\u5F0F\u3002
 - \u4E0B\u9762\u7ED9\u51FA\u7684\u56DE\u590D\u6A21\u677F\u4F1A\u88AB\u5305\u88F9\u5728\u4EE3\u7801\u5757\u4E2D\uFF0C\u4F46\u662F\u4F60\u7684\u56DE\u590D**\u4E0D\u8981**\u7528\u4EE3\u7801\u5757\u7B26\u53F7\uFF08\u5373 "\`\`\`markdown" \u548C "\`\`\`"\uFF09\u6765\u5305\u88F9\u3002\u518D\u6B21\u5F3A\u8C03\uFF0C**\u4E0D\u8981\u7528\u4EE3\u7801\u5757\u6765\u5305\u88F9\u4F60\u7684\u56DE\u590D**\u3002
-- \u4E0B\u9762\u7ED9\u51FA\u7684\u4EE3\u7801\u6539\u52A8\u4EE5 \`diff\` \u683C\u5F0F\u8868\u793A\u3002\u5176\u4E2D\u7684\u6587\u4EF6\u8DEF\u5F84\u53EF\u80FD\u4EE5 \`a/\` \u6216 \`b/\` \u4F5C\u4E3A\u524D\u7F00\uFF0C\u4E0D\u8981\u5C06\u8FD9\u4E24\u4E2A\u524D\u7F00\u89C6\u4E3A\u6587\u4EF6\u8DEF\u5F84\u7684\u4E00\u90E8\u5206\u3002
 - \u5728\u56DE\u590D\u6A21\u677F\u4E2D\uFF0C\`{{}}\` \u662F\u4F60\u9700\u8981\u66FF\u6362\u7684\u90E8\u5206\uFF0C\u4F8B\u5982\u4F60\u9700\u8981\u5C06 \`{{\u8BC4\u5BA1\u610F\u89C1}}\` \u66FF\u6362\u4E3A\u4F60\u5B9E\u9645\u7684\u8BC4\u5BA1\u610F\u89C1\u3002
-- \u5728\u56DE\u590D\u6A21\u677F\u4E2D\uFF0C\u6240\u6709\u9879\u76EE\u4EC5\u5217\u51FA\u4E86\u4E00\u9879\uFF0C\u4F46\u4F60\u5E94\u8BE5\u6839\u636E\u5B9E\u9645\u60C5\u51B5\uFF0C\u5217\u51FA\u5408\u9002\u7684\u9879\u76EE\u6570\u91CF\u3002
+- \u5728\u56DE\u590D\u6A21\u677F\u4E2D\uFF0C\u4F5C\u4E3A\u793A\u4F8B\uFF0C\u6BCF\u4E2A\u7AE0\u8282\u4EC5\u5217\u51FA\u4E86\u4E00\u9879\u5185\u5BB9\u3002\u4F60\u7684\u56DE\u590D\u5E94\u8BE5\u6839\u636E\u5B9E\u9645\u60C5\u51B5\uFF0C\u5217\u51FA**\u5408\u9002\u7684\u9879\u76EE\u6570\u91CF**\u3002
+- \u4E0B\u9762\u7ED9\u51FA\u7684\u4EE3\u7801\u6539\u52A8\u4EE5 \`diff\` \u683C\u5F0F\u8868\u793A\u3002\u5176\u4E2D\u7684\u6587\u4EF6\u8DEF\u5F84\u53EF\u80FD\u4EE5 \`a/\` \u6216 \`b/\` \u4F5C\u4E3A\u524D\u7F00\uFF0C\u4E0D\u8981\u5C06\u8FD9\u4E24\u4E2A\u524D\u7F00\u89C6\u4E3A\u6587\u4EF6\u8DEF\u5F84\u7684\u4E00\u90E8\u5206\u3002
+- \u8BC4\u5BA1\u610F\u89C1\u5E94\u8BE5\u6307\u51FA\u4EE3\u7801\u7684\u6539\u8FDB\u70B9\uFF0C\u4F46\u4E0D\u5FC5\u8FC7\u4E8E\u5439\u6BDB\u6C42\u75B5\u3002
+- \u8BC4\u5BA1\u610F\u89C1\u5E94\u8BE5\u6307\u51FA\u4EE3\u7801\u7684\u8BED\u6CD5\u95EE\u9898\uFF0C\u5982\u4F7F\u7528\u4E86\u8BED\u6CD5\u9519\u8BEF\u3001\u62EC\u53F7\u672A\u95ED\u5408\u7B49\u3002
+- \u8BC4\u5BA1\u610F\u89C1\u5E94\u8BE5\u6307\u51FA\u4EE3\u7801\u7684\u903B\u8F91\u95EE\u9898\uFF0C\u5982\u65E0\u9650\u5FAA\u73AF\u3001\u6761\u4EF6\u9519\u8BEF\u3001\u8868\u8FBE\u5F0F\u9519\u8BEF\u7B49\u3002
+- \u8BC4\u5BA1\u610F\u89C1\u5E94\u8BE5**\u7279\u522B\u6307\u51FA**\u4EE3\u7801\u7684\u5B89\u5168\u95EE\u9898\uFF0C\u5373\u53EF\u80FD\u5BFC\u81F4\u88AB\u653B\u51FB\u7684\u6F0F\u6D1E\uFF0C\u5982 SQL \u6CE8\u5165\u3001XSS\u3001CSRF \u7B49\u3002
+- \u5728\u201C\u95EE\u9898\u548C\u6539\u8FDB\u70B9\u201D\u7AE0\u8282\u4E2D\uFF0C**\u53EA\u9700\u8981**\u6307\u51FA\u4EE3\u7801\u4E2D\u7684\u95EE\u9898\u6216\u6539\u8FDB\u70B9\uFF0C\u4E0D\u9700\u8981\u7ED9\u51FA\u5408\u7406\u4EE3\u7801\u7684\u8BC4\u5BA1\u610F\u89C1\u3002
 ${nyan ? "- 扮演一个猫娘，你的回复需要带上猫娘的语癖，例如使用“喵~”、emoji、颜表情等。你应该在句子中使用第一人称“猫猫”，包括在描述意图、改动点时，例如“猫猫觉得...”、“猫猫认为...”、“猫猫喜欢...”。" : ""}
 
 \u4F60\u7684\u56DE\u590D\u6A21\u677F\u5982\u4E0B\uFF1A
@@ -70759,23 +71405,17 @@ ${nyan ? "- 扮演一个猫娘，你的回复需要带上猫娘的语癖，例�
 \`\`\`markdown
 # \u6574\u4F53\u6539\u52A8
 
-1. {{\u6574\u4F53\u6539\u52A8\u70B91}}
+1. {{\u6574\u4F53\u6539\u52A8\u70B9}}
 
 # \u6574\u4F53\u8BC4\u5BA1
 
-1. {{\u6574\u4F53\u8BC4\u5BA1\u610F\u89C11}}
+1. {{\u6574\u4F53\u8BC4\u5BA1\u610F\u89C1}}
 
-# \u6309\u6587\u4EF6\u8BC4\u5BA1
+# \u95EE\u9898\u548C\u6539\u8FDB\u70B9
 
-1. \`{{\u6587\u4EF6\u8DEF\u5F841}}\`
+1. \`{{\u6709\u95EE\u9898\u6216\u6539\u8FDB\u70B9\u7684\u6587\u4EF6\u8DEF\u5F84}}\`
 
-   \u6539\u52A8\u70B9\uFF1A
-
-   1. {{\u6539\u52A8\u70B91}}
-
-   \u8BC4\u5BA1\u610F\u89C1\uFF1A
-
-   1. {{\u8BC4\u5BA1\u610F\u89C11}}
+   1. {{\u95EE\u9898\u6216\u6539\u8FDB\u70B9}}
 \`\`\`
 
 \u4EE5\u4E0B\u662F\u4F60\u9700\u8981\u8BC4\u5BA1\u7684\u4EE3\u7801\u6539\u52A8\uFF1A
@@ -70798,8 +71438,108 @@ async function getPrompt(fileOrBuiltinName, replacements$1) {
 	for (const [key, value] of Object.entries(replacements$1)) customPrompt = customPrompt.replaceAll(key, value);
 	return customPrompt;
 }
+function usageToString(usage) {
+	return ["[USAGE]", [
+		`promptTokens: ${usage?.promptTokens ? usage.promptTokens : "N/A"}`,
+		`completionTokens: ${usage?.completionTokens ? usage.completionTokens : "N/A"}`,
+		`totalTokens: ${usage?.totalTokens ? usage.totalTokens : "N/A"}`
+	].join(", ")].join(" ");
+}
+function statsToString(stats) {
+	return ["[STATS]", [
+		`timeToFirstToken: ${(stats.timeToFirstToken / 1e3).toFixed(2)}s`,
+		`timeToFinish: ${(stats.timeToFinish / 1e3).toFixed(2)}s`,
+		`tokensPerSecond: ${stats.tokensPerSecond ? `${stats.tokensPerSecond.toFixed(2)} tokens/s` : "N/A"}`
+	].join(", ")].join(" ");
+}
+async function createCompletion(options) {
+	const { client, model, messages, tools, onDeltaReasoningContent, onDeltaContent } = options;
+	const stream$2 = await client.chat.completions.create({
+		stream: true,
+		model,
+		messages,
+		tools
+	});
+	const completion = await readCompletionStream({
+		stream: stream$2,
+		onDeltaReasoningContent,
+		onDeltaContent
+	});
+	return completion;
+}
+async function readCompletionStream(options) {
+	const { stream: stream$2, onDeltaReasoningContent, onDeltaContent } = options;
+	let reasoningContent;
+	let reasoningContentCounter = 0;
+	let content;
+	let contentCounter = 0;
+	let toolCalls;
+	let finishReason = null;
+	let usage;
+	const stats = {
+		startedAt: Date.now(),
+		firstTokenReceivedAt: 0,
+		finishedAt: 0,
+		timeToFirstToken: 0,
+		timeToFinish: 0
+	};
+	for await (const chunk of stream$2) {
+		if (chunk.usage) usage = {
+			promptTokens: chunk.usage.prompt_tokens,
+			completionTokens: chunk.usage.completion_tokens,
+			totalTokens: chunk.usage.total_tokens
+		};
+		if (stats.firstTokenReceivedAt === 0) stats.firstTokenReceivedAt = Date.now();
+		const choice = chunk.choices[0];
+		if (!choice) continue;
+		if (choice.finish_reason) finishReason = choice.finish_reason;
+		const delta = choice.delta;
+		if (!delta) continue;
+		if (typeof delta.reasoning_content === "string") {
+			reasoningContent = (reasoningContent || "") + delta.reasoning_content;
+			onDeltaReasoningContent?.(delta.reasoning_content, reasoningContentCounter);
+			reasoningContentCounter++;
+		}
+		if (typeof delta.content === "string") {
+			content = (content || "") + delta.content;
+			onDeltaContent?.(delta.content, contentCounter);
+			contentCounter++;
+		}
+		if (delta.tool_calls) {
+			toolCalls = toolCalls || [];
+			for (const toolCallChunk of delta.tool_calls) {
+				toolCalls[toolCallChunk.index] = toolCalls[toolCallChunk.index] || {
+					index: toolCallChunk.index,
+					id: "",
+					type: "",
+					function: {
+						name: "",
+						arguments: ""
+					}
+				};
+				const toolCall = toolCalls[toolCallChunk.index];
+				if (toolCallChunk.id) toolCall.id = toolCallChunk.id;
+				if (toolCallChunk.type) toolCall.type = toolCallChunk.type;
+				if (toolCallChunk.function?.name) toolCall.function.name = toolCallChunk.function.name;
+				if (toolCallChunk.function?.arguments) toolCall.function.arguments += toolCallChunk.function.arguments;
+			}
+		}
+	}
+	stats.finishedAt = Date.now();
+	stats.timeToFirstToken = stats.firstTokenReceivedAt - stats.startedAt;
+	stats.timeToFinish = stats.finishedAt - stats.startedAt;
+	if (usage) stats.tokensPerSecond = usage.completionTokens / (stats.timeToFinish / 1e3);
+	return {
+		reasoningContent,
+		content,
+		toolCalls,
+		finishReason,
+		usage,
+		stats
+	};
+}
 async function codeReview(options) {
-	const { model, apiKey, baseUrl: baseUrl$1, diffsCmd = "git log --no-prefix -p -n 1 -- . :!package-lock.json :!pnpm-lock.yaml :!yarn.lock", outputFile, promptFile = "en", print = false, printReasoning = false, printDebug = false, inputPrice = 0, outputPrice = 0 } = options;
+	const { model, apiKey, baseUrl: baseUrl$1, diffsCmd = "git log --no-prefix -p -n 1 -- . :!package-lock.json :!pnpm-lock.yaml :!yarn.lock", outputFile, promptFile = "en", print = false, printReasoning = false, printDebug = false } = options;
 	const client = new openai_default({
 		baseURL: baseUrl$1,
 		apiKey
@@ -70810,73 +71550,38 @@ async function codeReview(options) {
 		return stdout2;
 	})();
 	const prompt = await getPrompt(promptFile, { $DIFFS: diffs });
-	if (outputFile) await writeFile(outputFile, "");
-	let reasoningContent = "";
-	let content = "";
-	const usage = {
-		inputTokens: 0,
-		outputTokens: 0,
-		totalTokens: 0,
-		inputCost: 0,
-		outputCost: 0,
-		totalCost: 0
-	};
-	const stats = {
-		startAt: Date.now(),
-		firstTokenAt: 0,
-		finishAt: 0,
-		timeToFirstToken: 0,
-		timeToFinish: 0,
-		tokensPerSecond: 0
-	};
-	const stream$2 = await client.chat.completions.create({
-		stream: true,
+	const completion = await createCompletion({
+		client,
 		model,
 		messages: [{
 			role: "user",
 			content: prompt
-		}]
+		}],
+		onDeltaReasoningContent: (delta, counter) => {
+			if (print && printReasoning) {
+				if (counter === 0) stdout.write("> (Reasoning)\n> \n> ");
+				stdout.write(delta.replaceAll("\n", "\n> "));
+			}
+		},
+		onDeltaContent: async (delta, counter) => {
+			if (counter === 0 && outputFile) await writeFile(outputFile, "");
+			if (print) stdout.write(delta);
+			if (outputFile) await appendFile(outputFile, delta);
+		}
 	});
-	for await (const chunk of stream$2) {
-		if (stats.firstTokenAt === 0) stats.firstTokenAt = Date.now();
-		const reasoningContentChunk = chunk.choices[0]?.delta?.reasoning_content;
-		if (reasoningContentChunk) {
-			if (print && printReasoning && !reasoningContent) stdout.write("> (Reasoning)\n> \n> ");
-			reasoningContent += reasoningContentChunk;
-			if (print && printReasoning) stdout.write(reasoningContentChunk.replaceAll("\n", "\n> "));
-		}
-		const contentChunk = chunk.choices[0]?.delta?.content;
-		if (contentChunk) {
-			content += contentChunk;
-			if (print) stdout.write(contentChunk);
-			if (outputFile) await appendFile(outputFile, contentChunk);
-		}
-		if (chunk.usage) {
-			usage.inputTokens = chunk.usage.prompt_tokens;
-			usage.outputTokens = chunk.usage.completion_tokens;
-			usage.totalTokens = chunk.usage.total_tokens;
-			usage.inputCost = inputPrice * usage.inputTokens / 1e6;
-			usage.outputCost = outputPrice * usage.outputTokens / 1e6;
-			usage.totalCost = inputPrice * usage.inputTokens / 1e6 + outputPrice * usage.outputTokens / 1e6;
-		}
-	}
 	if (print) console.log();
-	stats.finishAt = Date.now();
-	stats.timeToFirstToken = stats.firstTokenAt - stats.startAt;
-	stats.timeToFinish = stats.finishAt - stats.startAt;
-	stats.tokensPerSecond = usage.outputTokens / (stats.timeToFinish / 1e3);
 	if (printDebug) {
 		console.log();
-		console.log(`[USAGE] inputTokens: ${usage.inputTokens}, outputTokens: ${usage.outputTokens}, totalTokens: ${usage.totalTokens}, inputCost: ${usage.inputCost.toFixed(6)}, outputCost: ${usage.outputCost.toFixed(6)}, totalCost: ${usage.totalCost.toFixed(6)}`);
-		console.log(`[STATS] timeToFirstToken: ${(stats.timeToFirstToken / 1e3).toFixed(2)}s, timeToFinish: ${(stats.timeToFinish / 1e3).toFixed(2)}s, tokensPerSecond: ${stats.tokensPerSecond.toFixed(2)} tokens/s`);
+		console.log(usageToString(completion.usage));
+		console.log(statsToString(completion.stats));
 	}
 	return {
-		reasoningContent,
-		content,
+		reasoningContent: completion.reasoningContent,
+		content: completion.content || "",
 		debug: {
 			diffs,
-			usage,
-			stats
+			stats: completion.stats,
+			usage: completion.usage
 		}
 	};
 }
