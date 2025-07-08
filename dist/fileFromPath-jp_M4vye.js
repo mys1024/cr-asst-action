@@ -1,4 +1,4 @@
-import { File, __commonJS, __require, __toESM, isFile } from "./isFile-BS595NCG.js";
+import { File, __commonJS, __require, __toESM, isFile } from "./isFile-Cusceg7q.js";
 import { createReadStream, promises } from "fs";
 import { basename } from "path";
 
@@ -6,14 +6,13 @@ import { basename } from "path";
 var require_node_domexception = __commonJS({ "node_modules/.pnpm/node-domexception@1.0.0/node_modules/node-domexception/index.js"(exports, module) {
 	/*! node-domexception. MIT License. Jimmy Wärting <https://jimmy.warting.se/opensource> */
 	if (!globalThis.DOMException) try {
-		const { MessageChannel } = __require("worker_threads"), port = new MessageChannel().port1, ab = new ArrayBuffer();
+		const { MessageChannel } = __require("worker_threads"), port = new MessageChannel().port1, ab = /* @__PURE__ */ new ArrayBuffer();
 		port.postMessage(ab, [ab, ab]);
 	} catch (err) {
 		err.constructor.name === "DOMException" && (globalThis.DOMException = err.constructor);
 	}
 	module.exports = globalThis.DOMException;
 } });
-var import_node_domexception = __toESM(require_node_domexception(), 1);
 
 //#endregion
 //#region node_modules/.pnpm/formdata-node@4.4.1/node_modules/formdata-node/lib/esm/isPlainObject.js
@@ -29,6 +28,7 @@ var isPlainObject_default = isPlainObject;
 
 //#endregion
 //#region node_modules/.pnpm/formdata-node@4.4.1/node_modules/formdata-node/lib/esm/fileFromPath.js
+var import_node_domexception = __toESM(require_node_domexception(), 1);
 var __classPrivateFieldSet = void 0 && (void 0).__classPrivateFieldSet || function(receiver, state, value, kind, f) {
 	if (kind === "m") throw new TypeError("Private method is not writable");
 	if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
@@ -68,7 +68,7 @@ var FileFromPath = class FileFromPath {
 			end: __classPrivateFieldGet(this, _FileFromPath_start, "f") + this.size - 1
 		});
 	}
-	get [(_FileFromPath_path = new WeakMap(), _FileFromPath_start = new WeakMap(), Symbol.toStringTag)]() {
+	get [(_FileFromPath_path = /* @__PURE__ */ new WeakMap(), _FileFromPath_start = /* @__PURE__ */ new WeakMap(), Symbol.toStringTag)]() {
 		return "File";
 	}
 };
