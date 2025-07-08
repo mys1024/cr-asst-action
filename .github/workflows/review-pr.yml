@@ -22,7 +22,7 @@ jobs:
         uses: ./
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          model: deepseek-ai/DeepSeek-V3
-          base-url: https://api.siliconflow.cn/v1
+          model: ${{ vars.CR_MODEL }}
+          base-url: ${{ vars.CR_BASE_URL }}
           api-key: ${{ secrets.CR_API_KEY }}
           exclude-files: pnpm-lock.yaml,dist
