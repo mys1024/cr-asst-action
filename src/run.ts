@@ -43,8 +43,8 @@ async function _run(): Promise<void> {
   // code review
   core.info('\nCode review started...\n');
   const { content: reviewComment } = await codeReview({
-    baseRef,
-    headRef,
+    baseRef: `remotes/origin/${baseRef}`,
+    headRef: `remotes/origin/${headRef}`,
     model,
     provider,
     apiKey,
