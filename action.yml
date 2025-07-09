@@ -32,6 +32,15 @@ inputs:
   prompt-file:
     description: 'Path to a custom prompt file, or a builtin prompt (options: "en" or "zh-cn"). (default: "en")'
     required: false
+  system-prompt-file:
+    description: 'Path to a custom system prompt file.'
+    required: false
+  disable-tools:
+    description: 'Whether to disable tools.'
+    required: false
+  max-steps:
+    description: 'Maximum number of AI model calls.'
+    required: false
   output-file:
     description: Path to a file to save review result.
     required: false

@@ -41775,7 +41775,7 @@ const $ = createExeca(mapScriptAsync, {}, deepScriptOptions, setScriptSync);
 const { sendMessage, getOneMessage, getEachMessage, getCancelSignal } = getIpcExport();
 
 //#endregion
-//#region node_modules/.pnpm/cr-asst@1.0.1_react@19.1.0/node_modules/cr-asst/dist/shared/cr-asst.BXkjMNt9.mjs
+//#region node_modules/.pnpm/cr-asst@1.1.0_react@19.1.0/node_modules/cr-asst/dist/shared/cr-asst.CXOfKhqq.mjs
 function genEnBuiltinPrompt() {
 	return `Your response should adhere to the following rules:
 
@@ -41842,8 +41842,8 @@ ${nyan ? "- 扮演一个猫娘，你的回复需要带上猫娘的语癖，例�
    1. {{\u95EE\u9898\u6216\u6539\u8FDB\u70B9}}
 \`\`\``;
 }
-function getSystemPrompt(options) {
-	const { diffs, baseRef, headRef } = options;
+function getBuiltinSystemPrompt(options) {
+	const { disableTools } = options;
 	return `# Code Review Assistant
 
 ## Role
@@ -41856,25 +41856,33 @@ Your goal is to provide thorough code reviews while following the rules below.
 These are the code changes you need to review, please analyze these changes, understand their intent, and review them:
 
 \`\`\`diff
-${diffs}
+$DIFFS
 \`\`\`
 
 The code changes are represented in \`diff\` format, where file paths may be prefixed with \`a/\` or \`b/\`.
 Do not consider these two prefixes as part of the file path.
 
-The base ref of the code changes is \`${baseRef}\`, and the head ref is \`${headRef}\`.
+The base ref of the code changes is \`$BASE_REF\`, and the head ref is \`$HEAD_REF\`.
 
 ## System Rules
 
 System rules have the highest priority and must be followed.
 
-The code changes in diff format contain very limited code context, which is insufficient for a thorough code review.
+${disableTools ? "" : `The code changes in diff format contain very limited code context, which is insufficient for a thorough code review.
 Therefore, before providing your final review result, you must think about which directories and files you need to read to get more code context.
 
 You must read the directories and files from the project being reviewed by calling the tools provided by the system.
 
 You can call these tools multiple times before you have enough code context to fully understand the code changes.
-You should only provide your final review result after you have enough code context to conduct a thorough code review.`;
+You should only provide your final review result after you have enough code context to conduct a thorough code review.`}`;
+}
+async function getSystemPrompt(options) {
+	const { systemPromptFile, disableTools, diffs, baseRef, headRef } = options;
+	let systemPrompt = systemPromptFile ? await readFile(systemPromptFile, "utf8") : getBuiltinSystemPrompt({ disableTools });
+	systemPrompt = systemPrompt.replaceAll("$DIFFS", diffs);
+	systemPrompt = systemPrompt.replaceAll("$BASE_REF", baseRef);
+	systemPrompt = systemPrompt.replaceAll("$HEAD_REF", headRef);
+	return systemPrompt;
 }
 function getBuiltinUserPrompt(name$2) {
 	switch (name$2) {
@@ -41953,7 +41961,7 @@ async function codeReview(options) {
 		"package-lock.json",
 		"pnpm-lock.yaml",
 		"yarn.lock"
-	], outputFile, promptFile = "en", print = false } = options;
+	], outputFile, promptFile = "en", systemPromptFile, disableTools = false, maxSteps = 32, print = false } = options;
 	const diffArgs = [
 		"diff",
 		`${baseRef}...${headRef}`,
@@ -41978,10 +41986,12 @@ async function codeReview(options) {
 	});
 	const result = streamText({
 		model: providerInst(model),
-		tools,
+		tools: disableTools ? void 0 : tools,
 		messages: [{
 			role: "system",
-			content: getSystemPrompt({
+			content: await getSystemPrompt({
+				systemPromptFile,
+				disableTools,
 				diffs,
 				baseRef,
 				headRef
@@ -41990,7 +42000,7 @@ async function codeReview(options) {
 			role: "user",
 			content: await getUserPrompt(promptFile)
 		}],
-		maxSteps: 64,
+		maxSteps: disableTools ? 1 : maxSteps,
 		onError: ({ error: error$1 }) => {
 			throw new Error("code review failed", { cause: error$1 });
 		}
@@ -42101,6 +42111,9 @@ async function _run() {
 	const apiKey = import_core.getInput("api-key");
 	const exclude = import_core.getInput("exclude") ? import_core.getInput("exclude").split(",") : void 0;
 	const promptFile = import_core.getInput("prompt-file") ? import_core.getInput("prompt-file") : void 0;
+	const systemPromptFile = import_core.getInput("system-prompt-file") ? import_core.getInput("system-prompt-file") : void 0;
+	const disableTools = import_core.getInput("disable-tools") ? import_core.getInput("disable-tools") === "true" : void 0;
+	const maxSteps = import_core.getInput("max-steps") ? parseInt(import_core.getInput("max-steps")) : void 0;
 	const outputFile = import_core.getInput("output-file") ? import_core.getInput("output-file") : void 0;
 	import_core.info("baseRef: " + baseRef);
 	import_core.info("headRef: " + headRef);
@@ -42110,11 +42123,14 @@ async function _run() {
 		headRef,
 		model,
 		provider,
-		apiKey,
 		baseUrl: baseUrl$1,
+		apiKey,
+		exclude,
 		outputFile,
 		promptFile,
-		exclude,
+		systemPromptFile,
+		disableTools,
+		maxSteps,
 		print: true
 	});
 	import_core.info("\nCode review finished.\n");

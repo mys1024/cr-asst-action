@@ -39,6 +39,13 @@ async function _run(): Promise<void> {
   const apiKey = core.getInput('api-key');
   const exclude = core.getInput('exclude') ? core.getInput('exclude').split(',') : undefined;
   const promptFile = core.getInput('prompt-file') ? core.getInput('prompt-file') : undefined;
+  const systemPromptFile = core.getInput('system-prompt-file')
+    ? core.getInput('system-prompt-file')
+    : undefined;
+  const disableTools = core.getInput('disable-tools')
+    ? core.getInput('disable-tools') === 'true'
+    : undefined;
+  const maxSteps = core.getInput('max-steps') ? parseInt(core.getInput('max-steps')) : undefined;
   const outputFile = core.getInput('output-file') ? core.getInput('output-file') : undefined;
 
   // print debug info
@@ -52,11 +59,14 @@ async function _run(): Promise<void> {
     headRef,
     model,
     provider,
-    apiKey,
     baseUrl,
+    apiKey,
+    exclude,
     outputFile,
     promptFile,
-    exclude,
+    systemPromptFile,
+    disableTools,
+    maxSteps,
     print: true,
   });
   core.info('\nCode review finished.\n');
