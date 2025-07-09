@@ -16542,7 +16542,7 @@ var require_exec = __commonJS({ "node_modules/.pnpm/@actions+exec@1.1.1/node_mod
 	* @param     options            optional exec options.  See ExecOptions
 	* @returns   Promise<number>    exit code
 	*/
-	function exec$1(commandLine, args, options) {
+	function exec$2(commandLine, args, options) {
 		return __awaiter$3(this, void 0, void 0, function* () {
 			const commandArgs = tr.argStringToArray(commandLine);
 			if (commandArgs.length === 0) throw new Error(`Parameter 'commandLine' cannot be null or empty.`);
@@ -16552,7 +16552,7 @@ var require_exec = __commonJS({ "node_modules/.pnpm/@actions+exec@1.1.1/node_mod
 			return runner.exec();
 		});
 	}
-	exports.exec = exec$1;
+	exports.exec = exec$2;
 	/**
 	* Exec a command and get the output.
 	* Output will be streamed to the live console.
@@ -16584,7 +16584,7 @@ var require_exec = __commonJS({ "node_modules/.pnpm/@actions+exec@1.1.1/node_mod
 				stdout: stdOutListener,
 				stderr: stdErrListener
 			});
-			const exitCode = yield exec$1(commandLine, args, Object.assign(Object.assign({}, options), { listeners }));
+			const exitCode = yield exec$2(commandLine, args, Object.assign(Object.assign({}, options), { listeners }));
 			stdout$1 += stdoutDecoder.end();
 			stderr += stderrDecoder.end();
 			return {
@@ -16664,10 +16664,10 @@ var require_platform = __commonJS({ "node_modules/.pnpm/@actions+core@1.11.1/nod
 	Object.defineProperty(exports, "__esModule", { value: true });
 	exports.getDetails = exports.isLinux = exports.isMacOS = exports.isWindows = exports.arch = exports.platform = void 0;
 	const os_1$1 = __importDefault(__require("os"));
-	const exec = __importStar$4(require_exec());
+	const exec$1 = __importStar$4(require_exec());
 	const getWindowsInfo = () => __awaiter$2(void 0, void 0, void 0, function* () {
-		const { stdout: version } = yield exec.getExecOutput("powershell -command \"(Get-CimInstance -ClassName Win32_OperatingSystem).Version\"", void 0, { silent: true });
-		const { stdout: name$2 } = yield exec.getExecOutput("powershell -command \"(Get-CimInstance -ClassName Win32_OperatingSystem).Caption\"", void 0, { silent: true });
+		const { stdout: version } = yield exec$1.getExecOutput("powershell -command \"(Get-CimInstance -ClassName Win32_OperatingSystem).Version\"", void 0, { silent: true });
+		const { stdout: name$2 } = yield exec$1.getExecOutput("powershell -command \"(Get-CimInstance -ClassName Win32_OperatingSystem).Caption\"", void 0, { silent: true });
 		return {
 			name: name$2.trim(),
 			version: version.trim()
@@ -16675,7 +16675,7 @@ var require_platform = __commonJS({ "node_modules/.pnpm/@actions+core@1.11.1/nod
 	});
 	const getMacOsInfo = () => __awaiter$2(void 0, void 0, void 0, function* () {
 		var _a$3, _b, _c, _d;
-		const { stdout: stdout$1 } = yield exec.getExecOutput("sw_vers", void 0, { silent: true });
+		const { stdout: stdout$1 } = yield exec$1.getExecOutput("sw_vers", void 0, { silent: true });
 		const version = (_b = (_a$3 = stdout$1.match(/ProductVersion:\s*(.+)/)) === null || _a$3 === void 0 ? void 0 : _a$3[1]) !== null && _b !== void 0 ? _b : "";
 		const name$2 = (_d = (_c = stdout$1.match(/ProductName:\s*(.+)/)) === null || _c === void 0 ? void 0 : _c[1]) !== null && _d !== void 0 ? _d : "";
 		return {
@@ -16684,7 +16684,7 @@ var require_platform = __commonJS({ "node_modules/.pnpm/@actions+core@1.11.1/nod
 		};
 	});
 	const getLinuxInfo = () => __awaiter$2(void 0, void 0, void 0, function* () {
-		const { stdout: stdout$1 } = yield exec.getExecOutput("lsb_release", [
+		const { stdout: stdout$1 } = yield exec$1.getExecOutput("lsb_release", [
 			"-i",
 			"-r",
 			"-s"
@@ -42064,6 +42064,7 @@ async function codeReview(options) {
 //#region src/run.ts
 var import_core = __toESM$1(require_core(), 1);
 var import_github = __toESM$1(require_github(), 1);
+var import_exec = __toESM$1(require_exec(), 1);
 const reviewCommentIdentifier = "<!-- Commented by mys1024/cr-asst-action. -->";
 async function _run() {
 	if (!import_github.context.payload.pull_request) {
@@ -42081,6 +42082,18 @@ async function _run() {
 		import_core.setFailed("Failed to get \"headRef\" of the pull request.");
 		return;
 	}
+	await (0, import_exec.exec)("git", [
+		"checkout",
+		"-b",
+		baseRef,
+		`origin/${baseRef}`
+	]);
+	await (0, import_exec.exec)("git", [
+		"checkout",
+		"-b",
+		headRef,
+		`origin/${headRef}`
+	]);
 	const githubToken = import_core.getInput("github-token");
 	const model = import_core.getInput("model");
 	const provider = import_core.getInput("provider") ? import_core.getInput("provider") : void 0;
@@ -42093,8 +42106,8 @@ async function _run() {
 	import_core.info("headRef: " + headRef);
 	import_core.info("\nCode review started...\n");
 	const { content: reviewComment } = await codeReview({
-		baseRef: `remotes/origin/${baseRef}`,
-		headRef: `remotes/origin/${headRef}`,
+		baseRef,
+		headRef,
 		model,
 		provider,
 		apiKey,

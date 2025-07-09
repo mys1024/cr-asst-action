@@ -1,5 +1,6 @@
 import * as core from '@actions/core';
 import { context, getOctokit } from '@actions/github';
+import { exec } from '@actions/exec';
 import { codeReview, type CodeReviewProvider } from 'cr-asst';
 
 const reviewCommentIdentifier = '<!-- Commented by mys1024/cr-asst-action. -->';
@@ -24,6 +25,10 @@ async function _run(): Promise<void> {
     return;
   }
 
+  // checkout branches
+  await exec('git', ['checkout', '-b', baseRef, `origin/${baseRef}`]);
+  await exec('git', ['checkout', '-b', headRef, `origin/${headRef}`]);
+
   // get inputs
   const githubToken = core.getInput('github-token');
   const model = core.getInput('model');
@@ -43,8 +48,8 @@ async function _run(): Promise<void> {
   // code review
   core.info('\nCode review started...\n');
   const { content: reviewComment } = await codeReview({
-    baseRef: `remotes/origin/${baseRef}`,
-    headRef: `remotes/origin/${headRef}`,
+    baseRef,
+    headRef,
     model,
     provider,
     apiKey,
