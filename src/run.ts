@@ -26,8 +26,8 @@ async function _run(): Promise<void> {
   }
 
   // checkout branches
-  await exec('git', ['checkout', '-b', baseRef, `origin/${baseRef}`]);
-  await exec('git', ['checkout', '-b', headRef, `origin/${headRef}`]);
+  await exec('git', ['checkout', '-b', baseRef, `origin/${baseRef}`], { silent: true });
+  await exec('git', ['checkout', '-b', headRef, `origin/${headRef}`], { silent: true });
 
   // get inputs
   const githubToken = core.getInput('github-token');

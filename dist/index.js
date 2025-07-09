@@ -42087,13 +42087,13 @@ async function _run() {
 		"-b",
 		baseRef,
 		`origin/${baseRef}`
-	]);
+	], { silent: true });
 	await (0, import_exec.exec)("git", [
 		"checkout",
 		"-b",
 		headRef,
 		`origin/${headRef}`
-	]);
+	], { silent: true });
 	const githubToken = import_core.getInput("github-token");
 	const model = import_core.getInput("model");
 	const provider = import_core.getInput("provider") ? import_core.getInput("provider") : void 0;
