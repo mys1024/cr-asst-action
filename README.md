@@ -35,12 +35,16 @@ An action powered by **[cr-asst](https://github.com/mys1024/cr-asst)** that revi
              fetch-depth: 0
 
          - name: Review
-           uses: mys1024/cr-asst-action@v1
+           uses: mys1024/cr-asst-action@v2.0.0
            with:
              github-token: ${{ secrets.GITHUB_TOKEN }} # required
-             api-key: ${{ secrets.CR_API_KEY }} # required
              model: gpt-4 # required
-             base-url: https://api.example.com/v1 #optional
+             api-key: ${{ secrets.CR_API_KEY }} # required
+             provider: openai # optional, defaults to "openai", options: "openai", "deepseek", "xai", "anthropic", "google"
+             base-url: https://api.example.com/v1 # optional
+             exclude: 'foo,bar/dir' # optional, defaults to "package-lock.json,pnpm-lock.yaml,yarn.lock"
+             prompt-file: 'my-prompt.md' # optional, defaults to the builtin prompt "en"
+             output-file: 'review-result.md' # optional
    ```
 
    Note: see [action.yml](./action.yml) for more details about inputs.

@@ -35,12 +35,16 @@
              fetch-depth: 0
 
          - name: Review
-           uses: mys1024/cr-asst-action@v1
+           uses: mys1024/cr-asst-action@v2.0.0
            with:
-             github-token: ${{ secrets.GITHUB_TOKEN }} # 必需
-             api-key: ${{ secrets.CR_API_KEY }} # 必需
-             model: gpt-4 # 必需
+             github-token: ${{ secrets.GITHUB_TOKEN }} # 必填
+             model: gpt-4 # 必填
+             api-key: ${{ secrets.CR_API_KEY }} # 必填
+             provider: openai # 可选，默认为 "openai"，可选值："openai", "deepseek", "xai", "anthropic", "google"
              base-url: https://api.example.com/v1 # 可选
+             exclude: 'foo,bar/dir' # 可选，默认为 "package-lock.json,pnpm-lock.yaml,yarn.lock"
+             prompt-file: 'my-prompt.md' # 可选，默认为内置提示词 "en"
+             output-file: 'review-result.md' # 可选
    ```
 
    注: 参数细节可以参考 [action.yml](./action.yml)。

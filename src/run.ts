@@ -1,6 +1,6 @@
 import * as core from '@actions/core';
 import { context, getOctokit } from '@actions/github';
-import { codeReview } from 'cr-asst';
+import { codeReview, type CodeReviewProvider } from 'cr-asst';
 
 const reviewCommentIdentifier = '<!-- Commented by mys1024/cr-asst-action. -->';
 
@@ -27,32 +27,32 @@ async function _run(): Promise<void> {
   // get inputs
   const githubToken = core.getInput('github-token');
   const model = core.getInput('model');
-  const apiKey = core.getInput('api-key');
+  const provider = core.getInput('provider')
+    ? (core.getInput('provider') as CodeReviewProvider)
+    : undefined;
   const baseUrl = core.getInput('base-url') ? core.getInput('base-url') : undefined;
-  const promptFile = core.getInput('prompt-file') || 'en';
-  const excludeFiles = core.getInput('exclude-files')
-    ? core.getInput('exclude-files').split(',')
-    : ['pnpm-lock.yaml', 'package-lock.json', 'yarn.lock'];
-  const diffsCmd =
-    core.getInput('diffs-cmd') ||
-    `git diff --no-prefix remotes/origin/${baseRef}...remotes/origin/${headRef} -- ${excludeFiles.length > 0 ? `. ${excludeFiles.map((file) => `:!${file}`).join(' ')}` : '.'}`;
+  const apiKey = core.getInput('api-key');
+  const exclude = core.getInput('exclude') ? core.getInput('exclude').split(',') : undefined;
+  const promptFile = core.getInput('prompt-file') ? core.getInput('prompt-file') : undefined;
+  const outputFile = core.getInput('output-file') ? core.getInput('output-file') : undefined;
 
   // print debug info
   core.info('baseRef: ' + baseRef);
   core.info('headRef: ' + headRef);
-  core.info('diffsCmd: ' + diffsCmd);
 
   // code review
   core.info('\nCode review started...\n');
   const { content: reviewComment } = await codeReview({
+    baseRef,
+    headRef,
     model,
+    provider,
     apiKey,
     baseUrl,
+    outputFile,
     promptFile,
-    diffsCmd,
+    exclude,
     print: true,
-    printReasoning: true,
-    printDebug: true,
   });
   core.info('\nCode review finished.\n');
 

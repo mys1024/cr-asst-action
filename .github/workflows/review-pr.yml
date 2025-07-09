@@ -23,6 +23,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           model: ${{ vars.CR_MODEL }}
+          provider: ${{ vars.CR_PROVIDER }}
           base-url: ${{ vars.CR_BASE_URL }}
           api-key: ${{ secrets.CR_API_KEY }}
-          exclude-files: pnpm-lock.yaml,dist
+          exclude: pnpm-lock.yaml,dist

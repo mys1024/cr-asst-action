@@ -17,18 +17,21 @@ inputs:
   model:
     description: AI Model to use for review.
     required: true
-  api-key:
-    description: API key for the AI service.
-    required: true
+  provider:
+    description: 'AI service provider (options: "openai", "deepseek", "xai", "anthropic", "google"). (default: "openai")'
+    required: false
   base-url:
     description: Base URL for the AI service API.
     required: false
+  api-key:
+    description: API key for the AI service.
+    required: true
+  exclude:
+    description: Files and directories to exclude from review, separated by commas.
+    required: false
   prompt-file:
-    description: Path to a custom prompt file, or a builtin prompt ("en" or "zh-cn").
+    description: 'Path to a custom prompt file, or a builtin prompt (options: "en" or "zh-cn"). (default: "en")'
     required: false
-  exclude-files:
-    description: Files (comma-separated) to be excluded from diffing. Only available when "diffs-cmd" is not set.
-    required: false
-  diffs-cmd:
-    description: Command to get code diffs for review.
+  output-file:
+    description: Path to a file to save review result.
     required: false
