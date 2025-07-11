@@ -42093,14 +42093,14 @@ async function _run() {
 		return;
 	}
 	await (0, import_exec.exec)("git", [
-		"checkout",
-		"-b",
+		"switch",
+		"-C",
 		baseRef,
 		`origin/${baseRef}`
 	], { silent: true });
 	await (0, import_exec.exec)("git", [
-		"checkout",
-		"-b",
+		"switch",
+		"-C",
 		headRef,
 		`origin/${headRef}`
 	], { silent: true });
