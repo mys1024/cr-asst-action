@@ -1,6 +1,6 @@
 import { createRequire } from "node:module";
-import { Duplex, PassThrough, Readable, Transform, Writable, getDefaultHighWaterMark } from "node:stream";
 import { aborted, callbackify, debuglog, inspect, promisify, stripVTControlCharacters } from "node:util";
+import { Duplex, PassThrough, Readable, Transform, Writable, getDefaultHighWaterMark } from "node:stream";
 import { EventEmitter, addAbortListener, on, once, setMaxListeners } from "node:events";
 import process$1, { execArgv, execPath, hrtime, platform, stdout } from "node:process";
 import { readFile, writeFile } from "node:fs/promises";
@@ -42150,7 +42150,6 @@ async function _run() {
 		});
 		import_core.info(`Review comment added: ${comment.html_url}`);
 	} else {
-		import_core.info(`Existing review comment found, comment id: ${existingComment.id}.`);
 		const { data: comment } = await octokit.rest.issues.updateComment({
 			owner: import_github.context.repo.owner,
 			repo: import_github.context.repo.repo,
@@ -42164,7 +42163,7 @@ async function run() {
 	try {
 		await _run();
 	} catch (error$1) {
-		import_core.setFailed(error$1 instanceof Error ? error$1 : String(error$1));
+		import_core.setFailed(inspect(error$1 instanceof Error ? error$1 : String(error$1)));
 	}
 }
 

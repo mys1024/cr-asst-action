@@ -1,3 +1,4 @@
+import { inspect } from 'node:util';
 import * as core from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import { exec } from '@actions/exec';
@@ -94,7 +95,6 @@ async function _run(): Promise<void> {
     });
     core.info(`Review comment added: ${comment.html_url}`);
   } else {
-    core.info(`Existing review comment found, comment id: ${existingComment.id}.`);
     const { data: comment } = await octokit.rest.issues.updateComment({
       owner: context.repo.owner,
       repo: context.repo.repo,
@@ -109,6 +109,6 @@ export async function run(): Promise<void> {
   try {
     await _run();
   } catch (error) {
-    core.setFailed(error instanceof Error ? error : String(error));
+    core.setFailed(inspect(error instanceof Error ? error : String(error)));
   }
 }
