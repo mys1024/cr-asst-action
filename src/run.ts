@@ -3,6 +3,7 @@ import * as core from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import { exec } from '@actions/exec';
 import { codeReview, type CodeReviewProvider } from 'cr-asst';
+import 'core-js/es/string/to-well-formed'; // for node 18
 
 const reviewCommentIdentifier = '<!-- Commented by mys1024/cr-asst-action. -->';
 

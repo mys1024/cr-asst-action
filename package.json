@@ -34,6 +34,7 @@
     "@actions/core": "^1.11.1",
     "@actions/exec": "^1.1.1",
     "@actions/github": "^6.0.1",
+    "core-js": "^3.44.0",
     "cr-asst": "^1.1.1"
   },
   "devDependencies": {
@@ -56,6 +57,7 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
+      "core-js",
       "esbuild",
       "simple-git-hooks"
     ]

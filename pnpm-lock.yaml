@@ -17,6 +17,9 @@ importers:
       '@actions/github':
         specifier: ^6.0.1
         version: 6.0.1
+      core-js:
+        specifier: ^3.44.0
+        version: 3.44.0
       cr-asst:
         specifier: ^1.1.1
         version: 1.1.1(react@19.1.0)
@@ -1113,6 +1116,9 @@ packages:
   consola@3.4.0:
     resolution: {integrity: sha512-EiPU8G6dQG0GFHNR8ljnZFki/8a+cQwEQ+7wpxdChl02Q8HXlwEZWD5lqAF8vC2sEC3Tehr8hy7vErz88LHyUA==}
     engines: {node: ^14.18.0 || >=16.10.0}
+
+  core-js@3.44.0:
+    resolution: {integrity: sha512-aFCtd4l6GvAXwVEh3XbbVqJGHDJt0OZRa+5ePGx3LLwi12WfexqQxcsohb2wgsa/92xtl19Hd66G/L+TaAxDMw==}
 
   cr-asst@1.1.1:
     resolution: {integrity: sha512-sx5f8z1K2wVl6+eG3t9RQoHTmUeVXvmDXyIJ+kBB9SvU80RoXidWeasN1IZzp01gQ5NEvW9EkjqrDL+Iyc6SDQ==}
@@ -2988,6 +2994,8 @@ snapshots:
   confbox@0.2.2: {}
 
   consola@3.4.0: {}
+
+  core-js@3.44.0: {}
 
   cr-asst@1.1.1(react@19.1.0):
     dependencies:
