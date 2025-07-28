@@ -35,7 +35,7 @@ An action powered by **[cr-asst](https://github.com/mys1024/cr-asst)** that revi
              fetch-depth: 0
 
          - name: Review
-           uses: mys1024/cr-asst-action@v2.0.0
+           uses: mys1024/cr-asst-action@v2
            with:
              github-token: ${{ secrets.GITHUB_TOKEN }} # required
              model: gpt-4 # required

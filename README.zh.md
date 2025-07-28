@@ -35,7 +35,7 @@
              fetch-depth: 0
 
          - name: Review
-           uses: mys1024/cr-asst-action@v2.0.0
+           uses: mys1024/cr-asst-action@v2
            with:
              github-token: ${{ secrets.GITHUB_TOKEN }} # 必填
              model: gpt-4 # 必填
