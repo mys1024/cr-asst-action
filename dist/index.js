@@ -61299,11 +61299,15 @@ async function _run() {
 	const provider = import_core.getInput("provider") ? import_core.getInput("provider") : void 0;
 	const baseUrl$1 = import_core.getInput("base-url") ? import_core.getInput("base-url") : void 0;
 	const apiKey = import_core.getInput("api-key");
+	const include = import_core.getInput("include") ? import_core.getInput("include").split(",") : void 0;
 	const exclude = import_core.getInput("exclude") ? import_core.getInput("exclude").split(",") : void 0;
 	const promptFile = import_core.getInput("prompt-file") ? import_core.getInput("prompt-file") : void 0;
 	const systemPromptFile = import_core.getInput("system-prompt-file") ? import_core.getInput("system-prompt-file") : void 0;
 	const disableTools = import_core.getInput("disable-tools") ? import_core.getInput("disable-tools") === "true" : void 0;
 	const maxSteps = import_core.getInput("max-steps") ? parseInt(import_core.getInput("max-steps")) : void 0;
+	const temperature = import_core.getInput("temperature") ? parseFloat(import_core.getInput("temperature")) : void 0;
+	const topP = import_core.getInput("top-p") ? parseFloat(import_core.getInput("top-p")) : void 0;
+	const topK = import_core.getInput("top-k") ? parseInt(import_core.getInput("top-k")) : void 0;
 	const outputFile = import_core.getInput("output-file") ? import_core.getInput("output-file") : void 0;
 	import_core.info("baseRef: " + baseRef);
 	import_core.info("headRef: " + headRef);
@@ -61315,12 +61319,16 @@ async function _run() {
 		provider,
 		baseUrl: baseUrl$1,
 		apiKey,
+		include,
 		exclude,
 		outputFile,
 		promptFile,
 		systemPromptFile,
 		disableTools,
 		maxSteps,
+		temperature,
+		topP,
+		topK,
 		print: true
 	});
 	import_core.info("\nCode review finished.\n");

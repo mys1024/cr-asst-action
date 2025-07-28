@@ -38,6 +38,7 @@ async function _run(): Promise<void> {
     : undefined;
   const baseUrl = core.getInput('base-url') ? core.getInput('base-url') : undefined;
   const apiKey = core.getInput('api-key');
+  const include = core.getInput('include') ? core.getInput('include').split(',') : undefined;
   const exclude = core.getInput('exclude') ? core.getInput('exclude').split(',') : undefined;
   const promptFile = core.getInput('prompt-file') ? core.getInput('prompt-file') : undefined;
   const systemPromptFile = core.getInput('system-prompt-file')
@@ -47,6 +48,11 @@ async function _run(): Promise<void> {
     ? core.getInput('disable-tools') === 'true'
     : undefined;
   const maxSteps = core.getInput('max-steps') ? parseInt(core.getInput('max-steps')) : undefined;
+  const temperature = core.getInput('temperature')
+    ? parseFloat(core.getInput('temperature'))
+    : undefined;
+  const topP = core.getInput('top-p') ? parseFloat(core.getInput('top-p')) : undefined;
+  const topK = core.getInput('top-k') ? parseInt(core.getInput('top-k')) : undefined;
   const outputFile = core.getInput('output-file') ? core.getInput('output-file') : undefined;
 
   // print debug info
@@ -62,12 +68,16 @@ async function _run(): Promise<void> {
     provider,
     baseUrl,
     apiKey,
+    include,
     exclude,
     outputFile,
     promptFile,
     systemPromptFile,
     disableTools,
     maxSteps,
+    temperature,
+    topP,
+    topK,
     print: true,
   });
   core.info('\nCode review finished.\n');

@@ -26,6 +26,9 @@ inputs:
   api-key:
     description: API key for the AI service.
     required: true
+  include:
+    description: Files and directories to include in review, separated by commas.
+    required: false
   exclude:
     description: Files and directories to exclude from review, separated by commas.
     required: false
@@ -33,13 +36,22 @@ inputs:
     description: 'Path to a custom prompt file, or a builtin prompt (options: "en" or "zh-cn"). (default: "en")'
     required: false
   system-prompt-file:
-    description: 'Path to a custom system prompt file.'
+    description: Path to a custom system prompt file.
     required: false
   disable-tools:
-    description: 'Whether to disable tools.'
+    description: Whether to disable tools.
     required: false
   max-steps:
-    description: 'Maximum number of AI model calls.'
+    description: Maximum number of AI model calls.
+    required: false
+  temperature:
+    description: Temperature for the AI model.
+    required: false
+  top-p:
+    description: Top P for the AI model.
+    required: false
+  top-k:
+    description: Top K for the AI model.
     required: false
   output-file:
     description: Path to a file to save review result.
