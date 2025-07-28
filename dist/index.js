@@ -1,6 +1,6 @@
 import { createRequire } from "node:module";
-import { aborted, callbackify, debuglog, inspect, promisify, stripVTControlCharacters } from "node:util";
 import { Duplex, PassThrough, Readable, Transform, Writable, getDefaultHighWaterMark } from "node:stream";
+import { aborted, callbackify, debuglog, inspect, promisify, stripVTControlCharacters } from "node:util";
 import { EventEmitter, addAbortListener, on, once, setMaxListeners } from "node:events";
 import process$1, { env, execArgv, execPath, hrtime, platform, stdout } from "node:process";
 import { readFile, writeFile } from "node:fs/promises";
@@ -61272,7 +61272,8 @@ async function run() {
 	try {
 		await _run();
 	} catch (error$1) {
-		import_core.setFailed(inspect(error$1 instanceof Error ? error$1 : String(error$1)));
+		console.error(error$1);
+		import_core.setFailed(error$1 instanceof Error ? error$1 : String(error$1));
 	}
 }
 

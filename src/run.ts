@@ -1,4 +1,3 @@
-import { inspect } from 'node:util';
 import * as core from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import { exec } from '@actions/exec';
@@ -110,6 +109,7 @@ export async function run(): Promise<void> {
   try {
     await _run();
   } catch (error) {
-    core.setFailed(inspect(error instanceof Error ? error : String(error)));
+    console.error(error);
+    core.setFailed(error instanceof Error ? error : String(error));
   }
 }
