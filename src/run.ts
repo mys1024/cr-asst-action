@@ -4,7 +4,7 @@ import { exec } from '@actions/exec';
 import { codeReview, type CodeReviewProvider } from 'cr-asst';
 import 'core-js/es/string/to-well-formed'; // for node 18
 
-const reviewCommentIdentifier = '<!-- Commented by mys1024/cr-asst-action. -->';
+const reviewReportIdentifier = '<!-- Commented by mys1024/cr-asst-action. -->';
 
 async function _run(): Promise<void> {
   // ensure the action is triggered by pull request event
@@ -85,33 +85,31 @@ async function _run(): Promise<void> {
   // octokit
   const octokit = getOctokit(githubToken);
 
-  // find existing review comment
+  // find old review reports
   const { data: comments } = await octokit.rest.issues.listComments({
     owner: context.repo.owner,
     repo: context.repo.repo,
     issue_number: issueNumber,
   });
-  const existingComment = comments.find((comment) =>
-    comment.body?.startsWith(reviewCommentIdentifier),
-  );
+  const oldReports = comments.filter((comment) => comment.body?.startsWith(reviewReportIdentifier));
 
-  // create or update review comment
-  if (!existingComment) {
-    const { data: comment } = await octokit.rest.issues.createComment({
+  // create new review report
+  const { data: newReport } = await octokit.rest.issues.createComment({
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    issue_number: issueNumber,
+    body: `${reviewReportIdentifier}\n\n${reviewComment}`,
+  });
+  core.info(`Review report generated: ${newReport.html_url}`);
+
+  // update old review reports
+  for (const oldReport of oldReports) {
+    await octokit.rest.issues.updateComment({
       owner: context.repo.owner,
       repo: context.repo.repo,
-      issue_number: issueNumber,
-      body: `${reviewCommentIdentifier}\n\n${reviewComment}`,
+      comment_id: oldReport.id,
+      body: `${reviewReportIdentifier}\n\n_Review report updated, click [here](${newReport.html_url}) to see the latest review report._`,
     });
-    core.info(`Review comment added: ${comment.html_url}`);
-  } else {
-    const { data: comment } = await octokit.rest.issues.updateComment({
-      owner: context.repo.owner,
-      repo: context.repo.repo,
-      comment_id: existingComment.id,
-      body: `${reviewCommentIdentifier}\n\n${reviewComment}`,
-    });
-    core.info(`Review comment updated: ${comment.html_url}`);
   }
 }
 

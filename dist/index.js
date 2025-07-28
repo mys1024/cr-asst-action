@@ -61265,7 +61265,7 @@ var import_core = __toESM$1(require_core(), 1);
 var import_github = __toESM$1(require_github(), 1);
 var import_exec = __toESM$1(require_exec(), 1);
 var import_to_well_formed = __toESM$1(require_to_well_formed(), 1);
-const reviewCommentIdentifier = "<!-- Commented by mys1024/cr-asst-action. -->";
+const reviewReportIdentifier = "<!-- Commented by mys1024/cr-asst-action. -->";
 async function _run() {
 	if (!import_github.context.payload.pull_request) {
 		import_core.setFailed("This action only works for pull request events.");
@@ -61338,24 +61338,20 @@ async function _run() {
 		repo: import_github.context.repo.repo,
 		issue_number: issueNumber
 	});
-	const existingComment = comments.find((comment) => comment.body?.startsWith(reviewCommentIdentifier));
-	if (!existingComment) {
-		const { data: comment } = await octokit.rest.issues.createComment({
-			owner: import_github.context.repo.owner,
-			repo: import_github.context.repo.repo,
-			issue_number: issueNumber,
-			body: `${reviewCommentIdentifier}\n\n${reviewComment}`
-		});
-		import_core.info(`Review comment added: ${comment.html_url}`);
-	} else {
-		const { data: comment } = await octokit.rest.issues.updateComment({
-			owner: import_github.context.repo.owner,
-			repo: import_github.context.repo.repo,
-			comment_id: existingComment.id,
-			body: `${reviewCommentIdentifier}\n\n${reviewComment}`
-		});
-		import_core.info(`Review comment updated: ${comment.html_url}`);
-	}
+	const oldReports = comments.filter((comment) => comment.body?.startsWith(reviewReportIdentifier));
+	const { data: newReport } = await octokit.rest.issues.createComment({
+		owner: import_github.context.repo.owner,
+		repo: import_github.context.repo.repo,
+		issue_number: issueNumber,
+		body: `${reviewReportIdentifier}\n\n${reviewComment}`
+	});
+	import_core.info(`Review report generated: ${newReport.html_url}`);
+	for (const oldReport of oldReports) await octokit.rest.issues.updateComment({
+		owner: import_github.context.repo.owner,
+		repo: import_github.context.repo.repo,
+		comment_id: oldReport.id,
+		body: `${reviewReportIdentifier}\n\n_Review report updated, click [here](${newReport.html_url}) to see the latest review report._`
+	});
 }
 async function run() {
 	try {
