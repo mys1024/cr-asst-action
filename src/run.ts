@@ -140,11 +140,12 @@ async function _run(): Promise<void> {
         ? `✅ Approved based on the [review report](${newReport.html_url}).`
         : `❌ Rejected based on the [review report](${newReport.html_url}).`,
     });
-    // fail if rejected
-    if (!reviewResult.approvalCheck.approved) {
+    // fail if not approved
+    if (reviewResult.approvalCheck.approved) {
       core.info(`Approval check passed: ${review.html_url}`);
     } else {
-      core.setFailed(`Approval check failed: ${review.html_url}`);
+      core.info(`Approval check failed: ${review.html_url}`);
+      core.setFailed('Approval check failed.');
     }
   }
 }

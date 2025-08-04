@@ -73829,8 +73829,11 @@ async function _run() {
 			event: reviewResult.approvalCheck.approved ? "APPROVE" : "REQUEST_CHANGES",
 			body: reviewResult.approvalCheck.approved ? `✅ Approved based on the [review report](${newReport.html_url}).` : `❌ Rejected based on the [review report](${newReport.html_url}).`
 		});
-		if (!reviewResult.approvalCheck.approved) import_core.info(`Approval check passed: ${review.html_url}`);
-		else import_core.setFailed(`Approval check failed: ${review.html_url}`);
+		if (reviewResult.approvalCheck.approved) import_core.info(`Approval check passed: ${review.html_url}`);
+		else {
+			import_core.info(`Approval check failed: ${review.html_url}`);
+			import_core.setFailed("Approval check failed.");
+		}
 	}
 }
 async function run() {
