@@ -136,7 +136,7 @@ async function _run(): Promise<void> {
       repo: context.repo.repo,
       pull_number: context.payload.pull_request.number,
       event: reviewResult.approvalCheck.approved ? 'APPROVE' : 'REQUEST_CHANGES',
-      body: '',
+      body: reviewResult.approvalCheck.content,
     });
     // fail if not approved
     if (reviewResult.approvalCheck.approved) {
