@@ -74398,9 +74398,12 @@ async function _run() {
 	const topP = import_core.getInput("top-p") ? parseFloat(import_core.getInput("top-p")) : void 0;
 	const topK = import_core.getInput("top-k") ? parseInt(import_core.getInput("top-k")) : void 0;
 	const outputFile = import_core.getInput("output-file") ? import_core.getInput("output-file") : void 0;
+	const approvalCheck = import_core.getInput("approval-check") ? import_core.getInput("approval-check") === "true" : void 0;
+	const approvalCheckPrompt = import_core.getInput("approval-check-prompt") ? import_core.getInput("approval-check-prompt") : void 0;
+	const approvalCheckPromptFile = import_core.getInput("approval-check-prompt-file") ? import_core.getInput("approval-check-prompt-file") : void 0;
 	import_core.info("baseRef: " + baseRef);
 	import_core.info("headRef: " + headRef);
-	const { content: reviewComment } = await codeReview({
+	const reviewResult = await codeReview({
 		baseRef,
 		headRef,
 		model,
@@ -74417,7 +74420,11 @@ async function _run() {
 		temperature,
 		topP,
 		topK,
-		print: true
+		print: true,
+		approvalCheck: !approvalCheck ? false : approvalCheckPrompt || approvalCheckPromptFile ? {
+			prompt: approvalCheckPrompt,
+			promptFile: approvalCheckPromptFile
+		} : true
 	});
 	const octokit = (0, import_github.getOctokit)(githubToken);
 	const { data: comments } = await octokit.rest.issues.listComments({
@@ -74430,14 +74437,21 @@ async function _run() {
 		owner: import_github.context.repo.owner,
 		repo: import_github.context.repo.repo,
 		issue_number: issueNumber,
-		body: `${reviewReportIdentifier}\n\n${reviewComment}`
+		body: `${reviewReportIdentifier}\n\n${reviewResult.content}`
 	});
-	import_core.info(`Review report generated: ${newReport.html_url}`);
+	import_core.info(`\nReview report generated: ${newReport.html_url}`);
 	for (const oldReport of oldReports) await octokit.rest.issues.updateComment({
 		owner: import_github.context.repo.owner,
 		repo: import_github.context.repo.repo,
 		comment_id: oldReport.id,
 		body: `${reviewReportIdentifier}\n\n_Review report updated, click [here](${newReport.html_url}) to see the latest review report._`
+	});
+	if (reviewResult.approvalCheck) await octokit.rest.pulls.createReview({
+		owner: import_github.context.repo.owner,
+		repo: import_github.context.repo.repo,
+		pull_number: import_github.context.payload.pull_request.number,
+		event: reviewResult.approvalCheck.approved ? "APPROVE" : "REQUEST_CHANGES",
+		body: reviewResult.approvalCheck.approved ? "Approved by cr-asst-action." : "Rejected by cr-asst-action."
 	});
 }
 async function run() {

@@ -56,3 +56,12 @@ inputs:
   output-file:
     description: Path to a file to save review result.
     required: false
+  approval-check:
+    description: Whether to enable approval check.
+    required: false
+  approval-check-prompt:
+    description: Custom approval check prompt.
+    required: false
+  approval-check-prompt-file:
+    description: Path to a custom approval check prompt file.
+    required: false
