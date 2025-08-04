@@ -73822,18 +73822,14 @@ async function _run() {
 		body: `${reviewReportIdentifier}\n\n_Review report updated, click [here](${newReport.html_url}) to see the latest review report._`
 	});
 	if (reviewResult.approvalCheck) {
-		const { data: review } = await octokit.rest.pulls.createReview({
+		await octokit.rest.pulls.createReview({
 			owner: import_github.context.repo.owner,
 			repo: import_github.context.repo.repo,
 			pull_number: import_github.context.payload.pull_request.number,
-			event: reviewResult.approvalCheck.approved ? "APPROVE" : "REQUEST_CHANGES",
-			body: reviewResult.approvalCheck.approved ? `✅ Approved based on the [review report](${newReport.html_url}).` : `❌ Rejected based on the [review report](${newReport.html_url}).`
+			event: reviewResult.approvalCheck.approved ? "APPROVE" : "REQUEST_CHANGES"
 		});
-		if (reviewResult.approvalCheck.approved) import_core.info(`Approval check passed: ${review.html_url}`);
-		else {
-			import_core.info(`Approval check failed: ${review.html_url}`);
-			import_core.setFailed("Approval check failed.");
-		}
+		if (reviewResult.approvalCheck.approved) import_core.info(`Approval check passed.`);
+		else import_core.setFailed("Approval check failed.");
 	}
 }
 async function run() {

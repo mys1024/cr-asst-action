@@ -131,20 +131,16 @@ async function _run(): Promise<void> {
   // approval check
   if (reviewResult.approvalCheck) {
     // create review
-    const { data: review } = await octokit.rest.pulls.createReview({
+    await octokit.rest.pulls.createReview({
       owner: context.repo.owner,
       repo: context.repo.repo,
       pull_number: context.payload.pull_request.number,
       event: reviewResult.approvalCheck.approved ? 'APPROVE' : 'REQUEST_CHANGES',
-      body: reviewResult.approvalCheck.approved
-        ? `✅ Approved based on the [review report](${newReport.html_url}).`
-        : `❌ Rejected based on the [review report](${newReport.html_url}).`,
     });
     // fail if not approved
     if (reviewResult.approvalCheck.approved) {
-      core.info(`Approval check passed: ${review.html_url}`);
+      core.info(`Approval check passed.`);
     } else {
-      core.info(`Approval check failed: ${review.html_url}`);
       core.setFailed('Approval check failed.');
     }
   }
