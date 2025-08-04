@@ -73777,6 +73777,7 @@ async function _run() {
 	const approvalCheckPromptFile = import_core.getInput("approval-check-prompt-file") ? import_core.getInput("approval-check-prompt-file") : void 0;
 	import_core.info("baseRef: " + baseRef);
 	import_core.info("headRef: " + headRef);
+	import_core.info("");
 	const reviewResult = await codeReview({
 		baseRef,
 		headRef,
@@ -73820,13 +73821,17 @@ async function _run() {
 		comment_id: oldReport.id,
 		body: `${reviewReportIdentifier}\n\n_Review report updated, click [here](${newReport.html_url}) to see the latest review report._`
 	});
-	if (reviewResult.approvalCheck) await octokit.rest.pulls.createReview({
-		owner: import_github.context.repo.owner,
-		repo: import_github.context.repo.repo,
-		pull_number: import_github.context.payload.pull_request.number,
-		event: reviewResult.approvalCheck.approved ? "APPROVE" : "REQUEST_CHANGES",
-		body: reviewResult.approvalCheck.approved ? "Approved by cr-asst-action." : "Rejected by cr-asst-action."
-	});
+	if (reviewResult.approvalCheck) {
+		const { data: review } = await octokit.rest.pulls.createReview({
+			owner: import_github.context.repo.owner,
+			repo: import_github.context.repo.repo,
+			pull_number: import_github.context.payload.pull_request.number,
+			event: reviewResult.approvalCheck.approved ? "APPROVE" : "REQUEST_CHANGES",
+			body: reviewResult.approvalCheck.approved ? `✅ Approved based on the [review report](${newReport.html_url}).` : `❌ Rejected based on the [review report](${newReport.html_url}).`
+		});
+		if (!reviewResult.approvalCheck.approved) import_core.info(`Approval check passed: ${review.html_url}`);
+		else import_core.setFailed(`Approval check failed: ${review.html_url}`);
+	}
 }
 async function run() {
 	try {

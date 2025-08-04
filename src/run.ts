@@ -67,6 +67,7 @@ async function _run(): Promise<void> {
   // print debug info
   core.info('baseRef: ' + baseRef);
   core.info('headRef: ' + headRef);
+  core.info('');
 
   // code review
   const reviewResult = await codeReview({
@@ -129,15 +130,22 @@ async function _run(): Promise<void> {
 
   // approval check
   if (reviewResult.approvalCheck) {
-    await octokit.rest.pulls.createReview({
+    // create review
+    const { data: review } = await octokit.rest.pulls.createReview({
       owner: context.repo.owner,
       repo: context.repo.repo,
       pull_number: context.payload.pull_request.number,
       event: reviewResult.approvalCheck.approved ? 'APPROVE' : 'REQUEST_CHANGES',
       body: reviewResult.approvalCheck.approved
-        ? 'Approved by cr-asst-action.'
-        : 'Rejected by cr-asst-action.',
+        ? `✅ Approved based on the [review report](${newReport.html_url}).`
+        : `❌ Rejected based on the [review report](${newReport.html_url}).`,
     });
+    // fail if rejected
+    if (!reviewResult.approvalCheck.approved) {
+      core.info(`Approval check passed: ${review.html_url}`);
+    } else {
+      core.setFailed(`Approval check failed: ${review.html_url}`);
+    }
   }
 }
 
