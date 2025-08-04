@@ -1,7 +1,7 @@
 {
   "name": "cr-asst-action",
   "type": "module",
-  "version": "2.3.0-beta.1",
+  "version": "2.3.0-beta.2",
   "private": true,
   "packageManager": "pnpm@10.14.0",
   "description": "An action powered by cr-asst that reviews your pull requests with AI assistants.",
