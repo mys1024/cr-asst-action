@@ -21,8 +21,8 @@ importers:
         specifier: ^3.44.0
         version: 3.44.0
       cr-asst:
-        specifier: ^1.2.2
-        version: 1.2.2
+        specifier: ^1.2.3
+        version: 1.2.3
     devDependencies:
       '@eslint/js':
         specifier: ^9.32.0
@@ -1116,8 +1116,8 @@ packages:
   core-js@3.44.0:
     resolution: {integrity: sha512-aFCtd4l6GvAXwVEh3XbbVqJGHDJt0OZRa+5ePGx3LLwi12WfexqQxcsohb2wgsa/92xtl19Hd66G/L+TaAxDMw==}
 
-  cr-asst@1.2.2:
-    resolution: {integrity: sha512-j5lehh5zf1Zl9gJYO6ttCyO4UwwftiGTKMGGsCHJh+Ory1GBIGmruQf7c3vE/ztQPTN30Rl6I89tOv1mbqqmMQ==}
+  cr-asst@1.2.3:
+    resolution: {integrity: sha512-AFp1O1+xiwZHGj9YwfpZ/oZwhSiu5+l9iOQuJPJiLyZr5xwKP05GgHnZ6L6rmbTqh1mcJoduX3KIj3M+b9NMCw==}
     hasBin: true
 
   cross-spawn@7.0.6:
@@ -1915,8 +1915,8 @@ packages:
     resolution: {integrity: sha512-zICwjrDrcrUE0pyyJc1I2QzBkLM8FINsgOrt6WjA+BgajVq9Nxu2PbFFXUrAggLfDXlZGZBVZYw7WNV5KiBiBA==}
     engines: {node: '>=14.0'}
 
-  undici@7.13.0:
-    resolution: {integrity: sha512-l+zSMssRqrzDcb3fjMkjjLGmuiiK2pMIcV++mJaAc9vhjSGpvM7h43QgP+OAMb1GImHmbPyG2tBXeuyG5iY4gA==}
+  undici@7.12.0:
+    resolution: {integrity: sha512-GrKEsc3ughskmGA9jevVlIOPMiiAHJ4OFUtaAH+NhfTUSiZ1wMPIQqQvAJUrJspFXJt3EBWgpAeoHEDVT1IBug==}
     engines: {node: '>=20.18.1'}
 
   universal-user-agent@6.0.1:
@@ -2948,7 +2948,7 @@ snapshots:
 
   core-js@3.44.0: {}
 
-  cr-asst@1.2.2:
+  cr-asst@1.2.3:
     dependencies:
       '@ai-sdk/anthropic': 2.0.0(zod@3.25.76)
       '@ai-sdk/deepseek': 1.0.0(zod@3.25.76)
@@ -2959,7 +2959,7 @@ snapshots:
       commander: 14.0.0
       dotenv: 17.2.1
       execa: 9.3.1
-      undici: 7.13.0
+      undici: 7.12.0
       zod: 3.25.76
 
   cross-spawn@7.0.6:
@@ -3806,7 +3806,7 @@ snapshots:
     dependencies:
       '@fastify/busboy': 2.1.1
 
-  undici@7.13.0: {}
+  undici@7.12.0: {}
 
   universal-user-agent@6.0.1: {}
 
