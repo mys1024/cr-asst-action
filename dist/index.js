@@ -73826,7 +73826,8 @@ async function _run() {
 			owner: import_github.context.repo.owner,
 			repo: import_github.context.repo.repo,
 			pull_number: import_github.context.payload.pull_request.number,
-			event: reviewResult.approvalCheck.approved ? "APPROVE" : "REQUEST_CHANGES"
+			event: reviewResult.approvalCheck.approved ? "APPROVE" : "REQUEST_CHANGES",
+			body: ""
 		});
 		if (reviewResult.approvalCheck.approved) import_core.info(`Approval check passed.`);
 		else import_core.setFailed("Approval check failed.");
